@@ -1,0 +1,39 @@
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="56dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_alignParentBottom="true"
+    android:gravity="bottom"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btnCancelLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="bottom"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:background="@drawable/rectangle"
+            />
+
+        <Button
+            android:id="@+id/btnSaveLoc"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:text="Save"
+            android:textAllCaps="false"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:background="@drawable/rectangle"
+            />
+    </LinearLayout>
+    </RelativeLayout>

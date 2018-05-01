@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    parent="Theme.AppCompat.NoActionBar"
+    >
+
+
+    <Preference
+        android:layout="@layout/set_profile_picture"
+        android:selectable="true"
+        android:key="profile_picture"
+        />
+
+
+    <PreferenceCategory android:title="PUBLIC INFORMATION">
+        <EditTextPreference
+            android:capitalize="words"
+            android:defaultValue="Noti Fellow"
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Name"
+            android:key="name"
+            />
+
+        <EditTextPreference
+            android:capitalize="words"
+            android:inputType="textCapWords"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Username"
+            android:key="username"
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="PRIVATE INFORMATION">
+
+        <EditTextPreference
+            android:capitalize="words"
+            android:defaultValue="notifellow@notify.com"
+            android:inputType="textCapWords"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="E-mail Address"
+            android:key="email"
+            />
+
+        <EditTextPreference
+            android:capitalize="words"
+            android:defaultValue="+900000000000"
+            android:inputType="phone|number|numberSigned"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Phone Number"
+            android:key="pnumber"
+            />
+
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/Gender"
+            android:entryValues="@array/Gender"
+            android:key="gender"
+            android:title="Gender" />
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="NOTIFICATIONS">
+
+        <RingtonePreference
+            android:defaultValue="content://settings/system/notification_sound"
+            android:dependency="notifications_new_message"
+            android:key="notifications_new_message_ringtone"
+            android:ringtoneType="notification"
+            android:title="@string/pref_title_ringtone" />
+        <SwitchPreference
+            android:paddingStart="?android:attr/actionBarSize"
+            android:defaultValue="true"
+            android:key="notifications_new_message"
+            android:title="@string/pref_title_new_message_notifications" />
+
+        <!-- Allows the user to choose a ringtone in the 'notification' category. -->
+        <!-- NOTE: This preference will be enabled only when the checkbox above is checked. -->
+        <!-- NOTE: RingtonePreference's summary should be set to its value by the activity code. -->
+        <!-- NOTE: This preference will be enabled only when the checkbox above is checked. -->
+        <SwitchPreference
+            android:defaultValue="true"
+            android:dependency="notifications_new_message"
+            android:key="notifications_new_message_vibrate"
+            android:title="@string/pref_title_vibrate" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="ACCOUNT SETTINGS">
+
+        <Preference
+            android:layout="@layout/changepassword_pref"
+            android:title="Change Password"
+            android:key="Change Password"
+           />
+        <Preference
+            android:layout="@layout/deleteaccount_pref"
+            android:key="Delete Account"
+            android:title="Delete Account"
+            />
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

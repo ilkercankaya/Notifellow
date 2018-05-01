@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:design="http://schemas.android.com/apk/res-auto"
+    tools:context=".Main">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay.New">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:elevation="0dp"
+            android:background="?attr/colorPrimary"
+            android:backgroundTint="@color/colorWhite"
+            android:foregroundTint="@color/colorBlue"
+            app:popupTheme="@style/AppTheme.AppBarOverlay.New" />
+
+    </android.support.design.widget.AppBarLayout>
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/NavBot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="bottom"
+        android:elevation="4dp"
+
+        android:background="@color/colorWhite"
+        app:itemIconTint="@color/color"
+        app:itemTextColor="@color/color"
+        design:menu="@menu/menu_nav" />
+    <include layout="@layout/content_main" />
+
+
+</android.support.design.widget.CoordinatorLayout>

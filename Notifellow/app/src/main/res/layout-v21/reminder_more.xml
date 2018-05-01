@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="72dp"
+        android:clickable="false"
+        android:layout_gravity="center"
+        card_view:cardCornerRadius="30dp"
+        card_view:cardBackgroundColor="@color/colorWhite"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_more"
+                android:tint="@color/colorBlue"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="8dp"
+                android:id="@+id/imgMore"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_below="@id/remMore"
+                android:id="@+id/lineMore"
+                android:background="@drawable/line_drawable"
+                />
+
+            <TextView
+                android:id="@+id/remMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/imgMore"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="8dp"
+                android:text="More"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorBlue"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/takeNotes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/imgMore"
+                android:layout_below="@+id/remMore"
+                android:layout_marginTop="16dp"
+                android:text="@string/notes"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorBlue"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/takeNotesTxt"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/takeNotes"
+                android:layout_below="@+id/takeNotes"
+                android:backgroundTint="@color/colorGray"
+                android:layout_marginRight="28dp"
+                android:hint="Put some notes here"
+                android:ems="10"
+                android:inputType="textMultiLine"
+                android:text=""
+                android:textAlignment="textStart"
+                android:textColor="@color/colorGray"
+                android:textStyle="italic"
+                />
+
+
+            <Switch
+                android:id="@+id/switchPublic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/imgMore"
+                android:layout_below="@+id/takeNotesTxt"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="28dp"
+                android:text="Set Task Visible to Friends"
+                android:layout_marginBottom="28dp"
+                android:textColor="@color/colorBlue"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:theme="@style/AlertDialog.AppCompat.Light" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

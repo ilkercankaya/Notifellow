@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar android:id="@+id/searchToolbar"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_gravity="top"
+    android:elevation="4dp"
+    android:background="@color/colorWhite"
+    android:gravity="top"
+    android:theme="@style/Base.Theme.AppCompat.Light"
+    tools:showIn="@layout/fragment_search"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_below="@+id/usersLayout"
+    >
+
+
+
+    </android.support.v7.widget.Toolbar>

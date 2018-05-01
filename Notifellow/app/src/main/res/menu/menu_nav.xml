@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/btnFeed"
+        android:icon="@drawable/ic_feed"
+        android:title="@string/feed"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/btnSearch"
+        android:icon="@drawable/ic_search"
+        android:title="@string/explore"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/btnSche"
+        android:icon="@drawable/ic_schedule"
+        android:title="@string/schedule"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/btnNotes"
+        android:icon="@drawable/ic_notes"
+        android:title="@string/notes"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/btnMessages"
+        android:icon="@drawable/ic_message"
+        android:title="@string/messages"
+        app:showAsAction="ifRoom"
+        />
+
+
+</menu>
