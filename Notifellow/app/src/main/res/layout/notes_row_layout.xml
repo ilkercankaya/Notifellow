@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/LinearLayoutRow"
+    android:descendantFocusability="blocksDescendants"
+    android:paddingRight="20dp">
+
+    <TextView
+        android:id="@+id/notes_row_layout_tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textIsSelectable="false" />
+
+    <TextView
+        android:id="@+id/notes_row_layout_tvNote"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ImageView
+        android:id="@+id/notes_row_layout_imagePreview"
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="false"
+        android:src="@android:drawable/ic_delete" />
+</LinearLayout>

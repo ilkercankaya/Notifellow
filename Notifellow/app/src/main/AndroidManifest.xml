@@ -95,6 +95,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.notifellow.su.notifellow.Main" />
         </activity>
+        <activity android:name=".NotesMainActivity" />
+        <activity android:name=".NotesListDataActivity" />
+        <activity android:name=".NotesEditDataActivity" />
     </application>
 
 </manifest>

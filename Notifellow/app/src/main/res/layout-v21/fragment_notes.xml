@@ -6,13 +6,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".NotesFragment">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="NOTES FRAGMENT"
-        android:layout_gravity="center"
-        android:gravity="center"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/notesLayout"
+        android:fitsSystemWindows="true"/>
+
+        <ListView
+            android:id="@+id/listView_Notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:paddingTop="4dp"
+            />
+
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabAddNote"
         android:layout_width="wrap_content"

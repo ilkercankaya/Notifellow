@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.notes.MainActivity"
+    android:orientation="vertical">
+
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+        <!--android:text="@string/tasks_header_text"-->
+        <!--android:id="@+id/textViewTasksHeader"-->
+        <!--android:background="#774251d8" />-->
+
+    <!--<ListView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:id="@+id/listViewTasks"-->
+        <!--android:layout_weight="1"-->
+        <!--android:choiceMode="singleChoice"-->
+        <!--android:focusable="false"-->
+        <!--android:focusableInTouchMode="false" />-->
+
+    <!--<Space-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="20dp" />-->
+
+    <EditText
+        android:id="@+id/notes_activity_main_editTextTittle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:hint="Enter Tittle" />
+
+    <EditText
+        android:id="@+id/notes_activity_main_editNoteEntry"
+        android:layout_width="match_parent"
+        android:layout_height="182dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/notes_activity_main_editTextTittle"
+        android:ems="10"
+        android:hint="Enter Note"
+        android:inputType="text" />
+
+    <include layout="@layout/notes_bar_create" />
+
+    <ImageView
+        android:id="@+id/notes_activity_main_image_view"
+        android:layout_width="317dp"
+        android:layout_height="188dp"
+        android:layout_below="@+id/notes_activity_main_editNoteEntry"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+</RelativeLayout>
