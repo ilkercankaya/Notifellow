@@ -3,6 +3,8 @@ package com.notifellow.su.notifellow;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +32,7 @@ public class TaskAdapter extends ArrayAdapter<Task>{
     public void rowOnClick(Task task){
         taskInfoDialog = new Dialog(getContext());
         taskInfoDialog.setContentView(R.layout.schedule_row_clicked);
-
+        taskInfoDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // DO NOT TOUCH, DESIGN ISSUES
         titleTextView = taskInfoDialog.findViewById(R.id.reminderTitle_clicked);
         startsTextView = taskInfoDialog.findViewById(R.id.startDateTxt_clicked);
         endsTextView = taskInfoDialog.findViewById(R.id.endDateTxt_clicked);
