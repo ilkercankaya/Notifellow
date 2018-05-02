@@ -3,6 +3,7 @@ package com.notifellow.su.notifellow;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
@@ -10,6 +11,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiConfiguration;
@@ -18,6 +21,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -111,12 +116,20 @@ public class AddReminder extends AppCompatActivity {
 
     RequestQueue queue;
     private ProgressDialog progressDialog;
+    Dialog InfoDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_reminder);
         setTitle("Add Reminder");
+
+        //// INFO DIALOG IMPLEMENTATION START /////
+        InfoDialog = new Dialog(AddReminder.this);
+        InfoDialog.setContentView(R.layout.add_reminder_info_dialog);
+        InfoDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // DO NOT TOUCH, DESIGN ISSUES
+        //// INFO DIALOG IMPLEMENTATION END /////
+
 
         refreshWifi = findViewById(R.id.RefreshBtn);
         calendar = Calendar.getInstance();
@@ -666,6 +679,25 @@ public class AddReminder extends AppCompatActivity {
             }, remindYear, remindMonth, remindDay);
             datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
             datePickerDialog.show();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.clear();
+        getMenuInflater().inflate(R.menu.menu_addrem,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.InfoRem:
+                InfoDialog.show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }
