@@ -44,7 +44,7 @@ import io.rmiri.buttonloading.ButtonLoading;
 
 public class LoginScreen extends AppCompatActivity {
 
-    private ButtonLoading buttonLogin;
+    private Button buttonLogin;
     private Button buttonSignup;
     private Button forgot;
     private SignInButton mGoogleBtn;
@@ -88,21 +88,10 @@ public class LoginScreen extends AppCompatActivity {
                 .addApi(Auth.CREDENTIALS_API)
                 .build();
 
-        buttonLogin.setOnButtonLoadingListener(new ButtonLoading.OnButtonLoadingListener() {
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick() {
-                //Login when clicked
+            public void onClick(View view) {
                 login();
-            }
-
-            @Override
-            public void onStart() {
-                //...
-            }
-
-            @Override
-            public void onFinish() {
-                //...
             }
         });
 
