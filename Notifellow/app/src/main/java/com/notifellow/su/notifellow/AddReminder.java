@@ -323,8 +323,11 @@ public class AddReminder extends AppCompatActivity {
                 start_date, start_time, end_date, end_time, remind_date, remind_time,
                 location, wifiName, notesTextView.getText().toString(), email);
 
-        //ScheduleFragment.taskList.add(new Task(String.valueOf(alarmCode), titleTextView.getText().toString(), start_date + "\t\t\t" + start_time, end_time + "\t\t\t" + end_date, remind_time + "\t\t\t" + remind_date, location, wifiName, notesTextView.getText().toString()));
-        //ScheduleFragment.taskAdapter.notifyDataSetChanged();
+        end_date = ScheduleFragment.formatDate(end_date);
+        remind_date = ScheduleFragment.formatDate(remind_date);
+
+        ScheduleFragment.taskList.add(new Task(String.valueOf(alarmCode), titleTextView.getText().toString(), start_date + "\t\t\t" + start_time, end_time + "\t\t\t" + end_date, remind_time + "\t\t\t" + remind_date, location, wifiName, notesTextView.getText().toString()));
+        ScheduleFragment.taskAdapter.notifyDataSetChanged();
 
         updateAlarmCode(++alarmCode);
 
@@ -664,8 +667,4 @@ public class AddReminder extends AppCompatActivity {
             datePickerDialog.show();
         }
     }
-
-
-
-
 }
