@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class NotesMainActivity extends AppCompatActivity implements NotesAdapter.ItemClickListener{
 
-    static Schema notesSchema;
+    public static Schema notesSchema;
     RecyclerView recyclerView;
     ArrayList<String> arrayList;
     NotesAdapter adapter;
@@ -95,8 +95,6 @@ public class NotesMainActivity extends AppCompatActivity implements NotesAdapter
                 createNoteFunc(v);
             }
         });
-
-        notesSchema = Schema.getInstance(this);
     }
 }
 

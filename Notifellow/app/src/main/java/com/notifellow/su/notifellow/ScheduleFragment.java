@@ -1,6 +1,7 @@
 package com.notifellow.su.notifellow;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class ScheduleFragment extends Fragment {
 
@@ -24,6 +27,7 @@ public class ScheduleFragment extends Fragment {
     private ListView taskListView;
     static List<Task> taskList;
     static TaskAdapter taskAdapter;
+    private SharedPreferences shared;
 
 
     public static String formatDate(String date) {
@@ -69,31 +73,36 @@ public class ScheduleFragment extends Fragment {
         int locationCol = allTasks.getColumnIndex("location");
         int wifiCol = allTasks.getColumnIndex("wifiname");
         int noteCol = allTasks.getColumnIndex("notes");
+        int emailCol = allTasks.getColumnIndex("email");
 
         allTasks.moveToFirst();
         rowCount = allTasks.getCount();
         int tempCount = rowCount;
 
+        shared = getContext().getSharedPreferences("shared", MODE_PRIVATE);
+        String email = shared.getString("email", "null");//GET EMAIL FROM SHARED
+
         if (allTasks != null && (tempCount > 0)) {
 
             do {
-                String id = allTasks.getString(idCol);
-                String title = allTasks.getString(titleCol);
-                String startTime = allTasks.getString(startTimeCol);
-                String startDate = allTasks.getString(startDateCol);
-                String endTime = allTasks.getString(endTimeCol);
-                String endDate = allTasks.getString(endDateCol);
-                String remindTime = allTasks.getString(remindTimeCol);
-                String remindDate = allTasks.getString(remindDateCol);
-                String location = allTasks.getString(locationCol);
-                String wifi = allTasks.getString(wifiCol);
-                String note = allTasks.getString(noteCol);
+                if(email.equals(allTasks.getString(emailCol))) {
+                    String id = allTasks.getString(idCol);
+                    String title = allTasks.getString(titleCol);
+                    String startTime = allTasks.getString(startTimeCol);
+                    String startDate = allTasks.getString(startDateCol);
+                    String endTime = allTasks.getString(endTimeCol);
+                    String endDate = allTasks.getString(endDateCol);
+                    String remindTime = allTasks.getString(remindTimeCol);
+                    String remindDate = allTasks.getString(remindDateCol);
+                    String location = allTasks.getString(locationCol);
+                    String wifi = allTasks.getString(wifiCol);
+                    String note = allTasks.getString(noteCol);
 
-                endDate = formatDate(endDate);
-                remindDate = formatDate(remindDate);
+                    endDate = formatDate(endDate);
+                    remindDate = formatDate(remindDate);
 
-                taskList.add(new Task(id, title, startDate + "\t\t" + startTime, endTime + "\t\t" + endDate, remindTime + "\t\t" + remindDate, location, wifi, note));
-
+                    taskList.add(new Task(id, title, startDate + "\t\t" + startTime, endTime + "\t\t" + endDate, remindTime + "\t\t" + remindDate, location, wifi, note));
+                }
                 tempCount--;
             }
             while (allTasks.moveToNext());

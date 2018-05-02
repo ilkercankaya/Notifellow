@@ -1037,8 +1037,4 @@ public class Settings extends AppCompatPreferenceActivity {
     public void onBackPressed(){
         NavUtils.navigateUpFromSameTask(this);
     }
-
-
-
-
 }

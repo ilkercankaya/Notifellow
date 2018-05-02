@@ -200,9 +200,6 @@ public class AddReminder extends AppCompatActivity {
         createAlarmCodeFile();
 
         Main.reminderFragmentVisited = true; //TODO Since its not fragment anymore, you  can change the name
-
-
-
     }
 
     private void createAlarmCodeFile() {
@@ -326,8 +323,8 @@ public class AddReminder extends AppCompatActivity {
                 start_date, start_time, end_date, end_time, remind_date, remind_time,
                 location, wifiName, notesTextView.getText().toString(), email);
 
-        ScheduleFragment.taskList.add(new Task(String.valueOf(alarmCode), titleTextView.getText().toString(), start_date + "\t\t\t" + start_time, end_time + "\t\t\t" + end_date, remind_time + "\t\t\t" + remind_date, location, wifiName, notesTextView.getText().toString()));
-        ScheduleFragment.taskAdapter.notifyDataSetChanged();
+        //ScheduleFragment.taskList.add(new Task(String.valueOf(alarmCode), titleTextView.getText().toString(), start_date + "\t\t\t" + start_time, end_time + "\t\t\t" + end_date, remind_time + "\t\t\t" + remind_date, location, wifiName, notesTextView.getText().toString()));
+        //ScheduleFragment.taskAdapter.notifyDataSetChanged();
 
         updateAlarmCode(++alarmCode);
 
@@ -392,6 +389,9 @@ public class AddReminder extends AppCompatActivity {
             queue.add(MyStringRequest);
         }
 
+        String[] splitted = remind_date.split("-");
+        remind_date = splitted[2] + "-" + splitted[1] + "-" + splitted[0];
+
         Toast.makeText(getBaseContext(), "Alarm is set for: " + remind_time + " " + remind_date, Toast.LENGTH_LONG).show();
     }
 
@@ -413,7 +413,10 @@ public class AddReminder extends AppCompatActivity {
             if (!wifiName.equals("")) {
                 //THIS ALARM WILL BE FIRED WHEN THE USER CONNECTS TO CHOSEN WIFI
 
-                Main.schema.insertForWifiListener(String.valueOf(alarmCode), titleTextView.getText().toString(), wifiName, notesTextView.getText().toString());
+                shared = this.getSharedPreferences("shared", MODE_PRIVATE);
+                String email = shared.getString("email", "null");//GET EMAIL FROM SHARED
+
+                Main.schema.insertForWifiListener(String.valueOf(alarmCode), titleTextView.getText().toString(), wifiName, notesTextView.getText().toString(), email);
                 int code = alarmCode;
                 updateAlarmCode(code);
 
@@ -421,8 +424,6 @@ public class AddReminder extends AppCompatActivity {
                 this.startService(intent);
 
                 Toast.makeText(getBaseContext().getApplicationContext(), "Alarm set for: " + wifiName, Toast.LENGTH_SHORT).show();
-
-
             }
             else{
                 Toast.makeText(getBaseContext(), "You should select a WiFi name, in order to set a WiFi based reminder!", Toast.LENGTH_SHORT).show();

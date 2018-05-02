@@ -90,7 +90,7 @@ public class AlarmDBSchema extends SQLiteOpenHelper{
 
     public Cursor getAllRowsForEvents() {
         SQLiteDatabase db = this.getWritableDatabase();
-        String[] columns = {ID, TITLE, START_DATE, START_TIME, END_DATE, END_TIME, REMIND_DATE, REMIND_TIME, LOCATION, WIFINAME, NOTES};
+        String[] columns = {ID, TITLE, START_DATE, START_TIME, END_DATE, END_TIME, REMIND_DATE, REMIND_TIME, LOCATION, WIFINAME, NOTES, EMAIL};
         Cursor cursor = db.query(TABLE_NAME, columns, REMIND_DATE + " != ?", new String[]{"NA"}, null, null, null);
         return cursor;
     }
@@ -193,7 +193,7 @@ public class AlarmDBSchema extends SQLiteOpenHelper{
         return location;
     }
 
-    public long insertForWifiListener(String alarmCode, String title, String wifiName, String note){
+    public long insertForWifiListener(String alarmCode, String title, String wifiName, String note, String email){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(ID, alarmCode);
@@ -203,6 +203,7 @@ public class AlarmDBSchema extends SQLiteOpenHelper{
         contentValues.put(LOCATION, "NA");
         contentValues.put(WIFINAME, wifiName);
         contentValues.put(NOTES, note);
+        contentValues.put(EMAIL, email);
         return db.insert(TABLE_NAME, null, contentValues);
     }
 
