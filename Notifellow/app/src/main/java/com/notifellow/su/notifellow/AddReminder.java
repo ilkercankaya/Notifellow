@@ -127,6 +127,7 @@ public class AddReminder extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     addTask();
+                    finish(); //navigates to schedule.
 
                 }
             });
