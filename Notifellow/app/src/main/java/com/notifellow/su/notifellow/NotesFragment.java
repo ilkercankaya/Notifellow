@@ -63,7 +63,7 @@ public class NotesFragment extends Fragment {
         Cursor allTasks = NoteCreateActivity.schema.getData();
 
         int idCol = allTasks.getColumnIndex("ID");
-        int titleCol = allTasks.getColumnIndex("title");
+        int titleCol = allTasks.getColumnIndex("tittle");
         int noteCol = allTasks.getColumnIndex("notes");
         int imageCol = allTasks.getColumnIndex("image_path");
         int emailCol = allTasks.getColumnIndex("email");
