@@ -1,6 +1,5 @@
 package com.notifellow.su.notifellow;
 
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -23,15 +22,16 @@ public class NotesListDataActivity extends AppCompatActivity {
 
     private static final String TAG = NotesListDataActivity.class.getSimpleName();
     private static final String TASKS_KEY = "com.notifellow.su.notifellow.tasks_key";
+
     NotesDBSchema mDatabaseHelper;
 
-    ArrayList<NoteTask> taskList;
+    ArrayList<Note> taskList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.notes_list_layout);
-        ListView mListView = findViewById(R.id.notes_list_layout_listView);
+        setContentView(R.layout.fragment_notes);
+        ListView mListView = findViewById(R.id.listView_Notes);
         mDatabaseHelper = new NotesDBSchema(this);
 
         Log.d(TAG, "populateListView: Displaying data in the ListView.");
@@ -40,24 +40,16 @@ public class NotesListDataActivity extends AppCompatActivity {
         Cursor data = mDatabaseHelper.getData();
 
 
-        if (savedInstanceState == null){
-            taskList = new ArrayList<>();
-            taskList.add(new NoteTask(null, null,
-                    String.valueOf(R.drawable.ic_launcher_foreground)));
-        }
-        else{
-            taskList = savedInstanceState.getParcelableArrayList(TASKS_KEY);
-        }
+        if (savedInstanceState == null) taskList = new ArrayList<>();
+        else taskList = savedInstanceState.getParcelableArrayList(TASKS_KEY);
 
+        //get the value from the database in columns then add it to the ArrayList
         while (data.moveToNext()) {
-            //get the value from the database in column 1
-            //then add it to the ArrayList
-            taskList.add(new NoteTask(data.getString(1), data.getString(2), data.getString(3)));
+            taskList.add(new Note(data.getString(1), data.getString(2), data.getString(3)));
         }
 
         //create the list adapter and set the adapter
-//        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
-        ListAdapter adapter = new NoteTaskAdapter(this,taskList);
+        ListAdapter adapter = new NoteAdapter(this,taskList);
         mListView.setAdapter(adapter);
 
 

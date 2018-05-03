@@ -254,9 +254,9 @@ public class NotesDBSchema extends SQLiteOpenHelper {
 //            ID          + " TEXT, " +
             "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
             TITLE       + " TEXT, " +
-            EMAIL       + " TEXT, " +
             NOTE        + " TEXT, " +
-            IMAGE_PATH  + " TEXT);";
+            IMAGE_PATH  + " TEXT, " +
+            EMAIL       + " TEXT); ";
     private static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 //
 

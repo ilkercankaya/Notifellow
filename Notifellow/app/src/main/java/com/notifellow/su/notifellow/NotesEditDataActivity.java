@@ -51,7 +51,7 @@ public class NotesEditDataActivity extends AppCompatActivity {
         Button btnImage = findViewById(R.id.notes_bar_edit_btnImage);
         Button btnDelete = findViewById(R.id.notes_bar_edit_btnDelete);
 
-        etTitle = findViewById(R.id.notes_edit_data_layout_editable_tittle);
+        etTitle = findViewById(R.id.note_row_clicked_title);
         etNote = findViewById(R.id.notes_edit_data_layout_editable_note);
         imageView = findViewById(R.id.notes_edit_data_layout_editable_image);
 

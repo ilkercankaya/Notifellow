@@ -13,7 +13,6 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -31,9 +30,6 @@ import java.util.ArrayList;
 import static com.notifellow.su.notifellow.NotePathUtils.isDownloadsDocument;
 import static com.notifellow.su.notifellow.NotePathUtils.isExternalStorageDocument;
 
-//import android.widget.ListView;
-
-@RequiresApi(api = Build.VERSION_CODES.KITKAT)
 
 public class NotesMainActivity extends AppCompatActivity {
 
@@ -44,11 +40,11 @@ public class NotesMainActivity extends AppCompatActivity {
     private EditText etTittle;
     private EditText etEntry;
     private ImageView imageView;
-    private ArrayList<NoteTask> taskList;
+    private ArrayList<Note> taskList;
     private String path;
     Bitmap bitmap;
     private String title;
-    private NoteTaskAdapter taskAdapter;
+    private NoteAdapter taskAdapter;
     final int REQUEST_CODE_GALLERY = 999;
 
 
@@ -73,12 +69,12 @@ public class NotesMainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             taskList = new ArrayList<>();
 
-            taskList.add(new NoteTask("Default tittle", "Default note", String.valueOf(R.drawable.ic_launcher_background)));
+            taskList.add(new Note("Default tittle", "Default note", String.valueOf(R.drawable.ic_launcher_background)));
         } else {
             taskList = savedInstanceState.getParcelableArrayList(TASKS_KEY);
         }
 
-        taskAdapter = new NoteTaskAdapter(this, taskList);
+        taskAdapter = new NoteAdapter(this, taskList);
 
         btnImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,7 +156,7 @@ public class NotesMainActivity extends AppCompatActivity {
 
 //        if (uri != null) imagePath = uri.toString();
 
-        taskList.add(new NoteTask(title, note, path));
+        taskList.add(new Note(title, note, path));
         AddData(title, note, path);
 //        Collections.sort(taskList);
         taskAdapter.notifyDataSetChanged();

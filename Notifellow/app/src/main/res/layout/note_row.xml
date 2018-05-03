@@ -22,13 +22,13 @@
         >
 
         <ImageView
-            android:id="@+id/deleteNoteButton"
+            android:id="@+id/note_row_delete_button"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
             android:src="@drawable/ic_cancel_task"
             android:tint="@color/colorBlue"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
 
 
             />
@@ -41,7 +41,7 @@
             android:layout_marginBottom="24dp"
             android:layout_centerVertical="true"
             android:src="@color/colorBlue"
-            android:id="@+id/note_image"
+            android:id="@+id/note_row_image"
 
             />
 
@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_toEndOf="@id/note_image"
+            android:layout_toEndOf="@id/note_row_image"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
@@ -58,7 +58,7 @@
             >
 
             <TextView
-                android:id="@+id/note_title"
+                android:id="@+id/note_row_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TITLE COMES HERE"
@@ -68,14 +68,13 @@
                 />
 
             <TextView
-                android:id="@+id/note_description"
+                android:id="@+id/note_row_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="DESCRIPTION COMES HERE"
-                android:textSize="14sp"
-                android:textStyle="normal"
                 android:textColor="@color/colorBlue"
-                />
+                android:textSize="14sp"
+                android:textStyle="normal" />
 
         </LinearLayout>
         
