@@ -44,13 +44,12 @@ public class NotesListActivity extends AppCompatActivity {
         //get the data and append to a list
         Cursor data = mDatabaseHelper.getData();
 
-
         if (savedInstanceState == null) taskList = new ArrayList<>();
         else taskList = savedInstanceState.getParcelableArrayList(TASKS_KEY);
 
         //get the value from the database in columns then add it to the ArrayList
         while (data.moveToNext()) {
-            taskList.add(new Note(data.getString(0), data.getString(1), data.getString(2), data.getString(3)));
+            taskList.add(new Note(data.getString(0), data.getString(1), data.getString(2), data.getString(3), data.getString(4)));
         }
 
         //create the list adapter and set the adapter
@@ -65,6 +64,7 @@ public class NotesListActivity extends AppCompatActivity {
                 String title = taskList.get(i).title;
                 String note = taskList.get(i).note;
                 String imagePath= taskList.get(i).imagePath;
+                String email = taskList.get(i).email;
 
                 Log.d(TAG, "onItemClick: You Clicked on " + title);
 
@@ -84,6 +84,7 @@ public class NotesListActivity extends AppCompatActivity {
                     editScreenIntent.putExtra("title", title);
                     editScreenIntent.putExtra("note", note);
                     editScreenIntent.putExtra("image_path", imagePath);
+                    editScreenIntent.putExtra("email", email);
 
                     startActivity(editScreenIntent);
                 } else {

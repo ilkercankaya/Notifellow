@@ -49,6 +49,7 @@ public class NoteCreateActivity extends AppCompatActivity {
     private NoteAdapter noteAdapter;
     final int REQUEST_CODE_GALLERY = 999;
 
+    private String email;
     FloatingActionButton fabSet, fabImage, fabCamera;
     static NotesDBSchema schema;
 
@@ -63,6 +64,9 @@ public class NoteCreateActivity extends AppCompatActivity {
         etEntry = findViewById(R.id.noteTxt);
         imageView = findViewById(R.id.NoteImage);
 
+        Intent receivedIntent = getIntent();
+
+        email = receivedIntent.getStringExtra("email");
 
         fabSet = findViewById(R.id.fabSet);
         if (fabSet != null) {
@@ -109,7 +113,7 @@ public class NoteCreateActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             noteArrayList = new ArrayList<>();
 
-            noteArrayList.add(new Note("0", "Default tittle", "Default note", String.valueOf(R.drawable.ic_launcher_background)));
+            noteArrayList.add(new Note("0", "Default tittle", "Default note", String.valueOf(R.drawable.ic_launcher_background), "default email"));
         } else {
             noteArrayList = savedInstanceState.getParcelableArrayList(TASKS_KEY);
         }
@@ -118,7 +122,7 @@ public class NoteCreateActivity extends AppCompatActivity {
 
     }
 
-    private boolean AddData(String newTitle, String newNote, String newImagePath) {
+    private boolean AddData(String newTitle, String newNote, String newImagePath, String email) {
         boolean insertData = schema.addData(newTitle, newNote, newImagePath);
         if (insertData) {
             toastMessage("Data Successfully Inserted!");
@@ -171,11 +175,11 @@ public class NoteCreateActivity extends AppCompatActivity {
 
 //        if (uri != null) imagePath = uri.toString();
 
-        if (AddData(title, note, path)) {
+        if (AddData(title, note, path, email)) {
             Cursor cursor = schema.getItemID(title);
             cursor.moveToFirst();
             String id = cursor.getString(0);
-            noteArrayList.add(new Note(id, title, note, path));
+            noteArrayList.add(new Note(id, title, note, path, email));
             //Collections.sort(noteArrayList);
             noteAdapter.notifyDataSetChanged();
             FileOutputStream out = null;

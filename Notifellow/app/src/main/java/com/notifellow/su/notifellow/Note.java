@@ -19,17 +19,14 @@ public class Note implements Comparable<Note>, Parcelable {
     String title;
     String note;
     String imagePath;
+    String email;
 
-//    public Note() {
-//        this("", "", "");
-//    }
-
-    public Note(String id, String title, String note, String imagePath) {
-//    Note(String title, String note, String imagePath) {
+    public Note(String id, String title, String note, String imagePath, String email) {
         this.id = id;
         this.title = title;
         this.note = note;
         this.imagePath = imagePath;
+        this.email = email;
     }
 
     public Note(Note other) {
@@ -37,6 +34,7 @@ public class Note implements Comparable<Note>, Parcelable {
         this.title = other.title;
         this.note = other.note;
         this.imagePath = other.imagePath;
+        this.email = email;
     }
 
     public Note(Parcel in) {
@@ -44,6 +42,7 @@ public class Note implements Comparable<Note>, Parcelable {
         this.title = in.readString();
         this.note = in.readString();
         this.imagePath = in.readString(); // TODO fix this readString
+        this.email = in.readString();
     }
 
     @Override
@@ -52,6 +51,7 @@ public class Note implements Comparable<Note>, Parcelable {
         dest.writeString(title);
         dest.writeString(note);
         dest.writeString(imagePath);
+        dest.writeString(email);
     }
 
     @Override

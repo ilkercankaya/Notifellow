@@ -43,6 +43,7 @@ public class NotesFragment extends Fragment {
                 public void onClick(View view) {
                     Toast.makeText(getActivity(), "Add Note!", Toast.LENGTH_LONG).show();
                     Intent myIntent = new Intent(NotesFragment.this.getActivity(), NoteCreateActivity.class);
+                    myIntent.putExtra("email",shared.getString("email", "null"));
                     NotesFragment.this.startActivity(myIntent);
                 }
             });
@@ -51,7 +52,7 @@ public class NotesFragment extends Fragment {
         if (savedInstanceState == null) {
             NoteCreateActivity.schema = new NotesDBSchema(getContext());
             noteList = new ArrayList<>();
-            noteList.add(new Note(null, null, null, String.valueOf(R.drawable.ic_launcher_foreground)));
+            noteList.add(new Note(null, null, null,null,null));
         } else {
             noteList = savedInstanceState.getParcelableArrayList(TASKS_KEY);
         }
@@ -85,7 +86,7 @@ public class NotesFragment extends Fragment {
                     String image = allTasks.getString(imageCol);
 
 //                    noteList.add(new Task(id, title, startDate + "\t\t" + startTime, endTime + "\t\t" + endDate, remindTime + "\t\t" + remindDate, location, wifi, note));
-                    noteList.add(new Note(id, title, note, image));
+                    noteList.add(new Note(id, title, note, image, email));
                 }
                 tempCount--;
             } while (allTasks.moveToNext());
