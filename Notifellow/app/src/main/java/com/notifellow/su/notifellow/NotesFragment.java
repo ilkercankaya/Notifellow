@@ -25,8 +25,8 @@ public class NotesFragment extends Fragment {
 
     private FloatingActionButton fab;
     private ListView taskListView;
-    static List<Note> taskList;
-    static NoteAdapter taskAdapter;
+    static List<Note> noteList;
+    static NoteAdapter noteAdapter;
     private SharedPreferences shared;
 
 // TODO: IMPLEMENT NOTES ACTIVITY AS FRAGMENT HERE
@@ -50,15 +50,15 @@ public class NotesFragment extends Fragment {
 
         if (savedInstanceState == null) {
             NoteCreateActivity.schema = new NotesDBSchema(getContext());
-            taskList = new ArrayList<>();
-            taskList.add(new Note(null, null, null, String.valueOf(R.drawable.ic_launcher_foreground)));
+            noteList = new ArrayList<>();
+            noteList.add(new Note(null, null, null, String.valueOf(R.drawable.ic_launcher_foreground)));
         } else {
-            taskList = savedInstanceState.getParcelableArrayList(TASKS_KEY);
+            noteList = savedInstanceState.getParcelableArrayList(TASKS_KEY);
         }
 
         taskListView = view.findViewById(R.id.listView_Notes);
         int rowCount = 0;
-        taskList = new ArrayList<>();
+        noteList = new ArrayList<>();
 
         Cursor allTasks = NoteCreateActivity.schema.getData();
 
@@ -84,17 +84,17 @@ public class NotesFragment extends Fragment {
                     String note = allTasks.getString(noteCol);
                     String image = allTasks.getString(imageCol);
 
-//                    taskList.add(new Task(id, title, startDate + "\t\t" + startTime, endTime + "\t\t" + endDate, remindTime + "\t\t" + remindDate, location, wifi, note));
-                    taskList.add(new Note(id, title, note, image));
+//                    noteList.add(new Task(id, title, startDate + "\t\t" + startTime, endTime + "\t\t" + endDate, remindTime + "\t\t" + remindDate, location, wifi, note));
+                    noteList.add(new Note(id, title, note, image));
                 }
                 tempCount--;
             } while (allTasks.moveToNext());
         }
 
-        Collections.sort(taskList);
+        Collections.sort(noteList);
 
-        taskAdapter = new NoteAdapter(getActivity(), taskList);
-        taskListView.setAdapter(taskAdapter);
+        noteAdapter = new NoteAdapter(getActivity(), noteList);
+        taskListView.setAdapter(noteAdapter);
 
         return view;
     }

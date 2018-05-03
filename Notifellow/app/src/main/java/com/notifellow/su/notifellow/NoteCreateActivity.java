@@ -21,7 +21,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.notifellow.su.notifellow.camera.Camera2BasicFragment;
 import com.notifellow.su.notifellow.camera.CameraActivity;
 
 import java.io.ByteArrayOutputStream;
@@ -43,11 +42,11 @@ public class NoteCreateActivity extends AppCompatActivity {
     private EditText etTittle;
     private EditText etEntry;
     private ImageView imageView;
-    private ArrayList<Note> taskList;
+    private ArrayList<Note> noteArrayList;
     private String path;
     //    Bitmap bitmap;
     private String title;
-    private NoteAdapter taskAdapter;
+    private NoteAdapter noteAdapter;
     final int REQUEST_CODE_GALLERY = 999;
 
     FloatingActionButton fabSet, fabImage, fabCamera;
@@ -108,14 +107,14 @@ public class NoteCreateActivity extends AppCompatActivity {
 //        schema = new NotesDBSchema(this);
         schema = NotesDBSchema.getInstance(getApplicationContext());
         if (savedInstanceState == null) {
-            taskList = new ArrayList<>();
+            noteArrayList = new ArrayList<>();
 
-            taskList.add(new Note("0", "Default tittle", "Default note", String.valueOf(R.drawable.ic_launcher_background)));
+            noteArrayList.add(new Note("0", "Default tittle", "Default note", String.valueOf(R.drawable.ic_launcher_background)));
         } else {
-            taskList = savedInstanceState.getParcelableArrayList(TASKS_KEY);
+            noteArrayList = savedInstanceState.getParcelableArrayList(TASKS_KEY);
         }
 
-        taskAdapter = new NoteAdapter(this, taskList);
+        noteAdapter = new NoteAdapter(this, noteArrayList);
 
     }
 
@@ -176,9 +175,9 @@ public class NoteCreateActivity extends AppCompatActivity {
             Cursor cursor = schema.getItemID(title);
             cursor.moveToFirst();
             String id = cursor.getString(0);
-            taskList.add(new Note(id, title, note, path));
-            //Collections.sort(taskList);
-            taskAdapter.notifyDataSetChanged();
+            noteArrayList.add(new Note(id, title, note, path));
+            //Collections.sort(noteArrayList);
+            noteAdapter.notifyDataSetChanged();
             FileOutputStream out = null;
 
         }
@@ -192,7 +191,7 @@ public class NoteCreateActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(TASKS_KEY, taskList);
+        outState.putParcelableArrayList(TASKS_KEY, noteArrayList);
     }
 
     /**
