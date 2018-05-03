@@ -17,17 +17,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.notifellow.su.notifellow.notes.camera.CameraActivity;
+import com.notifellow.su.notifellow.camera.Camera2BasicFragment;
+import com.notifellow.su.notifellow.camera.CameraActivity;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 
 import static com.notifellow.su.notifellow.NotePathUtils.isDownloadsDocument;
@@ -40,17 +39,18 @@ public class NoteCreateActivity extends AppCompatActivity {
 //    private static final String TAG = NoteCreateActivity.class.getSimpleName();
 
     Uri uri;
+    private static final int CAMERA_REQUEST = 1888;
     private EditText etTittle;
     private EditText etEntry;
     private ImageView imageView;
     private ArrayList<Note> taskList;
     private String path;
-//    Bitmap bitmap;
+    //    Bitmap bitmap;
     private String title;
     private NoteAdapter taskAdapter;
     final int REQUEST_CODE_GALLERY = 999;
 
-    FloatingActionButton fabSet,fabImage,fabCamera;
+    FloatingActionButton fabSet, fabImage, fabCamera;
     static NotesDBSchema schema;
 
     @Override
@@ -59,11 +59,6 @@ public class NoteCreateActivity extends AppCompatActivity {
 //        setContentView(R.layout.notes_main);
 
         setContentView(R.layout.activity_add_note);
-
-//        Button btnSave = findViewById(R.id.notes_bar_create_btnSave);
-//        Button btnViewData = findViewById(R.id.notes_bar_create_btnView);
-//        Button btnImage = findViewById(R.id.notes_bar_create_btnImage);
-
 
         etTittle = findViewById(R.id.noteTitleTxt);
         etEntry = findViewById(R.id.noteTxt);
@@ -90,8 +85,7 @@ public class NoteCreateActivity extends AppCompatActivity {
             fabImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ActivityCompat.requestPermissions(NoteCreateActivity.this, new String[]
-                            {Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_GALLERY);
+                    ActivityCompat.requestPermissions(NoteCreateActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_GALLERY);
                 }
             });
         }
@@ -103,6 +97,10 @@ public class NoteCreateActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     Intent intent = new Intent(NoteCreateActivity.this, CameraActivity.class);
                     startActivity(intent);
+//                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
+//                    Intent intent = new Intent(NoteCreateActivity.this, NoteCameraActivity.class);
+//                    startActivity(intent);
                 }
             });
         }
@@ -112,36 +110,12 @@ public class NoteCreateActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             taskList = new ArrayList<>();
 
-            taskList.add(new Note("0","Default tittle", "Default note", String.valueOf(R.drawable.ic_launcher_background)));
+            taskList.add(new Note("0", "Default tittle", "Default note", String.valueOf(R.drawable.ic_launcher_background)));
         } else {
             taskList = savedInstanceState.getParcelableArrayList(TASKS_KEY);
         }
 
         taskAdapter = new NoteAdapter(this, taskList);
-
-//        btnImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ActivityCompat.requestPermissions(NoteCreateActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_GALLERY);
-//            }
-//        });
-//
-//
-//        btnSave.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                createNoteTask();
-//            }
-//        });
-//
-//        btnViewData.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                Intent intent = new Intent(NoteCreateActivity.this, NotesListActivity.class);
-//                Intent intent = new Intent(NoteCreateActivity.this, NotesFragment.class);
-//                startActivity(intent);
-//            }
-//        });
 
     }
 
@@ -238,9 +212,17 @@ public class NoteCreateActivity extends AppCompatActivity {
             path = getRealPathFromURI_API19(this, uri);
             imageView.setImageURI(uri);
 
-            Toast.makeText(this, path, Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, path, Toast.LENGTH_LONG).show();
 
-        } super.onActivityResult(requestCode, resultCode, data);
+        }
+        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+            path = MediaStore.Images.Media.insertImage(getContentResolver(), photo, "Title", null);
+            imageView.setImageBitmap(photo);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

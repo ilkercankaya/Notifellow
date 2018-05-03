@@ -189,8 +189,8 @@ public class AlarmDBSchema extends SQLiteOpenHelper{
         if(cursor != null)
             cursor.moveToFirst();
 
-        String location = cursor.getString(cursor.getColumnIndex(EMAIL));
-        return location;
+        String email = cursor.getString(cursor.getColumnIndex(EMAIL));
+        return email;
     }
 
     public long insertForWifiListener(String alarmCode, String title, String wifiName, String note, String email){

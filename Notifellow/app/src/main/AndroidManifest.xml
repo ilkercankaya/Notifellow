@@ -98,6 +98,7 @@
         <activity android:name=".NoteCreateActivity" />
         <activity android:name=".NotesListActivity" />
         <activity android:name=".NotesEditActivity" />
+        <activity android:name=".camera.CameraActivity" />
     </application>
 
 </manifest>

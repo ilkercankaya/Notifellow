@@ -115,6 +115,7 @@ public class NoteAdapter extends ArrayAdapter<Note> {
 
         holder.descriptionTextView.setText(getItem(position).note);
 
+
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         Bitmap bitmap = BitmapFactory.decodeFile(getItem(position).imagePath, bmOptions);
 

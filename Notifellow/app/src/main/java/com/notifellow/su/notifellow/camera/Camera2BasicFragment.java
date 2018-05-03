@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.notifellow.su.notifellow.notes.camera;
+package com.notifellow.su.notifellow.camera;
 
 import android.Manifest;
 import android.app.Activity;
@@ -24,7 +24,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.Point;
@@ -42,12 +41,10 @@ import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.Image;
 import android.media.ImageReader;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -76,7 +73,6 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
-@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class Camera2BasicFragment extends Fragment
         implements View.OnClickListener, ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -97,7 +93,7 @@ public class Camera2BasicFragment extends Fragment
     /**
      * Tag for the {@link Log}.
      */
-    private static final String TAG = "Camera2BasicFragment";
+    private static final String TAG = Camera2BasicFragment.class.getSimpleName();
 
     /**
      * Camera state: Showing camera preview.
@@ -112,7 +108,6 @@ public class Camera2BasicFragment extends Fragment
     /**
      * Camera state: Waiting for the exposure to be precapture state.
      */
-
     private static final int STATE_WAITING_PRECAPTURE = 2;
 
     /**
@@ -184,7 +179,7 @@ public class Camera2BasicFragment extends Fragment
     private CameraDevice mCameraDevice;
 
     /**
-     * The {@link android.util.Size} of camera preview.
+     * The {@link Size} of camera preview.
      */
     private Size mPreviewSize;
 
@@ -252,6 +247,7 @@ public class Camera2BasicFragment extends Fragment
         public void onImageAvailable(ImageReader reader) {
             mBackgroundHandler.post(new ImageSaver(reader.acquireNextImage(), mFile));
         }
+
     };
 
     /**
@@ -400,7 +396,7 @@ public class Camera2BasicFragment extends Fragment
             if (option.getWidth() <= maxWidth && option.getHeight() <= maxHeight &&
                     option.getHeight() == option.getWidth() * h / w) {
                 if (option.getWidth() >= textureViewWidth &&
-                    option.getHeight() >= textureViewHeight) {
+                        option.getHeight() >= textureViewHeight) {
                     bigEnough.add(option);
                 } else {
                     notBigEnough.add(option);
@@ -427,14 +423,14 @@ public class Camera2BasicFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.notes_camera_fragment_camera_layout, container, false);
+        return inflater.inflate(R.layout.fragment_camera2_basic, container, false);
     }
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         view.findViewById(R.id.btnPhotoShot).setOnClickListener(this);
         view.findViewById(R.id.btnCancel).setOnClickListener(this);
-        mTextureView = view.findViewById(R.id.texture);
+        mTextureView = (AutoFitTextureView) view.findViewById(R.id.camtexture);
     }
 
     @Override
@@ -493,6 +489,7 @@ public class Camera2BasicFragment extends Fragment
      * @param width  The width of available size for camera preview
      * @param height The height of available size for camera preview
      */
+    @SuppressWarnings("SuspiciousNameCombination")
     private void setUpCameraOutputs(int width, int height) {
         Activity activity = getActivity();
         CameraManager manager = (CameraManager) activity.getSystemService(Context.CAMERA_SERVICE);
@@ -735,7 +732,7 @@ public class Camera2BasicFragment extends Fragment
     }
 
     /**
-     * Configures the necessary {@link android.graphics.Matrix} transformation to `mTextureView`.
+     * Configures the necessary {@link Matrix} transformation to `mTextureView`.
      * This method should be called after the camera preview size is determined in
      * setUpCameraOutputs and also the size of `mTextureView` is fixed.
      *
@@ -894,7 +891,7 @@ public class Camera2BasicFragment extends Fragment
         switch (view.getId()) {
             case R.id.btnPhotoShot: {
                 takePicture();
-                closeCamera();
+//                closeCamera();
             }
             case R.id.btnCancel: {
 //                Activity activity = getActivity();
@@ -948,7 +945,6 @@ public class Camera2BasicFragment extends Fragment
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
-//                CreateNotes.imageView.setImageBitmap(BitmapFactory.decodeFile(mFile.getAbsolutePath()));
                 mImage.close();
                 if (null != output) {
                     try {

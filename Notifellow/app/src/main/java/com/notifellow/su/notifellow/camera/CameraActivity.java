@@ -14,18 +14,15 @@
  * limitations under the License.
  */
 
-package com.notifellow.su.notifellow.notes.camera;
+package com.notifellow.su.notifellow.camera;
 
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 
 import com.notifellow.su.notifellow.R;
 
 public class CameraActivity extends AppCompatActivity {
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

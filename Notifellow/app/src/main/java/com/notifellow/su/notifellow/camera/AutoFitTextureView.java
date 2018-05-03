@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.notifellow.su.notifellow.notes.camera;
+package com.notifellow.su.notifellow.camera;
 
 import android.content.Context;
 import android.util.AttributeSet;
