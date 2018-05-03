@@ -70,7 +70,7 @@ public class Task implements Comparable<Task>{
         if(!(other instanceof Task))
             return false;
 
-        Task o = (Task) other;
+        Task o = (Task) other; // necessary ?
         return id.equals(((Task) other).getID());
     }
 }

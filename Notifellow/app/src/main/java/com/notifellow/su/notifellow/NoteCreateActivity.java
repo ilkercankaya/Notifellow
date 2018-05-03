@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -20,6 +21,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.notifellow.su.notifellow.notes.camera.CameraActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -42,30 +45,70 @@ public class NoteCreateActivity extends AppCompatActivity {
     private ImageView imageView;
     private ArrayList<Note> taskList;
     private String path;
-    Bitmap bitmap;
+//    Bitmap bitmap;
     private String title;
     private NoteAdapter taskAdapter;
     final int REQUEST_CODE_GALLERY = 999;
 
-
+    FloatingActionButton fabSet,fabImage,fabCamera;
     static NotesDBSchema schema;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.notes_main);
+//        setContentView(R.layout.notes_main);
 
-        Button btnSave = findViewById(R.id.notes_bar_create_btnSave);
-        Button btnViewData = findViewById(R.id.notes_bar_create_btnView);
-        Button btnImage = findViewById(R.id.notes_bar_create_btnImage);
+        setContentView(R.layout.activity_add_note);
 
-        etTittle = findViewById(R.id.notes_activity_main_editTextTittle);
-        etEntry = findViewById(R.id.notes_activity_main_editNoteEntry);
-        imageView = findViewById(R.id.notes_activity_main_image_view);
+//        Button btnSave = findViewById(R.id.notes_bar_create_btnSave);
+//        Button btnViewData = findViewById(R.id.notes_bar_create_btnView);
+//        Button btnImage = findViewById(R.id.notes_bar_create_btnImage);
 
 
-        schema = new NotesDBSchema(this);
-//        schema = NotesDBSchema.getInstance(getApplicationContext());
+        etTittle = findViewById(R.id.noteTitleTxt);
+        etEntry = findViewById(R.id.noteTxt);
+        imageView = findViewById(R.id.NoteImage);
+
+
+        fabSet = findViewById(R.id.fabSet);
+        if (fabSet != null) {
+            fabSet.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    createNoteTask();
+
+                    Intent intent = new Intent(NoteCreateActivity.this, NotesListActivity.class);
+//                Intent intent = new Intent(NoteCreateActivity.this, NotesFragment.class);
+                    startActivity(intent);
+                    finish(); //navigates to schedule.
+                }
+            });
+        }
+
+        fabImage = findViewById(R.id.fabImage);
+        if (fabImage != null) {
+            fabImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ActivityCompat.requestPermissions(NoteCreateActivity.this, new String[]
+                            {Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_GALLERY);
+                }
+            });
+        }
+
+        fabCamera = findViewById(R.id.fabCamera);
+        if (fabCamera != null) {
+            fabCamera.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(NoteCreateActivity.this, CameraActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+
+//        schema = new NotesDBSchema(this);
+        schema = NotesDBSchema.getInstance(getApplicationContext());
         if (savedInstanceState == null) {
             taskList = new ArrayList<>();
 
@@ -76,32 +119,29 @@ public class NoteCreateActivity extends AppCompatActivity {
 
         taskAdapter = new NoteAdapter(this, taskList);
 
-        btnImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ActivityCompat.requestPermissions(NoteCreateActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_GALLERY);
-            }
-        });
-
-
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createNoteTask();
-//                if (didUserSelectedImage) {
-//                    SaveImageToLocal();
-//                    didUserSelectedImage = false;
-//                }
-            }
-        });
-
-        btnViewData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(NoteCreateActivity.this, NotesListActivity.class);
-                startActivity(intent);
-            }
-        });
+//        btnImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ActivityCompat.requestPermissions(NoteCreateActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_GALLERY);
+//            }
+//        });
+//
+//
+//        btnSave.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                createNoteTask();
+//            }
+//        });
+//
+//        btnViewData.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                Intent intent = new Intent(NoteCreateActivity.this, NotesListActivity.class);
+//                Intent intent = new Intent(NoteCreateActivity.this, NotesFragment.class);
+//                startActivity(intent);
+//            }
+//        });
 
     }
 
@@ -160,7 +200,7 @@ public class NoteCreateActivity extends AppCompatActivity {
 
         if (AddData(title, note, path)) {
             Cursor cursor = schema.getItemID(title);
-             cursor.moveToFirst();
+            cursor.moveToFirst();
             String id = cursor.getString(0);
             taskList.add(new Note(id, title, note, path));
             //Collections.sort(taskList);
@@ -199,7 +239,6 @@ public class NoteCreateActivity extends AppCompatActivity {
             imageView.setImageURI(uri);
 
             Toast.makeText(this, path, Toast.LENGTH_LONG).show();
-//            didUserSelectedImage = true;
 
         } super.onActivityResult(requestCode, resultCode, data);
     }

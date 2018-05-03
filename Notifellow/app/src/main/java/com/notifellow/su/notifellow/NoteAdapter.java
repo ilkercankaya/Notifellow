@@ -20,16 +20,17 @@ import java.util.List;
 
 public class NoteAdapter extends ArrayAdapter<Note> {
 
+    Dialog noteInfoDialog;
     ImageView imageView;
     private TextView titleTextView;
     private TextView noteTextView;
 
     NoteAdapter(Activity context, List<Note> taskList) {
-        super(context, R.layout.notes_row_layout, taskList);
+        super(context, R.layout.note_row, taskList);
     }
 
     public void rowOnClick(Note note) {
-        Dialog noteInfoDialog = new Dialog(getContext());
+        noteInfoDialog = new Dialog(getContext());
         noteInfoDialog.setContentView(R.layout.note_row_clicked);
 //        noteInfoDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // DO NOT TOUCH, DESIGN ISSUES
         titleTextView = noteInfoDialog.findViewById(R.id.note_row_clicked_title);
@@ -135,7 +136,7 @@ public class NoteAdapter extends ArrayAdapter<Note> {
                 Toast.makeText(NoteAdapter.this.getContext(), "DELETE CLICKED.", Toast.LENGTH_SHORT).show();
 //                DeleteNote(view);
 //                NotesFragment.taskList.remove(position);
-//                NotesFragment.taskAdapter.notifyDataSetChanged();
+                NotesFragment.taskAdapter.notifyDataSetChanged();
             }
         });
 
