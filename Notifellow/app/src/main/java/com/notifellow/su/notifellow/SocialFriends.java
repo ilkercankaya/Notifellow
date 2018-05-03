@@ -3,6 +3,7 @@ package com.notifellow.su.notifellow;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,8 @@ import static android.content.Context.MODE_PRIVATE;
 public class SocialFriends extends Fragment {
 
     ListView friendsListView;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     static FriendsAdapter friendsAdapter;
     static ArrayList<Friends> friendsList = new ArrayList<Friends>();
 
@@ -96,6 +99,23 @@ public class SocialFriends extends Fragment {
         MyRequestQueue.add(postRequest);
 
         Log.i("well", " this worked");
+
+        //// SWIPE TO REFRESH ////
+        swipeRefreshLayout = rootView.findViewById(R.id.friendsLayout);
+        swipeRefreshLayout.setColorSchemeResources(
+                R.color.refresh_progress_3,
+                R.color.refresh_progress_3,
+                R.color.refresh_progress_3); //CHANGE COLOR SCHEME
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                friendsAdapter.notifyDataSetChanged(); // REFRESH THE LIST (I GUESS :P)
+                swipeRefreshLayout.setRefreshing(false); // STOP ANIMATION
+            }
+        });
+        //// END OF SWIPE TO REFRESH ///
 
         return rootView;
     }

@@ -11,4 +11,7 @@
     <color name="textColorPrimary">@color/colorAccent</color>
     <color name="textColorSecondary">@color/colorAccent</color>
     <color name="textColorTertiary">@color/colorAccent</color>
+    <color name="refresh_progress_1">@color/colorGray</color>
+    <color name="refresh_progress_2">@color/colorGray</color>
+    <color name="refresh_progress_3">@color/colorBlue</color>
 </resources>

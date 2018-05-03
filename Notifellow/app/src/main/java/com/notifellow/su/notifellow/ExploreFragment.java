@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -38,6 +39,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class ExploreFragment extends Fragment {
 
     ListView listView;
+    private SwipeRefreshLayout swipeRefreshLayout;
     UsersAdapter adapter;
     String[] nameSurname;
     String[] username;
@@ -67,6 +69,23 @@ public class ExploreFragment extends Fragment {
         arrayList.clear();
         adapter = new UsersAdapter(this.getActivity(), arrayList);
         listView.setAdapter(adapter);
+
+        //// SWIPE TO REFRESH ////
+        swipeRefreshLayout = view.findViewById(R.id.usersLayout);
+        swipeRefreshLayout.setColorSchemeResources(
+                R.color.refresh_progress_3,
+                R.color.refresh_progress_3,
+                R.color.refresh_progress_3); //CHANGE COLOR SCHEME
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                adapter.notifyDataSetChanged(); // REFRESH THE LIST (I GUESS :P)
+                swipeRefreshLayout.setRefreshing(false); // STOP ANIMATION
+            }
+        });
+        //// END OF SWIPE TO REFRESH ///
 
         return view;
     }

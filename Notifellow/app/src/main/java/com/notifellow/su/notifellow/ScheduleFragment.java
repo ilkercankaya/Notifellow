@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +26,7 @@ public class ScheduleFragment extends Fragment {
 
     private FloatingActionButton fab;
     private ListView taskListView;
+    private SwipeRefreshLayout swipeRefreshLayout;
     static List<Task> taskList;
     static TaskAdapter taskAdapter;
     private SharedPreferences shared;
@@ -43,6 +45,9 @@ public class ScheduleFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_schedule, container, false);
+
+
+
         fab = (FloatingActionButton) view.findViewById(R.id.fabAddReminder);
         if (fab != null) {
             fab.setOnClickListener(new View.OnClickListener() {
@@ -113,7 +118,22 @@ public class ScheduleFragment extends Fragment {
         taskAdapter = new TaskAdapter(getActivity(), taskList);
         taskListView.setAdapter(taskAdapter);
 
+        //// SWIPE TO REFRESH ////
+        swipeRefreshLayout = view.findViewById(R.id.remindersLayout);
+        swipeRefreshLayout.setColorSchemeResources(
+                R.color.refresh_progress_3,
+                R.color.refresh_progress_3,
+                R.color.refresh_progress_3); //CHANGE COLOR SCHEME
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                taskAdapter.notifyDataSetChanged(); // REFRESH THE LIST (I GUESS :P)
+                swipeRefreshLayout.setRefreshing(false); // STOP ANIMATION
+            }
+        });
+        //// END OF SWIPE TO REFRESH ///
         return view;
     }
 
