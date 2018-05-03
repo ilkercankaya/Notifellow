@@ -94,12 +94,12 @@ public class MapsPlaces extends AppCompatActivity implements GoogleApiClient.OnC
 
                 AddReminder.markerPlace = place;
                 AddReminder.locationTv.setText(address);
-//                ReminderFragment.locationTv.setText(placeName);
+//              ReminderFragment.locationTv.setText(placeName);
                 onStop();
 
             }
         }
-//        if(place ==null)
+           if(place ==null)
             finish();
     }
 

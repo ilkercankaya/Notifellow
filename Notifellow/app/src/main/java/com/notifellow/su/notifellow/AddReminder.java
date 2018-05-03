@@ -123,6 +123,7 @@ public class AddReminder extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_reminder);
         setTitle("Add Reminder");
+        
 
         //// INFO DIALOG IMPLEMENTATION START /////
         InfoDialog = new Dialog(AddReminder.this);
