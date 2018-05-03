@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,27 +14,42 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 public class NoteAdapter extends ArrayAdapter<Note> {
 
     ImageView imageView;
+    private TextView titleTextView;
+    private TextView noteTextView;
 
     NoteAdapter(Activity context, List<Note> taskList) {
         super(context, R.layout.notes_row_layout, taskList);
     }
 
-    public void rowOnClick(Note note){
+    public void rowOnClick(Note note) {
         Dialog noteInfoDialog = new Dialog(getContext());
         noteInfoDialog.setContentView(R.layout.note_row_clicked);
-//        NoteInfoDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // DO NOT TOUCH, DESIGN ISSUES
-        TextView titleTextView = noteInfoDialog.findViewById(R.id.note_row_clicked_title);
-        TextView noteTextView = noteInfoDialog.findViewById(R.id.note_row_clicked_describe);
+//        noteInfoDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // DO NOT TOUCH, DESIGN ISSUES
+        titleTextView = noteInfoDialog.findViewById(R.id.note_row_clicked_title);
+        noteTextView = noteInfoDialog.findViewById(R.id.note_row_clicked_describe);
         imageView = noteInfoDialog.findViewById(R.id.note_row_clicked_image);
         Button btnDelete = noteInfoDialog.findViewById(R.id.notes_bar_edit_btnDelete);
         Button btnImage = noteInfoDialog.findViewById(R.id.notes_bar_edit_btnImage);
         Button btnSave = noteInfoDialog.findViewById(R.id.notes_bar_edit_btnSave);
+        final String id = note.id;
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NotesListActivity.mDatabaseHelper.deleteByID(id);
+                titleTextView.setText("");
+                noteTextView.setText("");
+                imageView.setImageResource(R.drawable.ic_launcher_background);
+                imageView.setVisibility(View.GONE);
+                notifyDataSetChanged();
+            }
+        });
 
         titleTextView.setText(note.title);
         noteTextView.setText(note.note);
@@ -43,6 +60,15 @@ public class NoteAdapter extends ArrayAdapter<Note> {
 
         noteInfoDialog.show();
     }
+
+//    private void DeleteNote(View v){
+//        NotesListActivity.mDatabaseHelper.deleteByID(String.valueOf(selectedID));
+//        titleTextView.setText("");
+//        noteTextView.setText("");
+//        imageView.setImageResource(R.drawable.ic_launcher_background);
+//        imageView.setVisibility(View.GONE);
+//
+//    }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -71,15 +97,15 @@ public class NoteAdapter extends ArrayAdapter<Note> {
 //        return rowView;
         View rowView = convertView;
         MyViewHolder holder;
-        if(rowView == null) {
+        if (rowView == null) {
             LayoutInflater inflater = ((Activity) getContext()).getLayoutInflater();
             rowView = inflater.inflate(R.layout.note_row, null);
         }
 
-        if(rowView.getTag() == null){
+        if (rowView.getTag() == null) {
             holder = new MyViewHolder(rowView);
             rowView.setTag(holder);
-        }else{
+        } else {
             holder = (MyViewHolder) rowView.getTag();
         }
 
@@ -105,8 +131,11 @@ public class NoteAdapter extends ArrayAdapter<Note> {
             public void onClick(View view) {
                 //TODO: IMPLEMENT DELETE FUNCTION!!!!!
 //                Main.cancelAlarm(Integer.parseInt(getItem(position).()) + 1);
-                NotesFragment.taskList.remove(position);
-                NotesFragment.taskAdapter.notifyDataSetChanged();
+//                NotesListActivity.DeleteNote();
+                Toast.makeText(NoteAdapter.this.getContext(), "DELETE CLICKED.", Toast.LENGTH_SHORT).show();
+//                DeleteNote(view);
+//                NotesFragment.taskList.remove(position);
+//                NotesFragment.taskAdapter.notifyDataSetChanged();
             }
         });
 

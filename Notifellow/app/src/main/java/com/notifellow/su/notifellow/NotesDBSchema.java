@@ -242,6 +242,8 @@ import android.util.Log;
 
 public class NotesDBSchema extends SQLiteOpenHelper {
 
+    private static NotesDBSchema schemaInstance;
+
     private static final String TAG = NotesDBSchema.class.getSimpleName();
 
     private static final String TABLE_NAME = "NOTE_TABLE";
@@ -250,18 +252,26 @@ public class NotesDBSchema extends SQLiteOpenHelper {
     private static final String NOTE = "note";
     private static final String EMAIL = "email";
     private static final String IMAGE_PATH = "image_path";
-    private static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
-//            ID          + " TEXT, " +
+    private static final String CREATE_TABLE = "CREATE TABLE " +
+            TABLE_NAME + " (" +
             "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            TITLE       + " TEXT, " +
-            NOTE        + " TEXT, " +
-            IMAGE_PATH  + " TEXT, " +
-            EMAIL       + " TEXT); ";
+            TITLE + " TEXT, " +
+            NOTE + " TEXT, " +
+            IMAGE_PATH + " TEXT, " +
+            EMAIL + " TEXT, "  +
+            "PRIMARY KEY (" + EMAIL + ", " + ID + "));";
     private static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 //
 
     NotesDBSchema(Context context) {
         super(context, TABLE_NAME, null, 1);
+    }
+
+    public static NotesDBSchema getInstance(Context context) {
+        if (schemaInstance == null) {
+            schemaInstance = new NotesDBSchema(context.getApplicationContext());
+        }
+        return schemaInstance;
     }
 
     @Override
@@ -273,7 +283,8 @@ public class NotesDBSchema extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+//        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL(DROP_TABLE);
         onCreate(db);
     }
 
@@ -285,7 +296,7 @@ public class NotesDBSchema extends SQLiteOpenHelper {
         contentValues.put(NOTE, note);
         contentValues.put(IMAGE_PATH, itemPath);
 
-        Log.d(TAG, new StringBuilder().append("addData: Adding ").append(tittle).append("\n").append(note).append("\nand \n").append(itemPath).append("\nto ").append(TABLE_NAME).toString());
+        Log.d(TAG, "addData: Adding " + tittle + "\n" + note + "\nand \n" + itemPath + "\nto " + TABLE_NAME);
 
         long result = db.insert(TABLE_NAME, null, contentValues);
         //if date as inserted incorrectly it will return -1
@@ -347,8 +358,7 @@ public class NotesDBSchema extends SQLiteOpenHelper {
      * Updates the IMAGE_PATH field
      *
      * @param id
-     * @param newImagePath
-//     * @param oldImagePath
+     * @param newImagePath //     * @param oldImagePath
      */
     public void updateImagePath(int id, String newImagePath) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -378,39 +388,79 @@ public class NotesDBSchema extends SQLiteOpenHelper {
 //        String[] columns = {ID, TITLE, NOTE, IMAGE_PATH};
 //        return db.query(TABLE_NAME, columns, null, null, null, null, null);
 //    }
+//    /**
+//     * Delete from database
+//     *
+//     * @param id        int
+//     * @param tittle     String
+//     * @param note      String
+//     * @param imagePath String
+//     */
+//    public void deleteName(int id, String tittle, String note, String imagePath) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        String query = new StringBuilder()
+//                .append("DELETE FROM ")
+//                .append(TABLE_NAME)
+//                .append(" WHERE ")
+//                .append(ID)
+//                .append(" = '")
+//                .append(id)
+//                .append("' AND ")
+//                .append(TITLE)
+//                .append(" = '")
+//                .append(tittle)
+//                .append("' AND ")
+//                .append(NOTE)
+//                .append(" = ' ")
+//                .append(note)
+//                .append(" ' AND ")
+//                .append(IMAGE_PATH)
+//                .append(" = ' ")
+//                .append(imagePath)
+//                .append("'").toString();
+//        Log.d(TAG, "deleteName: query: " + query);
+//        Log.d(TAG, "deleteName: Deleting item with id: " + id + " from database.");
+//        db.execSQL(query);
+//    }
 
-    /**
-     * Delete from database
-     *
-     * @param id        int
-     * @param tittle     String
-     * @param note      String
-     * @param imagePath String
-     */
-    public void deleteName(int id, String tittle, String note, String imagePath) {
+    public String getTitle(String ID) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME, new String[]{TITLE}, this.ID + " = ? ", new String[]{ID}, null, null, null);
+
+        if (cursor != null) cursor.moveToFirst();
+
+        String title = cursor.getString(cursor.getColumnIndex(TITLE));
+        return title;
+    }
+
+    public String getEmail(String ID) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME, new String[]{EMAIL}, this.ID + " = ? ", new String[]{ID}, null, null, null);
+
+        if (cursor != null) cursor.moveToFirst();
+
+        String email = cursor.getString(cursor.getColumnIndex(EMAIL));
+        return email;
+    }
+
+    public int deleteByID(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = new StringBuilder()
-                .append("DELETE FROM ")
-                .append(TABLE_NAME)
-                .append(" WHERE ")
-                .append(ID)
-                .append(" = '")
-                .append(id)
-                .append("' AND ")
-                .append(TITLE)
-                .append(" = '")
-                .append(tittle)
-                .append("' AND ")
-                .append(NOTE)
-                .append(" = ' ")
-                .append(note)
-                .append(" ' AND ")
-                .append(IMAGE_PATH)
-                .append(" = ' ")
-                .append(imagePath)
-                .append("'").toString();
-        Log.d(TAG, "deleteName: query: " + query);
-        Log.d(TAG, "deleteName: Deleting item with id: " + id + " from database.");
-        db.execSQL(query);
+        int num = db.delete(TABLE_NAME, ID + " = ? ", new String[]{id});
+        return num;
+    }
+
+    public int deleteByEmail(String email) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int num = db.delete(TABLE_NAME, EMAIL + " = ? ", new String[]{email});
+        return num;
+    }
+
+
+    public long updateEmailAddresses(String oldMail, String newMail) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(EMAIL, newMail);
+        Log.i("AlarmDBSchema: ", "Next statement is Update EMAIL!!!");
+        return db.update(TABLE_NAME, contentValues, EMAIL + " = ? ", new String[]{oldMail});
     }
 }

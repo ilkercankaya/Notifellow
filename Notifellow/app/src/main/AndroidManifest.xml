@@ -40,9 +40,9 @@
             android:name=".SignUp"
             android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".notes.EditNotes" />
-        <activity android:name=".notes.NotesMainActivity" />
-        <activity android:name=".notes.CreateNotes" />
+        <!--<activity android:name=".notes.EditNotes" />-->
+        <!--<activity android:name=".notes.NotesMainActivity" />-->
+        <!--<activity android:name=".notes.CreateNotes" />-->
 
         <service android:name=".ServiceListenWiFi" />
         <service android:name=".LocationService" />
@@ -95,9 +95,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.notifellow.su.notifellow.Main" />
         </activity>
-        <activity android:name=".NotesMainActivity" />
-        <activity android:name=".NotesListDataActivity" />
-        <activity android:name=".NotesEditDataActivity" />
+        <activity android:name=".NoteCreateActivity" />
+        <activity android:name=".NotesListActivity" />
+        <activity android:name=".NotesEditActivity" />
     </application>
 
 </manifest>

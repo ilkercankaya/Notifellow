@@ -49,8 +49,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.notifellow.su.notifellow.notes.NotesMainActivity;
-import com.notifellow.su.notifellow.notes.Schema;
+//import com.notifellow.su.notifellow.notes.NotesMainActivity;
+//import com.notifellow.su.notifellow.notes.Schema;
 
 import java.io.File;
 import java.util.Calendar;
@@ -321,8 +321,8 @@ public class Main extends AppCompatActivity
 
 
         schema = AlarmDBSchema.getInstance(getApplicationContext());
-       // NotesMainActivity.notesSchema = Schema.getInstance(this); //TODO: Uncomment and change this once you put notes.
-        NotesMainActivity.notesSchema = Schema.getInstance(this);
+//        NoteCreateActivity.notesSchema = Schema.getInstance(this); //TODO: Uncomment and change this once you put notes.
+        NoteCreateActivity.schema = NotesDBSchema.getInstance(this);
 
         Main.context = getApplicationContext();
     }

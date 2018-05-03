@@ -31,10 +31,10 @@ import static com.notifellow.su.notifellow.NotePathUtils.isDownloadsDocument;
 import static com.notifellow.su.notifellow.NotePathUtils.isExternalStorageDocument;
 
 
-public class NotesMainActivity extends AppCompatActivity {
+public class NoteCreateActivity extends AppCompatActivity {
 
     private static final String TASKS_KEY = "com.notifellow.su.notifellow.tasks_key";
-//    private static final String TAG = NotesMainActivity.class.getSimpleName();
+//    private static final String TAG = NoteCreateActivity.class.getSimpleName();
 
     Uri uri;
     private EditText etTittle;
@@ -69,7 +69,7 @@ public class NotesMainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             taskList = new ArrayList<>();
 
-            taskList.add(new Note("Default tittle", "Default note", String.valueOf(R.drawable.ic_launcher_background)));
+            taskList.add(new Note("0","Default tittle", "Default note", String.valueOf(R.drawable.ic_launcher_background)));
         } else {
             taskList = savedInstanceState.getParcelableArrayList(TASKS_KEY);
         }
@@ -79,7 +79,7 @@ public class NotesMainActivity extends AppCompatActivity {
         btnImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityCompat.requestPermissions(NotesMainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_GALLERY);
+                ActivityCompat.requestPermissions(NoteCreateActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_GALLERY);
             }
         });
 
@@ -98,52 +98,54 @@ public class NotesMainActivity extends AppCompatActivity {
         btnViewData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NotesMainActivity.this, NotesListDataActivity.class);
+                Intent intent = new Intent(NoteCreateActivity.this, NotesListActivity.class);
                 startActivity(intent);
             }
         });
 
     }
 
-    private void AddData(String newTitle, String newNote, String newImagePath) {
+    private boolean AddData(String newTitle, String newNote, String newImagePath) {
         boolean insertData = schema.addData(newTitle, newNote, newImagePath);
         if (insertData) {
             toastMessage("Data Successfully Inserted!");
+            return true;
         } else {
             toastMessage("Something went wrong");
+            return false;
         }
     }
 
-    /**
-     * Since we can not track the paths of images that user chooses,
-     * we will duplicate them somewhere else and solve the problem in that way.
-     */
-    private void SaveImageToLocal() {
-        Cursor cursor = null;
-        cursor = schema.getItemID(title);
-        cursor.moveToFirst();
-        String filename = cursor.getString(cursor.getColumnIndex("ID"));
-        File previewFile = new File(Environment.getExternalStorageState(), filename);
-        OutputStream out = null;
-
-//        mFile = new File(getActivity().getExternalFilesDir(null), "pic.jpg");
-        try {
-            out = new FileOutputStream(previewFile);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);// bitmap is your Bitmap instance
-            // PNG is a lossless format, the compression factor (100) is ignored
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (out != null) {
-                    out.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        schema.updateImagePath(Integer.parseInt(filename), previewFile.getAbsolutePath());
-    }
+//    /**
+//     * Since we can not track the paths of images that user chooses,
+//     * we will duplicate them somewhere else and solve the problem in that way.
+//     */
+//    private void SaveImageToLocal() {
+//        Cursor cursor = null;
+//        cursor = schema.getItemID(title);
+//        cursor.moveToFirst();
+//        String filename = cursor.getString(cursor.getColumnIndex("ID"));
+//        File previewFile = new File(Environment.getExternalStorageState(), filename);
+//        OutputStream out = null;
+//
+////        mFile = new File(getActivity().getExternalFilesDir(null), "pic.jpg");
+//        try {
+//            out = new FileOutputStream(previewFile);
+//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);// bitmap is your Bitmap instance
+//            // PNG is a lossless format, the compression factor (100) is ignored
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if (out != null) {
+//                    out.close();
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        schema.updateImagePath(Integer.parseInt(filename), previewFile.getAbsolutePath());
+//    }
 
     private void createNoteTask() {
         title = etTittle.getText().toString();
@@ -156,11 +158,16 @@ public class NotesMainActivity extends AppCompatActivity {
 
 //        if (uri != null) imagePath = uri.toString();
 
-        taskList.add(new Note(title, note, path));
-        AddData(title, note, path);
-//        Collections.sort(taskList);
-        taskAdapter.notifyDataSetChanged();
-        FileOutputStream out = null;
+        if (AddData(title, note, path)) {
+            Cursor cursor = schema.getItemID(title);
+             cursor.moveToFirst();
+            String id = cursor.getString(0);
+            taskList.add(new Note(id, title, note, path));
+            //Collections.sort(taskList);
+            taskAdapter.notifyDataSetChanged();
+            FileOutputStream out = null;
+
+        }
 
     }
 

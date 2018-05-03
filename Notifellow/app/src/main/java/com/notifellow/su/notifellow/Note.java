@@ -15,7 +15,7 @@ public class Note implements Comparable<Note>, Parcelable {
         }
     };
 
-    //    String id;
+    String id;
     String title;
     String note;
     String imagePath;
@@ -24,23 +24,23 @@ public class Note implements Comparable<Note>, Parcelable {
 //        this("", "", "");
 //    }
 
-    //    public Note(String id, String title, String note, String imagePath) {
-    Note(String title, String note, String imagePath) {
-//        this.id = id;
+    public Note(String id, String title, String note, String imagePath) {
+//    Note(String title, String note, String imagePath) {
+        this.id = id;
         this.title = title;
         this.note = note;
         this.imagePath = imagePath;
     }
 
     public Note(Note other) {
-//        this.id = id;
+        this.id = id;
         this.title = other.title;
         this.note = other.note;
         this.imagePath = other.imagePath;
     }
 
     public Note(Parcel in) {
-//        this.id = in.readString();
+        this.id = in.readString();
         this.title = in.readString();
         this.note = in.readString();
         this.imagePath = in.readString(); // TODO fix this readString
@@ -48,7 +48,7 @@ public class Note implements Comparable<Note>, Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeString(id);
+        dest.writeString(id);
         dest.writeString(title);
         dest.writeString(note);
         dest.writeString(imagePath);
@@ -56,7 +56,7 @@ public class Note implements Comparable<Note>, Parcelable {
 
     @Override
     public int compareTo(Note another) { // i know.. this makes no sense but compiler cries otherwise
-        return title.compareTo(another.title);
+        return id.compareTo(another.id);
     }
 
     @Override

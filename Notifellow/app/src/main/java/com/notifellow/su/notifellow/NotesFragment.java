@@ -42,16 +42,16 @@ public class NotesFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(getActivity(), "Add Note!", Toast.LENGTH_LONG).show();
-                    Intent myIntent = new Intent(NotesFragment.this.getActivity(), NotesMainActivity.class);
+                    Intent myIntent = new Intent(NotesFragment.this.getActivity(), NoteCreateActivity.class);
                     NotesFragment.this.startActivity(myIntent);
                 }
             });
         }
 
         if (savedInstanceState == null) {
-            NotesMainActivity.schema = new NotesDBSchema(getContext());
+            NoteCreateActivity.schema = new NotesDBSchema(getContext());
             taskList = new ArrayList<>();
-            taskList.add(new Note(null, null, String.valueOf(R.drawable.ic_launcher_foreground)));
+            taskList.add(new Note(null, null, null, String.valueOf(R.drawable.ic_launcher_foreground)));
         } else {
             taskList = savedInstanceState.getParcelableArrayList(TASKS_KEY);
         }
@@ -60,7 +60,7 @@ public class NotesFragment extends Fragment {
         int rowCount = 0;
         taskList = new ArrayList<>();
 
-        Cursor allTasks = NotesMainActivity.schema.getData();
+        Cursor allTasks = NoteCreateActivity.schema.getData();
 
         int idCol = allTasks.getColumnIndex("ID");
         int titleCol = allTasks.getColumnIndex("title");
@@ -85,7 +85,7 @@ public class NotesFragment extends Fragment {
                     String image = allTasks.getString(imageCol);
 
 //                    taskList.add(new Task(id, title, startDate + "\t\t" + startTime, endTime + "\t\t" + endDate, remindTime + "\t\t" + remindDate, location, wifi, note));
-                    taskList.add(new Note(title, note, image));
+                    taskList.add(new Note(id, title, note, image));
                 }
                 tempCount--;
             } while (allTasks.moveToNext());

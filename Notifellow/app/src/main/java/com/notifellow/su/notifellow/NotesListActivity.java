@@ -1,5 +1,6 @@
 package com.notifellow.su.notifellow;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -18,14 +19,18 @@ import java.util.ArrayList;
  * Created by berk aktug on 27/05/2017.
  */
 
-public class NotesListDataActivity extends AppCompatActivity {
+public class NotesListActivity extends AppCompatActivity {
 
-    private static final String TAG = NotesListDataActivity.class.getSimpleName();
+    private static final String TAG = NotesListActivity.class.getSimpleName();
     private static final String TASKS_KEY = "com.notifellow.su.notifellow.tasks_key";
 
-    NotesDBSchema mDatabaseHelper;
+    static NotesDBSchema mDatabaseHelper;
 
     ArrayList<Note> taskList;
+
+    public static void updateEmailAddressesNotesDB(String oldEmail, String value){
+        mDatabaseHelper.updateEmailAddresses(oldEmail, value);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,7 +50,7 @@ public class NotesListDataActivity extends AppCompatActivity {
 
         //get the value from the database in columns then add it to the ArrayList
         while (data.moveToNext()) {
-            taskList.add(new Note(data.getString(1), data.getString(2), data.getString(3)));
+            taskList.add(new Note(data.getString(0), data.getString(1), data.getString(2), data.getString(3)));
         }
 
         //create the list adapter and set the adapter
@@ -73,7 +78,7 @@ public class NotesListDataActivity extends AppCompatActivity {
                     Log.d(TAG, "onItemClick: The ID is: " + itemID);
 
                     Intent editScreenIntent = new Intent(
-                            NotesListDataActivity.this, NotesEditDataActivity.class);
+                            NotesListActivity.this, NotesEditActivity.class);
 
                     editScreenIntent.putExtra("id", itemID);
                     editScreenIntent.putExtra("title", title);

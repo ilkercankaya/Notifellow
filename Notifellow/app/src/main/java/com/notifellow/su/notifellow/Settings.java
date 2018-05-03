@@ -17,6 +17,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -38,6 +39,7 @@ import com.google.android.gms.tasks.Task;
 
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -63,7 +65,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.notifellow.su.notifellow.notes.NotesMainActivity;
+//import com.notifellow.su.notifellow.notes.NotesMainActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -286,6 +288,7 @@ public class Settings extends AppCompatPreferenceActivity {
             progressDialog.show();
 
             StringRequest MyStringRequest = new StringRequest(Request.Method.POST, "http://188.166.149.168:3030/getUniqID", new Response.Listener<String>() {
+                @RequiresApi(api = Build.VERSION_CODES.M)
                 @Override
                 public void onResponse(final String response) {
                     uniqID = response;
@@ -361,6 +364,7 @@ public class Settings extends AppCompatPreferenceActivity {
 
                 }
             }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
+                @RequiresApi(api = Build.VERSION_CODES.M)
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     //This code is executed if there is an error.
@@ -833,7 +837,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                                             editor.commit();
                                                             Log.i("Settings: ", "Email updated, change in LocalDB");
                                                             Main.updateEmailAddressesLocalDB(oldEmail, value);
-                                                            NotesMainActivity.updateEmailAddressesNotesDB(oldEmail, value);
+                                                            NotesListActivity.updateEmailAddressesNotesDB(oldEmail, value);
                                                             //check sharedreference and if its not null update the box otherwise make a web call and update
                                                             usermailREF.setText(value);
                                                             usermailREF.setSummary(value);

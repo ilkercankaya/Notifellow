@@ -24,9 +24,9 @@ import java.io.InputStream;
  * Created by berk aktug on 27/05/2017.
  */
 
-public class NotesEditDataActivity extends AppCompatActivity {
+public class NotesEditActivity extends AppCompatActivity {
 
-    private static final String TAG = NotesEditDataActivity.class.getSimpleName();
+    private static final String TAG = NotesEditActivity.class.getSimpleName();
 
     NotesDBSchema schema;
     final int REQUEST_CODE_GALLERY = 999;
@@ -57,7 +57,7 @@ public class NotesEditDataActivity extends AppCompatActivity {
 
         schema = new NotesDBSchema(this);
 
-        //get the intent extra from the NotesListDataActivity
+        //get the intent extra from the NotesListActivity
         Intent receivedIntent = getIntent();
 
         //now get the itemID we passed as an extra
@@ -111,7 +111,7 @@ public class NotesEditDataActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                schema.deleteByID(String.valueOf(selectedID));
+                schema.deleteByID(String.valueOf(selectedID));
                 etTitle.setText("");
                 etNote.setText("");
                 imageView.setImageResource(R.drawable.ic_launcher_foreground);
@@ -124,7 +124,7 @@ public class NotesEditDataActivity extends AppCompatActivity {
         btnImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityCompat.requestPermissions(NotesEditDataActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_GALLERY);
+                ActivityCompat.requestPermissions(NotesEditActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_GALLERY);
             }
         });
 
