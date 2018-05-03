@@ -170,16 +170,14 @@
             </RelativeLayout>
 
             <ImageView
+                android:id="@+id/imgLoc_clicked"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_alignStart="@+id/imgWifi"
+                android:layout_below="@+id/remLayout_clicked"
                 android:padding="0dp"
                 android:src="@drawable/ic_location_2"
-                android:id="@+id/imgLoc_clicked"
-                android:layout_below="@+id/remLayout_clicked"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="8dp"
-                android:tint="@color/colorBlue"
-                />
+                android:tint="@color/colorBlue" />
 
             <RelativeLayout
                 android:id="@+id/locLayout_clicked"

@@ -52,8 +52,29 @@ public class TaskAdapter extends ArrayAdapter<Task>{
 
         endsTextView.setText(task.getEndTime());
         remindsTextView.setText(task.getRemindTime());
-        locationTextView.setText(task.getLocation());
-        wifiTextView.setText(task.getWifi());
+
+        if(task.getLocation().equals("default")){
+            locationTextView.setVisibility(View.GONE);
+            TextView locName = taskInfoDialog.findViewById(R.id.locName);
+            locName.setVisibility(View.GONE);
+            ImageView locImage = taskInfoDialog.findViewById(R.id.imgLoc_clicked);
+            locImage.setVisibility(View.GONE);
+        }
+        else {
+            locationTextView.setText(task.getLocation());
+        }
+
+        if(task.getWifi().equals("")){
+            wifiTextView.setVisibility(View.GONE);
+            TextView wifiName = taskInfoDialog.findViewById(R.id.wifiName);
+            wifiName.setVisibility(View.GONE);
+            ImageView imgWifi = taskInfoDialog.findViewById(R.id.imgWifi);
+            imgWifi.setVisibility(View.GONE);
+        }
+        else{
+            wifiTextView.setText(task.getWifi());
+        }
+
         noteTextView.setText(task.getNote());
 
         taskInfoDialog.show();

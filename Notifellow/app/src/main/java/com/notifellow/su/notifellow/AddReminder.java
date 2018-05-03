@@ -411,6 +411,9 @@ public class AddReminder extends AppCompatActivity {
         remind_date = splitted[2] + "-" + splitted[1] + "-" + splitted[0];
 
         Toast.makeText(getBaseContext(), "Alarm is set for: " + remind_time + " " + remind_date, Toast.LENGTH_LONG).show();
+
+        wifiName = "";
+        markerPlace = null;
     }
 
     //ToDo: This function will store information about the reminder in local database
