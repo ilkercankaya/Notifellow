@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -25,8 +27,10 @@ public class MapsPlaces extends AppCompatActivity implements GoogleApiClient.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_maps);
 
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.setContentView(R.layout.empty);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this).addApi(Places.GEO_DATA_API).addApi(Places.PLACE_DETECTION_API).enableAutoManage(this, this).build();
 
@@ -36,6 +40,7 @@ public class MapsPlaces extends AppCompatActivity implements GoogleApiClient.OnC
         } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
@@ -83,17 +88,19 @@ public class MapsPlaces extends AppCompatActivity implements GoogleApiClient.OnC
 //                stBuilder.append(longitude);
 //                stBuilder.append("\n");
 //                stBuilder.append("Address: ");
-                stBuilder.append(address);
+//                stBuilder.append(address);
 //                stBuilder.append("Country: ");
 //                stBuilder.append(country);
 
                 AddReminder.markerPlace = place;
-                AddReminder.locationTv.setText(stBuilder);
+                AddReminder.locationTv.setText(address);
 //                ReminderFragment.locationTv.setText(placeName);
                 onStop();
 
             }
         }
+//        if(place ==null)
+            finish();
     }
 
     public String getAdress() {

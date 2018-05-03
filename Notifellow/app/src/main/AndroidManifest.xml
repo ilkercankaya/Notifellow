@@ -35,10 +35,13 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".ForgotPassword"  android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ForgotPassword"  android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".SignUp"
             android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <!--<activity android:name=".notes.EditNotes" />-->
         <!--<activity android:name=".notes.NotesMainActivity" />-->
@@ -55,6 +58,7 @@
         <activity
             android:name=".LoginScreen"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -64,10 +68,12 @@
 
         <activity
             android:name=".Main"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".AddReminder"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.AppCompat.New">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -79,26 +85,28 @@
             android:label="@string/title_activity_settings"
             android:parentActivityName=".Main"
             android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
             >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.notifellow.su.notifellow.Main" />
         </activity>
 
-        <activity android:name=".MapsPlaces" />
+        <activity android:name=".MapsPlaces" android:screenOrientation="portrait"  android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".Social"
             android:label="@string/title_activity_social"
             android:parentActivityName=".Main"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.notifellow.su.notifellow.Main" />
         </activity>
-        <activity android:name=".NoteCreateActivity" />
-        <activity android:name=".NotesListActivity" />
-        <activity android:name=".NotesEditActivity" />
-        <activity android:name=".camera.CameraActivity" />
+        <activity android:name=".NoteCreateActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".NotesListActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".NotesEditActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".camera.CameraActivity" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
