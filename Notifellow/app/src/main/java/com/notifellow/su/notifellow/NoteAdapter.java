@@ -41,7 +41,7 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NotesListActivity.mDatabaseHelper.deleteByID(id);
+                NotesListActivity.schema.deleteByID(id);
                 titleTextView.setText("");
                 noteTextView.setText("");
                 imageView.setImageResource(R.drawable.ic_launcher_background);

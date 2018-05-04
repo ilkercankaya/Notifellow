@@ -28,7 +28,7 @@ public class NotesEditActivity extends AppCompatActivity {
 
     private static final String TAG = NotesEditActivity.class.getSimpleName();
 
-    NotesDBSchema schema;
+//    NotesDBSchema schema;
     final int REQUEST_CODE_GALLERY = 999;
     private Uri uri;
     private String selectedTitle;
@@ -55,7 +55,7 @@ public class NotesEditActivity extends AppCompatActivity {
         etNote = findViewById(R.id.notes_edit_data_layout_editable_note);
         imageView = findViewById(R.id.notes_edit_data_layout_editable_image);
 
-        schema = new NotesDBSchema(this);
+//        schema = new NotesDBSchema(this);
 
         //get the intent extra from the NotesListActivity
         Intent receivedIntent = getIntent();
@@ -63,7 +63,7 @@ public class NotesEditActivity extends AppCompatActivity {
         //now get the itemID we passed as an extra
         selectedID = receivedIntent.getIntExtra("id", -1); //NOTE: -1 is just the default value
 
-        //now get the tittle we passed as an extra
+        //now get the title we passed as an extra
         selectedTitle = receivedIntent.getStringExtra("title");
 
         //note from extra
@@ -111,7 +111,7 @@ public class NotesEditActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                schema.deleteByID(String.valueOf(selectedID));
+                NotesListActivity.schema.deleteByID(String.valueOf(selectedID));
                 etTitle.setText("");
                 etNote.setText("");
                 imageView.setImageResource(R.drawable.ic_launcher_foreground);

@@ -322,9 +322,9 @@ public class Main extends AppCompatActivity
 
         schema = AlarmDBSchema.getInstance(getApplicationContext());
 //        NoteCreateActivity.notesSchema = Schema.getInstance(this); //TODO: Uncomment and change this once you put notes.
-        NoteCreateActivity.schema = NotesDBSchema.getInstance(this);
+//        NoteCreateActivity.schema = NotesDBSchema.getInstance(this);
 
-        NotesListActivity.mDatabaseHelper = NotesDBSchema.getInstance(this);
+        NotesListActivity.schema = NotesDBSchema.getInstance(this);
 
         Main.context = getApplicationContext();
     }

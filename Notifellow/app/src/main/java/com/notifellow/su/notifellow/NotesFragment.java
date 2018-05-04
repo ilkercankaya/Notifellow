@@ -24,7 +24,7 @@ public class NotesFragment extends Fragment {
     private static final String TASKS_KEY = "com.notifellow.su.notifellow.tasks_key";
 
     private FloatingActionButton fab;
-    private ListView taskListView;
+    private ListView noteListView;
     static List<Note> noteList;
     static NoteAdapter noteAdapter;
     private SharedPreferences shared;
@@ -50,52 +50,52 @@ public class NotesFragment extends Fragment {
         }
 
         if (savedInstanceState == null) {
-            NoteCreateActivity.schema = new NotesDBSchema(getContext());
+            NotesListActivity.schema = new NotesDBSchema(getContext());
             noteList = new ArrayList<>();
             noteList.add(new Note(null, null, null,null,null));
         } else {
             noteList = savedInstanceState.getParcelableArrayList(TASKS_KEY);
         }
 
-        taskListView = view.findViewById(R.id.listView_Notes);
+        noteListView = view.findViewById(R.id.listView_Notes);
         int rowCount = 0;
         noteList = new ArrayList<>();
 
-        Cursor allTasks = NoteCreateActivity.schema.getData();
+        Cursor allNotes = NotesListActivity.schema.getData();
 
-        int idCol = allTasks.getColumnIndex("ID");
-        int titleCol = allTasks.getColumnIndex("tittle");
-        int noteCol = allTasks.getColumnIndex("notes");
-        int imageCol = allTasks.getColumnIndex("image_path");
-        int emailCol = allTasks.getColumnIndex("email");
+        int idCol = allNotes.getColumnIndex("ID");
+        int titleCol = allNotes.getColumnIndex("title");
+        int noteCol = allNotes.getColumnIndex("note");
+        int imageCol = allNotes.getColumnIndex("image_path");
+        int emailCol = allNotes.getColumnIndex("email");
 
-        allTasks.moveToFirst();
-        rowCount = allTasks.getCount();
+        allNotes.moveToFirst();
+        rowCount = allNotes.getCount();
         int tempCount = rowCount;
 
         shared = getContext().getSharedPreferences("shared", MODE_PRIVATE);
         String email = shared.getString("email", "null");//GET EMAIL FROM SHARED
 
-        if (allTasks != null && (tempCount > 0)) {
+        if (allNotes != null && (tempCount > 0)) {
 
             do {
-                if (email.equals(allTasks.getString(emailCol))) {
-                    String id = allTasks.getString(idCol);
-                    String title = allTasks.getString(titleCol);
-                    String note = allTasks.getString(noteCol);
-                    String image = allTasks.getString(imageCol);
+                if (email.equals(allNotes.getString(emailCol))) {
+                    String id = allNotes.getString(idCol);
+                    String title = allNotes.getString(titleCol);
+                    String note = allNotes.getString(noteCol);
+                    String image = allNotes.getString(imageCol);
 
 //                    noteList.add(new Task(id, title, startDate + "\t\t" + startTime, endTime + "\t\t" + endDate, remindTime + "\t\t" + remindDate, location, wifi, note));
                     noteList.add(new Note(id, title, note, image, email));
                 }
                 tempCount--;
-            } while (allTasks.moveToNext());
+            } while (allNotes.moveToNext());
         }
 
         Collections.sort(noteList);
 
         noteAdapter = new NoteAdapter(getActivity(), noteList);
-        taskListView.setAdapter(noteAdapter);
+        noteListView.setAdapter(noteAdapter);
 
         return view;
     }

@@ -19,7 +19,7 @@ public class NotesDBSchema extends SQLiteOpenHelper {
 
     private static final String TABLE_NAME = "NOTE_TABLE";
     private static final String ID = "ID";
-    private static final String TITLE = "tittle";
+    private static final String TITLE = "title";
     private static final String NOTE = "note";
     private static final String EMAIL = "email";
     private static final String IMAGE_PATH = "image_path";
@@ -59,16 +59,17 @@ public class NotesDBSchema extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean addData(String tittle, String note, String itemPath) {
+    public boolean addData(String title, String note, String itemPath, String email) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
 //        contentValues.put(ID, id);
-        contentValues.put(TITLE, tittle);
+        contentValues.put(TITLE, title);
         contentValues.put(NOTE, note);
         contentValues.put(IMAGE_PATH, itemPath);
+        contentValues.put(EMAIL, email);
 
-        Log.d(TAG, "addData: Adding " + tittle + "\n" + note + "\nand \n" + itemPath + "\nto " + TABLE_NAME);
+        Log.d(TAG, "addData: Adding " + title + "\n" + note + "\nand \n" + itemPath + "\nto " + TABLE_NAME);
 
         long result = db.insert(TABLE_NAME, null, contentValues);
         //if date as inserted incorrectly it will return -1
@@ -164,11 +165,11 @@ public class NotesDBSchema extends SQLiteOpenHelper {
 //     * Delete from database
 //     *
 //     * @param id        int
-//     * @param tittle     String
+//     * @param title     String
 //     * @param note      String
 //     * @param imagePath String
 //     */
-//    public void deleteName(int id, String tittle, String note, String imagePath) {
+//    public void deleteName(int id, String title, String note, String imagePath) {
 //        SQLiteDatabase db = this.getWritableDatabase();
 //        String query = new StringBuilder()
 //                .append("DELETE FROM ")
@@ -180,7 +181,7 @@ public class NotesDBSchema extends SQLiteOpenHelper {
 //                .append("' AND ")
 //                .append(TITLE)
 //                .append(" = '")
-//                .append(tittle)
+//                .append(title)
 //                .append("' AND ")
 //                .append(NOTE)
 //                .append(" = ' ")

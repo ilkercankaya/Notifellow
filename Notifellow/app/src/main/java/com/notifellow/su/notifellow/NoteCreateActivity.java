@@ -39,7 +39,7 @@ public class NoteCreateActivity extends AppCompatActivity {
 
     Uri uri;
     private static final int CAMERA_REQUEST = 1888;
-    private EditText etTittle;
+    private EditText etTitle;
     private EditText etEntry;
     private ImageView imageView;
     private ArrayList<Note> noteArrayList;
@@ -51,7 +51,7 @@ public class NoteCreateActivity extends AppCompatActivity {
 
     private String email;
     FloatingActionButton fabSet, fabImage, fabCamera;
-    static NotesDBSchema schema;
+//    static NotesDBSchema schema;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,7 @@ public class NoteCreateActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_add_note);
 
-        etTittle = findViewById(R.id.noteTitleTxt);
+        etTitle = findViewById(R.id.noteTitleTxt);
         etEntry = findViewById(R.id.noteTxt);
         imageView = findViewById(R.id.NoteImage);
 
@@ -75,9 +75,9 @@ public class NoteCreateActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     createNoteTask();
 
-                    Intent intent = new Intent(NoteCreateActivity.this, NotesListActivity.class);
+//                    Intent intent = new Intent(NoteCreateActivity.this, NotesListActivity.class);
 //                Intent intent = new Intent(NoteCreateActivity.this, NotesFragment.class);
-                    startActivity(intent);
+//                    startActivity(intent);
                     finish(); //navigates to schedule.
                 }
             });
@@ -109,11 +109,11 @@ public class NoteCreateActivity extends AppCompatActivity {
         }
 
 //        schema = new NotesDBSchema(this);
-        schema = NotesDBSchema.getInstance(getApplicationContext());
+        NotesListActivity.schema = NotesDBSchema.getInstance(getApplicationContext());
         if (savedInstanceState == null) {
             noteArrayList = new ArrayList<>();
 
-            noteArrayList.add(new Note("0", "Default tittle", "Default note", String.valueOf(R.drawable.ic_launcher_background), "default email"));
+            noteArrayList.add(new Note("0", "Default title", "Default note", String.valueOf(R.drawable.ic_launcher_background), "default email"));
         } else {
             noteArrayList = savedInstanceState.getParcelableArrayList(TASKS_KEY);
         }
@@ -123,7 +123,7 @@ public class NoteCreateActivity extends AppCompatActivity {
     }
 
     private boolean AddData(String newTitle, String newNote, String newImagePath, String email) {
-        boolean insertData = schema.addData(newTitle, newNote, newImagePath);
+        boolean insertData = NotesListActivity.schema.addData(newTitle, newNote, newImagePath, email);
         if (insertData) {
             toastMessage("Data Successfully Inserted!");
             return true;
@@ -165,7 +165,7 @@ public class NoteCreateActivity extends AppCompatActivity {
 //    }
 
     private void createNoteTask() {
-        title = etTittle.getText().toString();
+        title = etTitle.getText().toString();
         if (title.equals("")) {
             showToast("Please enter a title to note entry.");
             return;
@@ -176,7 +176,7 @@ public class NoteCreateActivity extends AppCompatActivity {
 //        if (uri != null) imagePath = uri.toString();
 
         if (AddData(title, note, path, email)) {
-            Cursor cursor = schema.getItemID(title);
+            Cursor cursor = NotesListActivity.schema.getItemID(title);
             cursor.moveToFirst();
             String id = cursor.getString(0);
             noteArrayList.add(new Note(id, title, note, path, email));

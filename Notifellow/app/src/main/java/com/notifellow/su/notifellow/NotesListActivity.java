@@ -24,12 +24,12 @@ public class NotesListActivity extends AppCompatActivity {
     private static final String TAG = NotesListActivity.class.getSimpleName();
     private static final String TASKS_KEY = "com.notifellow.su.notifellow.tasks_key";
 
-    static NotesDBSchema mDatabaseHelper;
+    static NotesDBSchema schema;
 
     ArrayList<Note> taskList;
 
     public static void updateEmailAddressesNotesDB(String oldEmail, String value){
-        mDatabaseHelper.updateEmailAddresses(oldEmail, value);
+        schema.updateEmailAddresses(oldEmail, value);
     }
 
     @Override
@@ -37,12 +37,12 @@ public class NotesListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_notes);
         ListView mListView = findViewById(R.id.listView_Notes);
-        mDatabaseHelper = new NotesDBSchema(this);
+        schema = new NotesDBSchema(this);
 
         Log.d(TAG, "populateListView: Displaying data in the ListView.");
 
         //get the data and append to a list
-        Cursor data = mDatabaseHelper.getData();
+        Cursor data = schema.getData();
 
         if (savedInstanceState == null) taskList = new ArrayList<>();
         else taskList = savedInstanceState.getParcelableArrayList(TASKS_KEY);
@@ -68,7 +68,7 @@ public class NotesListActivity extends AppCompatActivity {
 
                 Log.d(TAG, "onItemClick: You Clicked on " + title);
 
-                Cursor data = mDatabaseHelper.getItemID(title); //get the id associated with that name
+                Cursor data = schema.getItemID(title); //get the id associated with that name
 
                 int itemID = -1;
                 while (data.moveToNext()) {
