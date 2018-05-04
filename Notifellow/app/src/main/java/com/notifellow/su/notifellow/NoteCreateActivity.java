@@ -51,7 +51,11 @@ public class NoteCreateActivity extends AppCompatActivity {
 
     private String email;
     FloatingActionButton fabSet, fabImage, fabCamera;
-//    static NotesDBSchema schema;
+    static NotesDBSchema schema;
+
+    public static void updateEmailAddressesNotesDB(String oldEmail, String value){
+        schema.updateEmailAddresses(oldEmail, value);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,8 +112,8 @@ public class NoteCreateActivity extends AppCompatActivity {
             });
         }
 
-//        schema = new NotesDBSchema(this);
-        NotesListActivity.schema = NotesDBSchema.getInstance(getApplicationContext());
+        schema = new NotesDBSchema(this);
+//        NotesListActivity.schema = NotesDBSchema.getInstance(getApplicationContext());
         if (savedInstanceState == null) {
             noteArrayList = new ArrayList<>();
 
@@ -123,7 +127,7 @@ public class NoteCreateActivity extends AppCompatActivity {
     }
 
     private boolean AddData(String newTitle, String newNote, String newImagePath, String email) {
-        boolean insertData = NotesListActivity.schema.addData(newTitle, newNote, newImagePath, email);
+        boolean insertData = NoteCreateActivity.schema.addData(newTitle, newNote, newImagePath, email);
         if (insertData) {
             toastMessage("Data Successfully Inserted!");
             return true;
@@ -176,7 +180,7 @@ public class NoteCreateActivity extends AppCompatActivity {
 //        if (uri != null) imagePath = uri.toString();
 
         if (AddData(title, note, path, email)) {
-            Cursor cursor = NotesListActivity.schema.getItemID(title);
+            Cursor cursor = NoteCreateActivity.schema.getItemID(title);
             cursor.moveToFirst();
             String id = cursor.getString(0);
             noteArrayList.add(new Note(id, title, note, path, email));

@@ -11,15 +11,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4a5a6204-740b-403d-9c98-6b9c5991a3b1" name="Default" comment="bug fix. notes has no issue now.&#10;TODO:ringtone">
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/Main.java" afterPath="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/Main.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NoteAdapter.java" afterPath="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NoteAdapter.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NoteCreateActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NoteCreateActivity.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesDBSchema.java" afterPath="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesDBSchema.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesEditActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesEditActivity.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesFragment.java" afterPath="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesFragment.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesListActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesListActivity.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesListActivity.java" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/Settings.java" afterPath="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/Settings.java" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -37,22 +36,25 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="NotesListActivity.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesListActivity.java">
+          <file leaf-file-name="Settings.java" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/Settings.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="459">
-                  <caret line="43" column="5" lean-forward="false" selection-start-line="43" selection-start-column="5" selection-end-line="43" selection-end-column="5" />
+                <state relative-caret-position="189">
+                  <caret line="839" column="78" lean-forward="false" selection-start-line="839" selection-start-column="78" selection-end-line="839" selection-end-column="78" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="NotesFragment.java" pinned="false" current-in-tab="true">
+          <file leaf-file-name="NotesFragment.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesFragment.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="238">
-                  <caret line="60" column="25" lean-forward="true" selection-start-line="60" selection-start-column="25" selection-end-line="60" selection-end-column="25" />
-                  <folding />
+                <state relative-caret-position="629">
+                  <caret line="53" column="23" lean-forward="false" selection-start-line="53" selection-start-column="23" selection-end-line="53" selection-end-column="23" />
+                  <folding>
+                    <element signature="e#1354#1835#0" expanded="true" />
+                    <element signature="e#1834#1835#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -60,9 +62,11 @@
           <file leaf-file-name="NoteAdapter.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NoteAdapter.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1020">
-                  <caret line="74" column="18" lean-forward="false" selection-start-line="74" selection-start-column="18" selection-end-line="74" selection-end-column="18" />
-                  <folding />
+                <state relative-caret-position="180">
+                  <caret line="43" column="34" lean-forward="false" selection-start-line="43" selection-start-column="34" selection-end-line="43" selection-end-column="34" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -80,8 +84,8 @@
           <file leaf-file-name="NotesEditActivity.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesEditActivity.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="697">
-                  <caret line="113" column="40" lean-forward="false" selection-start-line="113" selection-start-column="40" selection-end-line="113" selection-end-column="40" />
+                <state relative-caret-position="310">
+                  <caret line="113" column="34" lean-forward="false" selection-start-line="113" selection-start-column="34" selection-end-line="113" selection-end-column="34" />
                   <folding />
                 </state>
               </provider>
@@ -90,8 +94,8 @@
           <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/Main.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="294">
-                  <caret line="325" column="0" lean-forward="false" selection-start-line="325" selection-start-column="0" selection-end-line="325" selection-end-column="0" />
+                <state relative-caret-position="532">
+                  <caret line="324" column="0" lean-forward="false" selection-start-line="324" selection-start-column="0" selection-end-line="324" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -100,7 +104,7 @@
           <file leaf-file-name="NotesDBSchema.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesDBSchema.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2023">
+                <state relative-caret-position="-374">
                   <caret line="167" column="18" lean-forward="false" selection-start-line="167" selection-start-column="18" selection-end-line="167" selection-end-column="18" />
                   <folding />
                 </state>
@@ -110,7 +114,7 @@
           <file leaf-file-name="NotePathUtils.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotePathUtils.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="17">
+                <state relative-caret-position="-1003">
                   <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
                   <folding />
                 </state>
@@ -134,8 +138,8 @@
           <file leaf-file-name="NoteCreateActivity.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NoteCreateActivity.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="578">
-                  <caret line="80" column="44" lean-forward="false" selection-start-line="80" selection-start-column="44" selection-end-line="80" selection-end-column="44" />
+                <state relative-caret-position="374">
+                  <caret line="51" column="25" lean-forward="true" selection-start-line="51" selection-start-column="25" selection-end-line="51" selection-end-column="25" />
                   <folding />
                 </state>
               </provider>
@@ -151,6 +155,8 @@
       <find>notes</find>
       <find>tittle</find>
       <find>NotesListActivity.schema</find>
+      <find>schema</find>
+      <find>list</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -2190,13 +2196,14 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/Note.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NoteAdapter.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesDBSchema.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/Main.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesListActivity.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesFragment.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesEditActivity.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NoteCreateActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesListActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesEditActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesFragment.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NoteAdapter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/Settings.java" />
       </list>
     </option>
   </component>
@@ -2499,13 +2506,13 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934782" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32934782" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934782" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -2556,7 +2563,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="799">
           <caret line="63" column="26" lean-forward="false" selection-start-line="63" selection-start-column="26" selection-end-line="63" selection-end-column="26" />
-          <folding />
+          <folding>
+            <element signature="e#1354#1835#0" expanded="true" />
+            <element signature="e#1834#1835#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2564,7 +2574,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1020">
           <caret line="74" column="18" lean-forward="false" selection-start-line="74" selection-start-column="18" selection-end-line="74" selection-end-column="18" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2636,7 +2648,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="663">
           <caret line="55" column="16" lean-forward="false" selection-start-line="55" selection-start-column="16" selection-end-line="55" selection-end-column="16" />
-          <folding />
+          <folding>
+            <element signature="e#1354#1835#0" expanded="true" />
+            <element signature="e#1834#1835#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2674,16 +2689,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/Settings.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="938" column="16" lean-forward="false" selection-start-line="938" selection-start-column="16" selection-end-line="938" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/OnBootAlarmSetter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -2696,22 +2701,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1020">
           <caret line="76" column="13" lean-forward="false" selection-start-line="76" selection-start-column="13" selection-end-line="76" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotePathUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesEditActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="697">
-          <caret line="113" column="40" lean-forward="false" selection-start-line="113" selection-start-column="40" selection-end-line="113" selection-end-column="40" />
           <folding />
         </state>
       </provider>
@@ -2734,48 +2723,77 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesDBSchema.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2023">
+        <state relative-caret-position="-374">
           <caret line="167" column="18" lean-forward="false" selection-start-line="167" selection-start-column="18" selection-end-line="167" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesEditActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="325" column="0" lean-forward="false" selection-start-line="325" selection-start-column="0" selection-end-line="325" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NoteAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1020">
-          <caret line="74" column="18" lean-forward="false" selection-start-line="74" selection-start-column="18" selection-end-line="74" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NoteCreateActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="80" column="44" lean-forward="false" selection-start-line="80" selection-start-column="44" selection-end-line="80" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesListActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="43" column="5" lean-forward="false" selection-start-line="43" selection-start-column="5" selection-end-line="43" selection-end-column="5" />
+        <state relative-caret-position="310">
+          <caret line="113" column="34" lean-forward="false" selection-start-line="113" selection-start-column="34" selection-end-line="113" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="60" column="25" lean-forward="true" selection-start-line="60" selection-start-column="25" selection-end-line="60" selection-end-column="25" />
+        <state relative-caret-position="629">
+          <caret line="53" column="23" lean-forward="false" selection-start-line="53" selection-start-column="23" selection-end-line="53" selection-end-column="23" />
+          <folding>
+            <element signature="e#1354#1835#0" expanded="true" />
+            <element signature="e#1834#1835#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="324" column="0" lean-forward="false" selection-start-line="324" selection-start-column="0" selection-end-line="324" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotePathUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1003">
+          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NoteAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="43" column="34" lean-forward="false" selection-start-line="43" selection-start-column="34" selection-end-line="43" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NoteCreateActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="51" column="25" lean-forward="true" selection-start-line="51" selection-start-column="25" selection-end-line="51" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/Settings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="839" column="78" lean-forward="false" selection-start-line="839" selection-start-column="78" selection-end-line="839" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/notifellow/su/notifellow/NotesListActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="51" column="32" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
           <folding />
         </state>
       </provider>

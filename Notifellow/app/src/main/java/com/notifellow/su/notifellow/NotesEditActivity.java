@@ -111,7 +111,7 @@ public class NotesEditActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NotesListActivity.schema.deleteByID(String.valueOf(selectedID));
+                NoteCreateActivity.schema.deleteByID(String.valueOf(selectedID));
                 etTitle.setText("");
                 etNote.setText("");
                 imageView.setImageResource(R.drawable.ic_launcher_foreground);

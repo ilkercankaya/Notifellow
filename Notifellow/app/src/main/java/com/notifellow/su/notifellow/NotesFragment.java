@@ -50,7 +50,7 @@ public class NotesFragment extends Fragment {
         }
 
         if (savedInstanceState == null) {
-            NotesListActivity.schema = new NotesDBSchema(getContext());
+            NoteCreateActivity.schema = new NotesDBSchema(getContext());
             noteList = new ArrayList<>();
             noteList.add(new Note(null, null, null,null,null));
         } else {
@@ -61,7 +61,7 @@ public class NotesFragment extends Fragment {
         int rowCount = 0;
         noteList = new ArrayList<>();
 
-        Cursor allNotes = NotesListActivity.schema.getData();
+        Cursor allNotes = NoteCreateActivity.schema.getData();
 
         int idCol = allNotes.getColumnIndex("ID");
         int titleCol = allNotes.getColumnIndex("title");

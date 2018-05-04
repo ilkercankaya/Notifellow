@@ -837,7 +837,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                                             editor.commit();
                                                             Log.i("Settings: ", "Email updated, change in LocalDB");
                                                             Main.updateEmailAddressesLocalDB(oldEmail, value);
-                                                            NotesListActivity.updateEmailAddressesNotesDB(oldEmail, value);
+                                                            NoteCreateActivity.updateEmailAddressesNotesDB(oldEmail, value);
                                                             //check sharedreference and if its not null update the box otherwise make a web call and update
                                                             usermailREF.setText(value);
                                                             usermailREF.setSummary(value);
