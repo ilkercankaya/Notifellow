@@ -2,6 +2,7 @@ package com.notifellow.su.notifellow;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -41,7 +42,7 @@ public class SocialRequests extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_requests, container, false);
+       final View rootView = inflater.inflate(R.layout.fragment_requests, container, false);
 
         MyRequestQueue = Volley.newRequestQueue(getActivity());
         shared = getActivity().getSharedPreferences("shared", MODE_PRIVATE);
@@ -82,7 +83,10 @@ public class SocialRequests extends Fragment{
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                        Toast.makeText(getActivity(), "Internet Connection Error!", Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar
+                                .make(rootView, "Internet Connection Error!", Snackbar.LENGTH_LONG);
+                        snackbar.show();
+
                     }
                 }
         ) {
@@ -109,8 +113,58 @@ public class SocialRequests extends Fragment{
             @Override
             public void onRefresh() {
 
-                pendingFriendsAdapter.notifyDataSetChanged(); // REFRESH THE LIST (I GUESS :P)
-                swipeRefreshLayout.setRefreshing(false); // STOP ANIMATION
+                StringRequest postRequest = new StringRequest(Request.Method.POST, "http://188.166.149.168:3030/getUserPendingFriends",
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                // response
+                                pendingFriendsAdapter.clear();
+                                try {
+                                    pendingFriendsList.clear(); //Clear for new results
+                                    JSONArray jsonARR = new JSONArray(response);
+                                    for (int i = 0; i < jsonARR.length(); i++) {
+                                        JSONObject oneUser = jsonARR.getJSONObject(i);
+                                        String name = oneUser.getString("fullName");
+                                        String username = oneUser.getString("username");
+                                        String userEmail = oneUser.getString("email");
+                                        String ppDEST = oneUser.getString("ppDest");
+
+                                        if (name.equals(""))
+                                            name = "-";
+
+                                        Friends friend = new Friends(name, username, userEmail, null);
+                                        pendingFriendsList.add(friend);
+                                    }
+                                    pendingFriendsAdapter.notifyDataSetChanged(); // REFRESH THE LIST (I GUESS :P)
+                                    swipeRefreshLayout.setRefreshing(false); // STOP ANIMATION
+
+                                } catch (JSONException e) {
+                                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // error
+                                Snackbar snackbar = Snackbar
+                                        .make(rootView, "Internet Connection Error!", Snackbar.LENGTH_LONG);
+                                snackbar.show();
+                                swipeRefreshLayout.setRefreshing(false); // STOP ANIMATION
+
+                            }
+                        }
+                ) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("emailGiven", email); //Add the data you'd like to send to the server.
+
+                        return params;
+                    }
+                };
+                MyRequestQueue.add(postRequest);
+
             }
         });
         //// END OF SWIPE TO REFRESH ///
