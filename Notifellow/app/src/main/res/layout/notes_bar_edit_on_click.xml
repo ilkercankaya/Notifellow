@@ -14,8 +14,22 @@
         android:background="@color/colorTransparent"
         >
 
+        <!--<Button-->
+        <!--android:id="@+id/notes_bar_edit_btnDelete"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--android:layout_marginBottom="16dp"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@drawable/buttonbg_gray"-->
+        <!--android:text="Delete"-->
+        <!--android:textAllCaps="false"-->
+        <!--android:textColor="@color/colorGray" />-->
+
         <Button
-            android:id="@+id/btnChangeImage"
+            android:id="@+id/notes_bar_edit_on_clicked_btnImage"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
@@ -24,26 +38,12 @@
             android:layout_marginRight="8dp"
             android:layout_weight="1"
             android:background="@drawable/buttonbg_gray"
-            android:text="Change Image"
+            android:text="Image"
             android:textAllCaps="false"
             android:textColor="@color/colorGray" />
 
         <Button
-            android:id="@+id/btnDeleteNote"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/buttonbg_gray"
-            android:text="Delete Note"
-            android:textAllCaps="false"
-            android:textColor="@color/colorGray" />
-
-        <Button
-            android:id="@+id/btnUpdateNotes"
+            android:id="@+id/notes_bar_edit_on_clicked_btnSave"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
@@ -52,7 +52,7 @@
             android:layout_marginRight="8dp"
             android:layout_weight="1"
             android:background="@drawable/buttonbg"
-            android:text="Update Notes"
+            android:text="Save"
             android:textAllCaps="false" />
     </LinearLayout>
 </RelativeLayout>

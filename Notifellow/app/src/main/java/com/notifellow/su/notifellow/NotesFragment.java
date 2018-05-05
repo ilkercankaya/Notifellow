@@ -29,8 +29,6 @@ public class NotesFragment extends Fragment {
     static NoteAdapter noteAdapter;
     private SharedPreferences shared;
 
-// TODO: IMPLEMENT NOTES ACTIVITY AS FRAGMENT HERE
-// TODO: INSTEAD OF ADD NEW NOTES BUTTON, USE THE fab I PROVIDED YOU
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -85,7 +83,6 @@ public class NotesFragment extends Fragment {
                     String note = allNotes.getString(noteCol);
                     String image = allNotes.getString(imageCol);
 
-//                    noteList.add(new Task(id, title, startDate + "\t\t" + startTime, endTime + "\t\t" + endDate, remindTime + "\t\t" + remindDate, location, wifi, note));
                     noteList.add(new Note(id, title, note, image, email));
                 }
                 tempCount--;

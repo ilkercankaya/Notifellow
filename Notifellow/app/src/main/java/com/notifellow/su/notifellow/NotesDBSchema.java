@@ -30,9 +30,7 @@ public class NotesDBSchema extends SQLiteOpenHelper {
             NOTE + " TEXT, " +
             IMAGE_PATH + " TEXT, " +
             EMAIL + " TEXT);";
-//            "PRIMARY KEY (" + EMAIL + ", " + TITLE + "));";
     private static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
-//
 
     NotesDBSchema(Context context) {
         super(context, TABLE_NAME, null, 1);
@@ -47,14 +45,11 @@ public class NotesDBSchema extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-//        String createTable = "CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " + TITLE + " TEXT, " + NOTE + " TEXT, " + IMAGE_PATH + " TEXT );";
-//        db.execSQL(createTable);
         db.execSQL(CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-//        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         db.execSQL(DROP_TABLE);
         onCreate(db);
     }
@@ -63,7 +58,6 @@ public class NotesDBSchema extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-//        contentValues.put(ID, id);
         contentValues.put(TITLE, title);
         contentValues.put(NOTE, note);
         contentValues.put(IMAGE_PATH, itemPath);
@@ -73,7 +67,6 @@ public class NotesDBSchema extends SQLiteOpenHelper {
 
         long result = db.insert(TABLE_NAME, null, contentValues);
         //if date as inserted incorrectly it will return -1
-        //return result != -1;
         return (int) result != -1;
     }
 
@@ -112,19 +105,40 @@ public class NotesDBSchema extends SQLiteOpenHelper {
         return db.rawQuery(query, null);
     }
 
+
+
     /**
      * Updates the name field
      *
-     * @param id
-     * @param newName
-     * @param oldName
+     * @param id int
+     * @param newTitle String
      */
-    public void updateName(int id, String newName, String oldName) {
+    public void updateTitleField(int id, String newTitle) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "UPDATE " + TABLE_NAME + " SET " + NOTE + " = '" + newName + "' WHERE " + ID + " = '" + id + "'" + " AND NOT " + NOTE + " = '" + oldName + "'";
-        Log.d(TAG, "updateName: query: " + query);
-        Log.d(TAG, "updateName: Setting NOTE to " + newName);
-        db.execSQL(query);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TITLE, newTitle);
+        Log.d(TAG, "updateName: Setting title to " + TITLE);
+        db.update(TABLE_NAME, contentValues, ID + " = ? ", new String[]{String.valueOf(id)});
+    }
+
+    /**
+     * Updates the ALl fields except email and id
+     *
+     * @param id int
+     * @param newTitle String
+     * @param newNote String
+     * @param newImagePath String
+     */
+    public void updateAllButEmailAndId(int id, String newTitle, String newNote, String newImagePath) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TITLE, newTitle);
+        contentValues.put(NOTE, newNote);
+        contentValues.put(IMAGE_PATH, newImagePath);
+        Log.d(TAG, "updateName: Setting title to " + TITLE);
+        Log.d(TAG, "updateName: Setting note to " + NOTE);
+        Log.d(TAG, "updateName: Setting image_path to " + IMAGE_PATH);
+        db.update(TABLE_NAME, contentValues, ID + " = ? ", new String[]{String.valueOf(id)});
     }
 
     /**
@@ -133,68 +147,26 @@ public class NotesDBSchema extends SQLiteOpenHelper {
      * @param id
      * @param newImagePath //     * @param oldImagePath
      */
-    public void updateImagePath(int id, String newImagePath) {
+    public void updateImagPathField(int id, String newImagePath) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(IMAGE_PATH, newImagePath);
         Log.d(TAG, "updateName: Setting imagepath to " + IMAGE_PATH);
         db.update(TABLE_NAME, contentValues, ID + " = ? ", new String[]{String.valueOf(id)});
     }
-
     /**
      * Updates the NOTE field
      *
      * @param id
      * @param newNote
-     * @param oldNote
      */
-    public void updateNote(int id, String newNote, String oldNote) {
+    public void updateNoteField(int id, String newNote) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "UPDATE " + TABLE_NAME + " SET " + TITLE + " = '" + newNote + "' WHERE " + ID + " = '" + id + "'" + " AND " + TITLE + " = '" + oldNote + "'";
-        Log.d(TAG, "updateName: query: " + query);
-        Log.d(TAG, "updateName: Setting name to " + newNote);
-        db.execSQL(query);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(NOTE, newNote);
+        Log.d(TAG, "updateName: Setting note to " + IMAGE_PATH);
+        db.update(TABLE_NAME, contentValues, ID + " = ? ", new String[]{String.valueOf(id)});
     }
-
-//    public Cursor getAllRowsForEvents() {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        String[] columns = {ID, TITLE, NOTE, IMAGE_PATH};
-//        return db.query(TABLE_NAME, columns, null, null, null, null, null);
-//    }
-//    /**
-//     * Delete from database
-//     *
-//     * @param id        int
-//     * @param title     String
-//     * @param note      String
-//     * @param imagePath String
-//     */
-//    public void deleteName(int id, String title, String note, String imagePath) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        String query = new StringBuilder()
-//                .append("DELETE FROM ")
-//                .append(TABLE_NAME)
-//                .append(" WHERE ")
-//                .append(ID)
-//                .append(" = '")
-//                .append(id)
-//                .append("' AND ")
-//                .append(TITLE)
-//                .append(" = '")
-//                .append(title)
-//                .append("' AND ")
-//                .append(NOTE)
-//                .append(" = ' ")
-//                .append(note)
-//                .append(" ' AND ")
-//                .append(IMAGE_PATH)
-//                .append(" = ' ")
-//                .append(imagePath)
-//                .append("'").toString();
-//        Log.d(TAG, "deleteName: query: " + query);
-//        Log.d(TAG, "deleteName: Deleting item with id: " + id + " from database.");
-//        db.execSQL(query);
-//    }
 
     public String getTitle(String ID) {
         SQLiteDatabase db = this.getReadableDatabase();

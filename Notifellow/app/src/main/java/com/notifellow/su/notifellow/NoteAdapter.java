@@ -1,7 +1,11 @@
 package com.notifellow.su.notifellow;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
@@ -14,86 +18,93 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 public class NoteAdapter extends ArrayAdapter<Note> {
 
-    Dialog noteInfoDialog;
-    ImageView imageView;
-    private TextView titleTextView;
-    private TextView noteTextView;
+
+    Activity context;
+
+    private Dialog noteInfoDialog;
+    protected static ImageView imageView;
+    private TextView tv_tittle;
+    private TextView tv_note;
+    protected static String path;
+    String id;
 
     NoteAdapter(Activity context, List<Note> taskList) {
         super(context, R.layout.note_row, taskList);
+        this.context = context;
     }
 
-    public void rowOnClick(Note note) {
+    private void rowOnClick(Note note) {
         noteInfoDialog = new Dialog(getContext());
         noteInfoDialog.setContentView(R.layout.note_row_clicked);
 //        noteInfoDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // DO NOT TOUCH, DESIGN ISSUES
-        titleTextView = noteInfoDialog.findViewById(R.id.note_row_clicked_title);
-        noteTextView = noteInfoDialog.findViewById(R.id.note_row_clicked_describe);
+        tv_tittle = noteInfoDialog.findViewById(R.id.note_row_clicked_title);
+        tv_note = noteInfoDialog.findViewById(R.id.note_row_clicked_describe);
         imageView = noteInfoDialog.findViewById(R.id.note_row_clicked_image);
-        Button btnDelete = noteInfoDialog.findViewById(R.id.notes_bar_edit_btnDelete);
-        Button btnImage = noteInfoDialog.findViewById(R.id.notes_bar_edit_btnImage);
-        Button btnSave = noteInfoDialog.findViewById(R.id.notes_bar_edit_btnSave);
-        final String id = note.id;
-        btnDelete.setOnClickListener(new View.OnClickListener() {
+        Button btnImage = noteInfoDialog.findViewById(R.id.notes_bar_edit_on_clicked_btnImage);
+        Button btnSave = noteInfoDialog.findViewById(R.id.notes_bar_edit_on_clicked_btnSave);
+        id = note.getId();
+
+        btnImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NoteCreateActivity.schema.deleteByID(id);
-                titleTextView.setText("");
-                noteTextView.setText("");
-                imageView.setImageResource(R.drawable.ic_launcher_background);
-                imageView.setVisibility(View.GONE);
-                notifyDataSetChanged();
+                Intent intent = new Intent(NoteAdapter.this.getContext(), GalleryActivity.class);
+                NoteAdapter.this.getContext().startActivity(intent);
+                imageView.setVisibility(View.VISIBLE);
             }
         });
 
-        titleTextView.setText(note.title);
-        noteTextView.setText(note.note);
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String title = tv_tittle.getText().toString();
+                if (title.equals("")) {
+                    toastMessage("Please enter a title to note entry.");
+                    return;
+                }
+                String note = tv_note.getText().toString();
+                NoteCreateActivity.schema.updateAllButEmailAndId(Integer.parseInt(id),title, note, path);
+                Toast.makeText(getContext(), "Note Updated. Please refresh the page to see changes.",
+                        Toast.LENGTH_SHORT).show();
+                notifyDataSetChanged();
+                noteInfoDialog.dismiss();
+            }
+        });
+
+        Cursor cursor = NoteCreateActivity.schema.getItemImagePath(id);
+        cursor.moveToFirst();
+        path = cursor.getString(0);
+
+        tv_tittle.setText(note.getTitle());
+        tv_note.setText(note.getNote());
 
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        Bitmap bitmap = BitmapFactory.decodeFile(note.imagePath, bmOptions);
+        Bitmap bitmap = BitmapFactory.decodeFile(note.getImagePath(), bmOptions);
         imageView.setImageBitmap(bitmap);
+        if(bitmap == null){
+            imageView.setVisibility(View.INVISIBLE);
+        }
 
         noteInfoDialog.show();
     }
 
-//    private void DeleteNote(View v){
-//        NotesListActivity.mDatabaseHelper.deleteByID(String.valueOf(selectedID));
-//        titleTextView.setText("");
-//        noteTextView.setText("");
-//        imageView.setImageResource(R.drawable.ic_launcher_background);
-//        imageView.setVisibility(View.GONE);
-//
-//    }
+    /**
+     * customizable toast
+     *
+     * @param message
+     */
+    private void toastMessage(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-//        View rowView = convertView;
-//        if (rowView == null) {
-//            LayoutInflater inflater = this.getLayoutInflater();
-//            rowView = inflater.inflate(R.layout.fragment_notes, null);
-//        }
-//
-//        final Note task = getItem(position);
-//
-//        TextView tvTitle = rowView.findViewById(R.id.note_row_title);
-//        TextView tvNote = rowView.findViewById(R.id.note_row_description);
-//        ImageView imageView = rowView.findViewById(R.id.note_row_image);
-//
-//        tvTitle.setText(task.title);
-//        tvNote.setText(task.note);
-//
-//        final BitmapFactory.Options options = new BitmapFactory.Options();
-//        options.inSampleSize = 8;
-//
-//        Bitmap bitmap = BitmapFactory.decodeFile(task.imagePath, options);
-//        imageView.setImageBitmap(bitmap);
-//
-//        return rowView;
         View rowView = convertView;
         MyViewHolder holder;
         if (rowView == null) {
@@ -108,14 +119,26 @@ public class NoteAdapter extends ArrayAdapter<Note> {
             holder = (MyViewHolder) rowView.getTag();
         }
 
+        String title = getItem(position).getTitle();
+        if (title.length() > 30) {
+            holder.titleTextView.setText(MessageFormat.format("{0}...", title.substring(0, 27)));
+        } else {
+            holder.titleTextView.setText(getItem(position).getTitle());
+        }
 
-        holder.titleTextView.setText(getItem(position).title);
+//        holder.titleTextView.setText(getItem(position).getTitle());
 
-        holder.descriptionTextView.setText(getItem(position).note);
+
+        String note = getItem(position).getNote();
+        if (note.length() > 70) {
+            holder.descriptionTextView.setText(MessageFormat.format("{0}...", note.substring(0, 67)));
+        } else {
+            holder.descriptionTextView.setText(getItem(position).getNote());
+        }
 
 
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        Bitmap bitmap = BitmapFactory.decodeFile(getItem(position).imagePath, bmOptions);
+        Bitmap bitmap = BitmapFactory.decodeFile(getItem(position).getImagePath(), bmOptions);
 
         holder.imageView.setImageBitmap(bitmap);
 
@@ -129,18 +152,30 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         holder.cancelTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: IMPLEMENT DELETE FUNCTION!!!!!
-//                Main.cancelAlarm(Integer.parseInt(getItem(position).()) + 1);
-//                NotesListActivity.DeleteNote();
-                Toast.makeText(NoteAdapter.this.getContext(), "DELETE CLICKED.", Toast.LENGTH_SHORT).show();
-//                DeleteNote(view);
-//                NotesFragment.noteList.remove(position);
-                NotesFragment.noteAdapter.notifyDataSetChanged();
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("Do you want to delete this note?");
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                });
+                builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        int code = Integer.parseInt(getItem(position).getId());
+                        NoteCreateActivity.schema.deleteByID(String.valueOf(code));
+                        NotesFragment.noteList.remove(position);
+                        NotesFragment.noteAdapter.notifyDataSetChanged();
+                        Toast.makeText(context, "" + "" + "Task deleted!", Toast.LENGTH_LONG).show();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 
         return rowView;
     }
+
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -149,7 +184,7 @@ public class NoteAdapter extends ArrayAdapter<Note> {
         private ImageView imageView;
         private ImageView cancelTask;
 
-        public MyViewHolder(View itemView) {
+        MyViewHolder(View itemView) {
             super(itemView);
 
             titleTextView = itemView.findViewById(R.id.note_row_title);

@@ -11,8 +11,9 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--do we need write_external_storage? internal storage seems just fine.-->
     <uses-feature android:name="android.hardware.wifi" />
-
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -43,9 +44,6 @@
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <!--<activity android:name=".notes.EditNotes" />-->
-        <!--<activity android:name=".notes.NotesMainActivity" />-->
-        <!--<activity android:name=".notes.CreateNotes" />-->
 
         <service android:name=".ServiceListenWiFi" />
         <service android:name=".LocationService" />
@@ -104,9 +102,7 @@
                 android:value="com.notifellow.su.notifellow.Main" />
         </activity>
         <activity android:name=".NoteCreateActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".NotesListActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".NotesEditActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".camera.CameraActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".GalleryActivity" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

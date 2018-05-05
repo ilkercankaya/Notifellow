@@ -43,7 +43,7 @@
         android:layout_alignParentStart="true"
         android:weightSum="100">
 
-        <include layout="@layout/notes_bar_edit" />
+        <include layout="@layout/notes_bar_edit_on_click" />
 
     </LinearLayout>
 

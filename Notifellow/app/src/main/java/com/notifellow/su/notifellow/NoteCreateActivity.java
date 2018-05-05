@@ -16,17 +16,20 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.notifellow.su.notifellow.camera.CameraActivity;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static com.notifellow.su.notifellow.NotePathUtils.isDownloadsDocument;
 import static com.notifellow.su.notifellow.NotePathUtils.isExternalStorageDocument;
@@ -35,23 +38,24 @@ import static com.notifellow.su.notifellow.NotePathUtils.isExternalStorageDocume
 public class NoteCreateActivity extends AppCompatActivity {
 
     private static final String TASKS_KEY = "com.notifellow.su.notifellow.tasks_key";
-//    private static final String TAG = NoteCreateActivity.class.getSimpleName();
+    private static final String TAG = NoteCreateActivity.class.getSimpleName();
 
     Uri uri;
+
     private static final int CAMERA_REQUEST = 1888;
+    private static final int REQUEST_CODE_GALLERY = 999;
     private EditText etTitle;
     private EditText etEntry;
     private ImageView imageView;
     private ArrayList<Note> noteArrayList;
     private String path;
-    //    Bitmap bitmap;
-    private String title;
     private NoteAdapter noteAdapter;
-    final int REQUEST_CODE_GALLERY = 999;
+
 
     private String email;
     FloatingActionButton fabSet, fabImage, fabCamera;
     static NotesDBSchema schema;
+
 
     public static void updateEmailAddressesNotesDB(String oldEmail, String value){
         schema.updateEmailAddresses(oldEmail, value);
@@ -60,7 +64,6 @@ public class NoteCreateActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.notes_main);
 
         setContentView(R.layout.activity_add_note);
 
@@ -78,10 +81,6 @@ public class NoteCreateActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     createNoteTask();
-
-//                    Intent intent = new Intent(NoteCreateActivity.this, NotesListActivity.class);
-//                Intent intent = new Intent(NoteCreateActivity.this, NotesFragment.class);
-//                    startActivity(intent);
                     finish(); //navigates to schedule.
                 }
             });
@@ -97,23 +96,20 @@ public class NoteCreateActivity extends AppCompatActivity {
             });
         }
 
+
+//        hasSystemFeature(PackageManager.FEATURE_CAMERA) ?? :)
         fabCamera = findViewById(R.id.fabCamera);
         if (fabCamera != null) {
             fabCamera.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(NoteCreateActivity.this, CameraActivity.class);
-                    startActivity(intent);
-//                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
-//                    Intent intent = new Intent(NoteCreateActivity.this, NoteCameraActivity.class);
-//                    startActivity(intent);
+                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
                 }
             });
         }
 
         schema = new NotesDBSchema(this);
-//        NotesListActivity.schema = NotesDBSchema.getInstance(getApplicationContext());
         if (savedInstanceState == null) {
             noteArrayList = new ArrayList<>();
 
@@ -123,7 +119,6 @@ public class NoteCreateActivity extends AppCompatActivity {
         }
 
         noteAdapter = new NoteAdapter(this, noteArrayList);
-
     }
 
     private boolean AddData(String newTitle, String newNote, String newImagePath, String email) {
@@ -137,39 +132,8 @@ public class NoteCreateActivity extends AppCompatActivity {
         }
     }
 
-//    /**
-//     * Since we can not track the paths of images that user chooses,
-//     * we will duplicate them somewhere else and solve the problem in that way.
-//     */
-//    private void SaveImageToLocal() {
-//        Cursor cursor = null;
-//        cursor = schema.getItemID(title);
-//        cursor.moveToFirst();
-//        String filename = cursor.getString(cursor.getColumnIndex("ID"));
-//        File previewFile = new File(Environment.getExternalStorageState(), filename);
-//        OutputStream out = null;
-//
-////        mFile = new File(getActivity().getExternalFilesDir(null), "pic.jpg");
-//        try {
-//            out = new FileOutputStream(previewFile);
-//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);// bitmap is your Bitmap instance
-//            // PNG is a lossless format, the compression factor (100) is ignored
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                if (out != null) {
-//                    out.close();
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        schema.updateImagePath(Integer.parseInt(filename), previewFile.getAbsolutePath());
-//    }
-
     private void createNoteTask() {
-        title = etTitle.getText().toString();
+        String title = etTitle.getText().toString();
         if (title.equals("")) {
             showToast("Please enter a title to note entry.");
             return;
@@ -177,24 +141,22 @@ public class NoteCreateActivity extends AppCompatActivity {
 
         String note = etEntry.getText().toString();
 
-//        if (uri != null) imagePath = uri.toString();
 
         if (AddData(title, note, path, email)) {
             Cursor cursor = NoteCreateActivity.schema.getItemID(title);
             cursor.moveToFirst();
             String id = cursor.getString(0);
             noteArrayList.add(new Note(id, title, note, path, email));
-            //Collections.sort(noteArrayList);
             noteAdapter.notifyDataSetChanged();
-            FileOutputStream out = null;
-
         }
 
     }
 
+
     public void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -223,13 +185,64 @@ public class NoteCreateActivity extends AppCompatActivity {
 
         }
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
             photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-            path = MediaStore.Images.Media.insertImage(getContentResolver(), photo, "Title", null);
+//            path = MediaStore.Images.Media.insertImage(getContentResolver(), photo, "Title", null);
+            path = storeImage(photo);
             imageView.setImageBitmap(photo);
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    /**
+     * @param image
+     * @return string location of Photo taken.
+     */
+    private String storeImage(Bitmap image) {
+        File pictureFile = getOutputMediaFile();
+        if (pictureFile == null) {
+            Log.d(TAG,
+                    "Error creating media file, check storage permissions: ");// e.getMessage());
+            return null;
+        }
+        try {
+            FileOutputStream fos = new FileOutputStream(pictureFile);
+            image.compress(Bitmap.CompressFormat.PNG, 90, fos);
+            fos.close();
+        } catch (FileNotFoundException e) {
+            Log.d(TAG, "File not found: " + e.getMessage());
+        } catch (IOException e) {
+            Log.d(TAG, "Error accessing file: " + e.getMessage());
+        }
+        return pictureFile.getAbsolutePath();
+    }
+
+    /** Create a File for saving an image or video */
+    private  File getOutputMediaFile(){
+        // To be safe, you should check that the SDCard is mounted
+        // using Environment.getExternalStorageState() before doing this.
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
+                + "/Android/data/"
+                + getApplicationContext().getPackageName()
+                + "/Files");
+
+        // This location works best if you want the created images to be shared
+        // between applications and persist after your app has been uninstalled.
+
+        // Create the storage directory if it does not exist
+        if (! mediaStorageDir.exists()){
+            if (! mediaStorageDir.mkdirs()){
+                return null;
+            }
+        }
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
+        File mediaFile;
+        String mImageName="MI_"+ timeStamp +".jpg";
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
+        return mediaFile;
     }
 
     @Override
