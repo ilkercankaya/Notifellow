@@ -174,31 +174,41 @@ public class LoginScreen extends AppCompatActivity {
         String[] parts = lowerCaseMail.split("@");
         final String UserMailName = parts[0];
         //Create user on Notifellow server
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // response
-                        Log.d("Response", response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // error
-                        Log.d("Error.Response", error.getMessage().toString().trim());
-                    }
-                }
-        ) {
+        OneSignal.idsAvailable(new OneSignal.IdsAvailableHandler() {
             @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("usernameGiven", UserMailName);
-                params.put("emailGiven", lowerCaseMail); //Add the data you'd like to send to the server.
-                return params;
-            }
-        };
-        queue.add(postRequest);
+            public void idsAvailable(String userId, final String registrationId) {
+                Log.d("debug", "User:" + userId);
+                if (registrationId != null) {
+                    StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    // response
+                                    Log.d("Response", response);
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    // error
+                                    Log.d("Error.Response", error.getMessage().toString().trim());
+                                }
+                            }
+                    ) {
+                        @Override
+                        protected Map<String, String> getParams() {
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put("usernameGiven", UserMailName);
+                            params.put("emailGiven", lowerCaseMail); //Add the data you'd like to send to the server.
+                            params.put("oneSignal", registrationId); //Add the data you'd like to send to the server.
+                            return params;
+                        }
+                    };
+                    queue.add(postRequest);
+                }
+                else
+                    Toast.makeText(getApplicationContext()," Internet Connection Fail!", Toast.LENGTH_LONG).show();
+            }});
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)

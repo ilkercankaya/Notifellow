@@ -184,6 +184,7 @@ public class Main extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API)
                 .build();
@@ -299,6 +300,26 @@ public class Main extends AppCompatActivity
                             editor.commit();
                         }
                     });
+                } else if (localFile == null || !localFile .exists()) {
+                    storageRef.child(response).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            // Local temp file has been created load the pic
+                            SharedPreferences.Editor editor = shared.edit();
+                            editor.putString("ppSTAT", "exists");
+                            editor.putString("ppDIR", response);
+                            editor.commit();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle any errors
+                            //  Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_LONG);
+                            SharedPreferences.Editor editor = shared.edit();
+                            editor.putString("ppSTAT", "doesntExists");
+                            editor.commit();
+                        }
+                    });
                 }
             }
         }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
@@ -352,10 +373,10 @@ public class Main extends AppCompatActivity
         String value = shared.getString("name", null);
         final String ppSTAT = shared.getString("ppSTAT", null);
         final String ppDir = shared.getString("ppDIR", null);
-        ImageView ppImg = findViewById(R.id.profilePic);
+        final ImageView ppImg = findViewById(R.id.profilePic);
+        final File localFile = new File(getCacheDir(), ppDir + ".jpg");
 
         if (!(ppDir == null) && ppSTAT.equals("exists")) { //PP exists
-            final File localFile = new File(getCacheDir(), ppDir + ".jpg");
             Glide.with(this)
                     .load(localFile)
                     .listener(new RequestListener<File, GlideDrawable>() {
@@ -372,7 +393,64 @@ public class Main extends AppCompatActivity
                         }
                     })
                     .into(ppImg);
-        } else {
+        } else if(ppSTAT == null){
+            StringRequest MyStringRequest = new StringRequest(Request.Method.POST, "http://188.166.149.168:3030/getUniqID", new Response.Listener<String>() {
+                @Override
+                public void onResponse(final String response) {
+                    storageRef.child(response).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            // Local temp file has been created load the pic
+                            SharedPreferences.Editor editor = shared.edit();
+                            editor.putString("ppSTAT", "exists");
+                            editor.putString("ppDIR", response);
+                            editor.commit();
+                            Glide.with(getApplicationContext())
+                                    .load(localFile)
+                                    .listener(new RequestListener<File, GlideDrawable>() {
+                                        @Override
+                                        public boolean onException(Exception e, File model, Target<GlideDrawable> target, boolean isFirstResource) {
+                                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG);
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public boolean onResourceReady(GlideDrawable resource, File model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                                            //Image is loaded
+                                            return false;
+                                        }
+                                    })
+                                    .into(ppImg);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle any errors
+                            //  Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_LONG);
+                            SharedPreferences.Editor editor = shared.edit();
+                            editor.putString("ppSTAT", "doesntExists");
+                            editor.commit();
+                        }
+                    });
+                } }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //This code is executed if there is an error.
+                        //   Toast.makeText(getApplicationContext(), "" + "" + " Cannot connect to Internet!", Toast.LENGTH_LONG).show();
+                        //uniqID = "404_NOT_FOUND"; //For errors
+                        //if exists with no internet
+                    }
+                }) {
+                    protected Map<String, String> getParams() {
+                        Map<String, String> MyData = new HashMap<String, String>();
+                        MyData.put("emailGiven", email);
+                        // MyData.put("alarmID", String.valueOf(alarmCode));
+                        return MyData;
+                    }
+                };
+        queue.add(MyStringRequest);
+        }
+            else{
             //Set empty picutre
           /*
            TODO: UNCOMMENT AND FIX THIS AREA, IT THREW EXCEPTION.
