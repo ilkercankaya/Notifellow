@@ -8,6 +8,8 @@
     <color name="colorDarkBlue"> #1874CD</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGray">#778899</color>
+    <color name="colorGreen">#00FF00</color>
+    <color name="colorRed">#FF0000</color>
     <color name="textColorPrimary">@color/colorAccent</color>
     <color name="textColorSecondary">@color/colorAccent</color>
     <color name="textColorTertiary">@color/colorAccent</color>

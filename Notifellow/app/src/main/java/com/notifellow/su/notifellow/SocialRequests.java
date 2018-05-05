@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
+import android.graphics.Color;
 
 public class SocialRequests extends Fragment{
 
@@ -85,6 +87,7 @@ public class SocialRequests extends Fragment{
                         // error
                         Snackbar snackbar = Snackbar
                                 .make(rootView, "Internet Connection Error!", Snackbar.LENGTH_LONG);
+                        snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorRed));
                         snackbar.show();
 
                     }
@@ -149,6 +152,7 @@ public class SocialRequests extends Fragment{
                                 // error
                                 Snackbar snackbar = Snackbar
                                         .make(rootView, "Internet Connection Error!", Snackbar.LENGTH_LONG);
+                                snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorRed));
                                 snackbar.show();
                                 swipeRefreshLayout.setRefreshing(false); // STOP ANIMATION
 

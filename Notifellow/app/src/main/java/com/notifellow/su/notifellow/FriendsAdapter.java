@@ -3,6 +3,7 @@ package com.notifellow.su.notifellow;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,7 +38,7 @@ public class FriendsAdapter extends ArrayAdapter<Friends> {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
 
         View rowView = convertView;
         MyViewHolder holder;
@@ -72,8 +73,10 @@ public class FriendsAdapter extends ArrayAdapter<Friends> {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                Toast.makeText(getContext(), "You have deleted " + getItem(position).getUserName() + ".",
-                                        Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar
+                                        .make(parent, "Deleted User " + getItem(position).getUserName()+ "!", Snackbar.LENGTH_LONG);
+                                snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorGreen));
+                                snackbar.show();
                                 remove(getItem(position));
                                 notifyDataSetChanged();
 
@@ -83,7 +86,10 @@ public class FriendsAdapter extends ArrayAdapter<Friends> {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 // error
-                                Toast.makeText(getContext(), "Internet Connection Error!", Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar
+                                        .make(parent, "Database Error!", Snackbar.LENGTH_LONG);
+                                snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorRed));
+                                snackbar.show();
                             }
                         }
                 ) {
