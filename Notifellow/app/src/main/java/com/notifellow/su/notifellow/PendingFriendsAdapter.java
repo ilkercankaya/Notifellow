@@ -10,20 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
-import org.w3c.dom.Text;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,7 +74,10 @@ public class PendingFriendsAdapter extends ArrayAdapter<Friends> {
                             SocialRequests.pendingFriendsList.remove(position);
                             SocialRequests.pendingFriendsAdapter.notifyDataSetChanged();
                         } else {
-                            Toast.makeText(getContext(), "Database Error!", Toast.LENGTH_SHORT).show();
+                            Snackbar snackbar = Snackbar
+                                    .make(parent, "Database Error!", Snackbar.LENGTH_LONG);
+                            snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorRed));
+                            snackbar.show();
                         }
                     }
                 },
