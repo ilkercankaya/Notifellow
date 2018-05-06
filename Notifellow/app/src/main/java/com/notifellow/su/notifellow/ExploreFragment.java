@@ -4,10 +4,10 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.SearchView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,23 +16,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -44,6 +39,7 @@ public class ExploreFragment extends Fragment {
     String[] nameSurname;
     String[] username;
     Uri[] userPicture;
+    private String lastQ;
     private static RequestQueue MyRequestQueue;
     private static SharedPreferences shared;
     ArrayList<card_user> arrayList = new ArrayList<card_user>();
@@ -80,9 +76,70 @@ public class ExploreFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                final String email = shared.getString("email", null);
+                StringRequest postRequest = new StringRequest(Request.Method.POST, "http://188.166.149.168:3030/searchDB",
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                // response
+                                try {
+                                    arrayList.clear(); //Clear for new results
+                                    JSONArray jsonARR = new JSONArray(response);
+                                    for (int i = 0; i < jsonARR.length(); i++) {
+                                        JSONObject oneUser = jsonARR.getJSONObject(i);
+                                        String name = oneUser.getString("fullName");
+                                        String username = oneUser.getString("username");
+                                        String userEmail = oneUser.getString("email");
+                                        String ppDEST = oneUser.getString("ppDest");
+                                        String Status = oneUser.getString("status");
+                                        if (name.equals(""))
+                                            name = "-";
+                                        if (Status.equals("2"))
+                                            Status = "Friends With This User";
+                                        else if (Status.equals("0"))
+                                            Status = "Friend Request Sent!";
+                                        else if (Status.equals("1"))
+                                            Status = "Friend Request Has Been Received!";
+                                        else if (Status.equals("-1"))
+                                            Status = "You Can Add This User As A Friend.";
+                                        card_user user = new card_user(name, username, userEmail, Status, null);
+                                        arrayList.add(user);
+                                    }
+                                    adapter.notifyDataSetChanged(); // REFRESH THE LIST (I GUESS :P)
+                                    swipeRefreshLayout.setRefreshing(false); // STOP ANIMATION
 
-                adapter.notifyDataSetChanged(); // REFRESH THE LIST (I GUESS :P)
-                swipeRefreshLayout.setRefreshing(false); // STOP ANIMATION
+                                } catch (JSONException e) {
+                                    Snackbar snackbar = Snackbar
+                                            .make(getActivity().findViewById(android.R.id.content), e.getMessage(), Snackbar.LENGTH_LONG);
+                                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                    snackbar.show();
+                                    swipeRefreshLayout.setRefreshing(false); // STOP ANIMATION
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // error
+                                Snackbar snackbar = Snackbar
+                                        .make(getActivity().findViewById(android.R.id.content), "Internet Connection Fail!", Snackbar.LENGTH_LONG);
+                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                snackbar.show();
+                                swipeRefreshLayout.setRefreshing(false); // STOP ANIMATION
+                            }
+                        }
+                ) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("emailGiven", email); //Add the data you'd like to send to the server.
+                        params.put("queryGiv", lastQ); //Add the data you'd like to send to the server.
+
+                        return params;
+                    }
+                };
+                MyRequestQueue.add(postRequest);
+
             }
         });
         //// END OF SWIPE TO REFRESH ///
@@ -102,6 +159,7 @@ public class ExploreFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(final String query) {
+                lastQ = query;
                 final String email = shared.getString("email", null);
                 StringRequest postRequest = new StringRequest(Request.Method.POST, "http://188.166.149.168:3030/searchDB",
                         new Response.Listener<String>() {
@@ -133,8 +191,10 @@ public class ExploreFragment extends Fragment {
                                     }
                                     adapter.notifyDataSetChanged();
                                 } catch (JSONException e) {
-                                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
-
+                                    Snackbar snackbar = Snackbar
+                                            .make(getActivity().findViewById(android.R.id.content), e.getMessage(), Snackbar.LENGTH_LONG);
+                                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                    snackbar.show();
                                 }
                             }
                         },
@@ -142,7 +202,10 @@ public class ExploreFragment extends Fragment {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 // error
-                                Toast.makeText(getActivity(), "Internet Connection Error!", Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar
+                                        .make(getActivity().findViewById(android.R.id.content), "Internet Connection Fail!", Snackbar.LENGTH_LONG);
+                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                snackbar.show();
                             }
                         }
                 ) {

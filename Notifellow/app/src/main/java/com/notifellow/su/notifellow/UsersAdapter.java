@@ -1,13 +1,16 @@
 package com.notifellow.su.notifellow;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +40,7 @@ public class UsersAdapter extends BaseAdapter {
     private static RequestQueue MyRequestQueue;
     private static SharedPreferences shared;
     //end of variables
-
+    private RelativeLayout mRoot;
 
     //Constructor
     public UsersAdapter(Context context, List<card_user> userList) {
@@ -48,7 +51,6 @@ public class UsersAdapter extends BaseAdapter {
         this.arrayList.addAll(userList);
         MyRequestQueue = Volley.newRequestQueue(mContext);
         shared = context.getSharedPreferences("shared", MODE_PRIVATE);
-
     }
 
     public class ViewHolder //ViewHolder for userList
@@ -76,7 +78,9 @@ public class UsersAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View view, ViewGroup parent) {
+    public View getView(final int position, View view, final ViewGroup parent) {
+        final Activity activity = (Activity) mContext;
+
         final ViewHolder holder;
         if (view == null) {
             holder = new ViewHolder();
@@ -120,7 +124,7 @@ public class UsersAdapter extends BaseAdapter {
 
         holder.addUSRBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
                 final Button button = (Button) view;
                 final String email = shared.getString("email", null);
                 StringRequest postRequest = new StringRequest(Request.Method.POST, "http://188.166.149.168:3030/addFR",
@@ -131,15 +135,20 @@ public class UsersAdapter extends BaseAdapter {
                                 holder.statusUSR.setText("Friend Request Sent!");
                                 userList.get(position).setStatus("Friend Request Sent!");
                                 button.setVisibility(View.INVISIBLE);
-                                Toast.makeText(mContext, "You have sent friend request to " + userList.get(position).getNameSurname() + ".",
-                                        Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar
+                                        .make(activity.findViewById(android.R.id.content), "You have sent friend request to " + userList.get(position).getNameSurname() + ".", Snackbar.LENGTH_LONG);
+                                snackbar.getView().setBackgroundColor(mContext.getResources().getColor(R.color.colorGreen));
+                                snackbar.show();
                             }
                         },
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 // error
-                                Toast.makeText(mContext, "Internet Connection Error!", Toast.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar
+                                        .make(activity.findViewById(android.R.id.content), "Internet Connection Fail!", Snackbar.LENGTH_LONG);
+                                snackbar.getView().setBackgroundColor(mContext.getResources().getColor(R.color.colorRed));
+                                snackbar.show();
                             }
                         }
                 ) {
