@@ -3,14 +3,13 @@ package com.notifellow.su.notifellow;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -43,7 +42,10 @@ public class ForgotPassword extends AppCompatActivity{
                 String UserEmail = email.getText().toString().trim();
 
                 if (TextUtils.isEmpty(UserEmail)) {
-                    Toast.makeText(getApplicationContext(), "Please Enter Your Email!", Toast.LENGTH_LONG).show();
+                    Snackbar snackbar = Snackbar
+                            .make(findViewById(android.R.id.content), "Please Enter Your Email!", Snackbar.LENGTH_LONG);
+                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                    snackbar.show();
                     return;
                 }
 
@@ -56,16 +58,20 @@ public class ForgotPassword extends AppCompatActivity{
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
                                     // do something when mail was sent successfully.
-                                    Toast.makeText(ForgotPassword.this, "Please Check Your E-mail For Further Instructions!",
-                                            Toast.LENGTH_LONG).show();
+                                    Snackbar snackbar = Snackbar
+                                            .make(findViewById(android.R.id.content), "Please Check Your E-mail For Further Instructions!", Snackbar.LENGTH_LONG);
+                                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                                    snackbar.show();
                                     progressDialog.dismiss();
                                 }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(ForgotPassword.this, e.getLocalizedMessage(),
-                                Toast.LENGTH_LONG).show();
+                        Snackbar snackbar = Snackbar
+                                .make(findViewById(android.R.id.content), e.getMessage(), Snackbar.LENGTH_LONG);
+                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                        snackbar.show();
                         progressDialog.dismiss();
                     }
                 });

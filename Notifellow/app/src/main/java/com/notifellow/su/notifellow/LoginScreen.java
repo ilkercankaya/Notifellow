@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,8 +14,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -35,11 +34,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.onesignal.OneSignal;
-
 import java.util.HashMap;
 import java.util.Map;
 
-import io.rmiri.buttonloading.ButtonLoading;
 
 
 public class LoginScreen extends AppCompatActivity {
@@ -150,16 +147,28 @@ public class LoginScreen extends AppCompatActivity {
                 switch (result.getStatus().getStatusCode()) {
                     //  https://developers.google.com/android/reference/com/google/android/gms/common/api/CommonStatusCodes.html#NETWORK_ERROR
                     case 15:
-                        Toast.makeText(getApplicationContext(), "Timeout Occured!", Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar
+                                .make(findViewById(android.R.id.content), "Timeout Occured!", Snackbar.LENGTH_LONG);
+                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                        snackbar.show();
                         break;
                     case 7:
-                        Toast.makeText(getApplicationContext(), "Network Error Occured!", Toast.LENGTH_SHORT).show();
+                        Snackbar snackbarTwo = Snackbar
+                                .make(findViewById(android.R.id.content), "Network Error Occured!", Snackbar.LENGTH_LONG);
+                        snackbarTwo.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                        snackbarTwo.show();
                         break;
                     case 5:
-                        Toast.makeText(getApplicationContext(), "Invalid Account!", Toast.LENGTH_SHORT).show();
+                        Snackbar snackbarThree = Snackbar
+                                .make(findViewById(android.R.id.content), "Invalid Account!", Snackbar.LENGTH_LONG);
+                        snackbarThree.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                        snackbarThree.show();
                         break;
                     case 13:
-                        Toast.makeText(getApplicationContext(), "An Unknown Error Account!", Toast.LENGTH_SHORT).show();
+                        Snackbar snackbarFour = Snackbar
+                                .make(findViewById(android.R.id.content), "An Unknown Error Account!", Snackbar.LENGTH_LONG);
+                        snackbarFour.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                        snackbarFour.show();
                         break;
                 }
             }
@@ -207,7 +216,13 @@ public class LoginScreen extends AppCompatActivity {
                     queue.add(postRequest);
                 }
                 else
-                    Toast.makeText(getApplicationContext()," Internet Connection Fail!", Toast.LENGTH_LONG).show();
+                {
+                    Snackbar snackbar = Snackbar
+                            .make(findViewById(android.R.id.content), "Internet Connection Fail!", Snackbar.LENGTH_LONG);
+                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                    snackbar.show();
+                }
+
             }});
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
@@ -246,8 +261,11 @@ public class LoginScreen extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() { //When the task fails
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(LoginScreen.this, e.getLocalizedMessage(),
-                        Toast.LENGTH_LONG).show();
+
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(android.R.id.content), e.getMessage(), Snackbar.LENGTH_LONG);
+                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                snackbar.show();
                 progressDialog.dismiss();
                 exception.setText(e.getLocalizedMessage());
                 exception.setTextColor(Color.parseColor("#ff1919"));
@@ -277,12 +295,18 @@ public class LoginScreen extends AppCompatActivity {
 
 
         if (TextUtils.isEmpty(email)) {
-            Toast.makeText(getApplicationContext(), "Enter an email address!", Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar
+                    .make(findViewById(android.R.id.content), "Enter an email address!", Snackbar.LENGTH_LONG);
+            snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+            snackbar.show();
             return;
         }
 
         if (TextUtils.isEmpty(password)) {
-            Toast.makeText(getApplicationContext(), "Enter a password!", Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar
+                    .make(findViewById(android.R.id.content), "Enter a password!", Snackbar.LENGTH_LONG);
+            snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+            snackbar.show();
             return;
         }
         progressDialog.setMessage("Signing in Please Wait...");
