@@ -164,6 +164,10 @@ public class AddReminder extends AppCompatActivity {
         titleTextView = findViewById(R.id.reminderTxt);
 
         wifiSpinner = findViewById(R.id.spinnerWiFi);
+        final List<String> list = new ArrayList<String>();
+        list.add("Please Click Refresh");
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, list);
+        wifiSpinner.setAdapter(adapter);
         wifiName = ""; //By Default, set WiFi name := ""
         refreshWifi.setOnClickListener(new View.OnClickListener() {
             @Override
