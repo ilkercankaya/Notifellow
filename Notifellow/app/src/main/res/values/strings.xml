@@ -105,22 +105,6 @@
     <string name="pref_title_ringtone">Ringtone</string>
     <string name="pref_ringtone_silent">Silent</string>
 
-    <!--Camera Strings-->
-    <string name="picture">Picture</string>
-    <string name="description_info">Info</string>
-    <string name="request_permission">This sample needs camera permission.</string>
-    <string name="camera_error">This device doesn\'t support Camera2 API.</string>
-    <string name="intro_message">
-        <![CDATA[
-
-
-            This sample demonstrates the basic use of Camera2 API. Check the source code to see how
-            you can display camera preview and take pictures.
-
-
-        ]]>
-    </string>
-
 
     <string name="pref_title_vibrate">Vibrate</string>
     <!--<string name="refresh_gps_service">refresh GPS service</string>-->
@@ -139,8 +123,8 @@
     <string name="get_notes">Get Notes</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
-    <string name="notes_camera">NotesCamera</string>
-    <string name="add_image_nfrom_gallery">Add image From Gallery</string>
+    <!--<string name="notes_camera">NotesCamera</string>-->
+    <!--<string name="add_image_from_gallery">Add image From Gallery</string>-->
     <string name="capture_image">Capture image</string>
     <string name="save_note">Save Note</string>
     <string name="title_activity_social">Social</string>
@@ -156,5 +140,24 @@
     <string name="info">Info</string>
     <!--<string name="map_activity">mapActivity</string>-->
 
+
+
+    <!--Testing purposes start-->
+    <string name="quickstart_message">Click the SUBSCRIBE TO NEWS button below to subscribe to the
+        news topic. Messages sent to the news topic will be received. The LOG TOKEN button logs the
+        InstanceID token to logcat.</string>
+    <string name="subscribe_to_news">Subscribe To News</string>
+    <string name="log_token">Log Token</string>
+
+    <string name="msg_subscribed">Subscribed to news topic</string>
+    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
+
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <!--
+        This is the name that users will see when interacting with this channel.
+        It should describe the category of notifications that will be sent through this channel
+     -->
+    <string name="default_notification_channel_name" translatable="true">News</string>
+    <!--Testing purposes end-->
 
 </resources>

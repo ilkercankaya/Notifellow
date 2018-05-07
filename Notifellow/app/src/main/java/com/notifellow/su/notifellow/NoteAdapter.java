@@ -5,10 +5,12 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,14 +26,14 @@ import java.util.List;
 public class NoteAdapter extends ArrayAdapter<Note> {
 
 
-    Activity context;
+    private Activity context;
 
     private Dialog noteInfoDialog;
-    protected static ImageView imageView;
+    private ImageView imageView;
     private TextView tv_tittle;
     private TextView tv_note;
-    protected static String path;
-    String id;
+    private String path;
+    private String id;
 
     NoteAdapter(Activity context, List<Note> taskList) {
         super(context, R.layout.note_row, taskList);
@@ -55,6 +57,17 @@ public class NoteAdapter extends ArrayAdapter<Note> {
                 Intent intent = new Intent(NoteAdapter.this.getContext(), GalleryActivity.class);
                 NoteAdapter.this.getContext().startActivity(intent);
                 imageView.setVisibility(View.VISIBLE);
+
+                // error case: if user changes his/her mind.
+                if (path.equals("defaultImagePath")) {
+                    imageView.setVisibility(View.GONE);
+                }
+                else{
+                    imageView.setVisibility(View.VISIBLE);
+                    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                    Bitmap bitmap = BitmapFactory.decodeFile(path, bmOptions);
+                    imageView.setImageBitmap(bitmap);
+                }
             }
         });
 
@@ -68,25 +81,27 @@ public class NoteAdapter extends ArrayAdapter<Note> {
                 }
                 String note = tv_note.getText().toString();
                 NoteCreateActivity.schema.updateAllButEmailAndId(Integer.parseInt(id),title, note, path);
-                Toast.makeText(getContext(), "Note Updated. Please refresh the page to see changes.",
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Note Updated. Please refresh the page to see changes.",
+//                        Toast.LENGTH_SHORT).show();
                 notifyDataSetChanged();
                 noteInfoDialog.dismiss();
             }
         });
 
-        Cursor cursor = NoteCreateActivity.schema.getItemImagePath(id);
-        cursor.moveToFirst();
-        path = cursor.getString(0);
+        path = NoteCreateActivity.schema.getItemImagePath(id);
 
         tv_tittle.setText(note.getTitle());
         tv_note.setText(note.getNote());
 
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        Bitmap bitmap = BitmapFactory.decodeFile(note.getImagePath(), bmOptions);
-        imageView.setImageBitmap(bitmap);
-        if(bitmap == null){
-            imageView.setVisibility(View.INVISIBLE);
+        String tmp_path = note.getImagePath();
+        if (tmp_path.equals("defaultImagePath") || tmp_path == null) {
+            imageView.setVisibility(View.GONE);
+        }
+        else{
+            imageView.setVisibility(View.VISIBLE);
+            Bitmap bitmap = BitmapFactory.decodeFile(note.getImagePath(), bmOptions);
+            imageView.setImageBitmap(bitmap);
         }
 
         noteInfoDialog.show();
@@ -99,6 +114,10 @@ public class NoteAdapter extends ArrayAdapter<Note> {
      */
     private void toastMessage(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    protected void setPath(String path){
+        this.path = path;
     }
 
 
@@ -136,11 +155,21 @@ public class NoteAdapter extends ArrayAdapter<Note> {
             holder.descriptionTextView.setText(getItem(position).getNote());
         }
 
+        if(getItem(position).getImagePath() == null){
+            holder.imageView.setVisibility(View.GONE);
+            Log.e(NoteAdapter.class.getSimpleName(),"IMAGEPATH IS NULL!!");
+            // User did not select image earlier. so skip this case.
+        }else{
+            if(!getItem(position).getImagePath().equals("defaultImagePath")){
+                holder.imageView.setVisibility(View.VISIBLE);
+                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                Bitmap bitmap = BitmapFactory.decodeFile(getItem(position).getImagePath(), bmOptions);
+                holder.imageView.setImageBitmap(bitmap);
+            }else{
+                holder.imageView.setVisibility(View.GONE);
+            }
+        }
 
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        Bitmap bitmap = BitmapFactory.decodeFile(getItem(position).getImagePath(), bmOptions);
-
-        holder.imageView.setImageBitmap(bitmap);
 
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,19 +182,20 @@ public class NoteAdapter extends ArrayAdapter<Note> {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("Do you want to delete this note?");
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setMessage("Are you sure you want to erase this note?");
+                builder.setNegativeButton("No, I've changed my mind.",
+                        new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
                     }
                 });
-                builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Yes, delete it.", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         int code = Integer.parseInt(getItem(position).getId());
                         NoteCreateActivity.schema.deleteByID(String.valueOf(code));
-                        NotesFragment.noteList.remove(position);
-                        NotesFragment.noteAdapter.notifyDataSetChanged();
-                        Toast.makeText(context, "" + "" + "Task deleted!", Toast.LENGTH_LONG).show();
+                        NoteFragment.noteList.remove(position);
+                        NoteFragment.noteAdapter.notifyDataSetChanged();
+//                        Toast.makeText(context, "" + "" + "Task deleted!", Toast.LENGTH_LONG).show();
                     }
                 });
                 AlertDialog dialog = builder.create();
@@ -179,8 +209,8 @@ public class NoteAdapter extends ArrayAdapter<Note> {
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView titleTextView;
-        private TextView descriptionTextView;
+        private TextView  titleTextView;
+        private TextView  descriptionTextView;
         private ImageView imageView;
         private ImageView cancelTask;
 

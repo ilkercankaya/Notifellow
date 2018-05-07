@@ -135,6 +135,7 @@ public class AlarmDBSchema extends SQLiteOpenHelper{
             cursor.moveToFirst();
 
         String title = cursor.getString(cursor.getColumnIndex(TITLE));
+        cursor.close();
         return title;
     }
 
@@ -146,6 +147,7 @@ public class AlarmDBSchema extends SQLiteOpenHelper{
             cursor.moveToFirst();
 
         String startTime = cursor.getString(cursor.getColumnIndex(START_TIME));
+        cursor.close();
         return startTime;
     }
 
@@ -157,6 +159,7 @@ public class AlarmDBSchema extends SQLiteOpenHelper{
             cursor.moveToFirst();
 
         String endTime = cursor.getString(cursor.getColumnIndex(END_TIME));
+        cursor.close();
         return endTime;
     }
 
@@ -168,6 +171,7 @@ public class AlarmDBSchema extends SQLiteOpenHelper{
             cursor.moveToFirst();
 
         String wifiName = cursor.getString(cursor.getColumnIndex(WIFINAME));
+        cursor.close();
         return wifiName;
     }
 
@@ -179,6 +183,7 @@ public class AlarmDBSchema extends SQLiteOpenHelper{
             cursor.moveToFirst();
 
         String location = cursor.getString(cursor.getColumnIndex(LOCATION));
+        cursor.close();
         return location;
     }
 
@@ -190,6 +195,7 @@ public class AlarmDBSchema extends SQLiteOpenHelper{
             cursor.moveToFirst();
 
         String email = cursor.getString(cursor.getColumnIndex(EMAIL));
+        cursor.close();
         return email;
     }
 
