@@ -22,6 +22,7 @@
         >
 
         <LinearLayout
+            android:id="@+id/feedUserLay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -36,6 +37,7 @@
                 />
 
             <TextView
+                android:id="@+id/feedUsernameTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Username Comes Here."
@@ -54,12 +56,239 @@
             android:src="@drawable/line"
             android:tint="@color/colorBlue"
             android:padding="0dp"
-            android:layout_marginBottom="8dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="16dp"
+            >
+
+            <LinearLayout
+                android:id="@+id/feedTitleLay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp"
+                >
+
+                <ImageView
+                    android:id="@+id/feedTitleImg"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_reminder"
+                    android:tint="@color/colorBlue"
+
+                    />
+                <TextView
+                    android:id="@+id/feedTitleTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorBlue"
+                    android:textStyle="bold"
+                    android:text="Here comes our Event title, to make it more then one row in order to see if layout gets fucked up, im bullshitting right now. As I thought, it works fine."
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/feedDateLay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp"
+                >
+
+                <ImageView
+                    android:id="@+id/feedDateImg"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_clock"
+                    android:tint="@color/colorBlue"
+
+                    />
+                <LinearLayout
+                    android:id="@+id/feedDateTxtLay"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/feedDateStartLay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:id="@+id/feedDateStartsAt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:textColor="@color/colorBlue"
+                            android:text="Starts At:"
+                            android:textStyle="bold"
+                            />
+                        <TextView
+                            android:id="@+id/feedDateStartsAtTxt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:textColor="@color/colorBlue"
+                            android:textSize="14sp"
+                            android:text="Starting date comes here"
+                            />
+
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/feedDateEndLay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:id="@+id/feedDateEndsAt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorBlue"
+                            android:textSize="14sp"
+                            android:text="Ends At:"
+                            android:textStyle="bold"
+                            />
+                        <TextView
+                            android:id="@+id/feedDateEndsAtTxt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorBlue"
+                            android:layout_marginStart="8dp"
+                            android:textSize="14sp"
+                            android:text="Ending date comes here"
+                            />
+
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/feedLocationLay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                >
+
+                <ImageView
+                    android:id="@+id/feedLocationImg"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_location_2"
+                    android:tint="@color/colorBlue"
+                    />
+                <TextView
+                    android:id="@+id/feedLocationTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Here comes the location of your Event/Task/Reminder, to see how it looks after more than 1 row, it turns out to be great again."
+                    android:textColor="@color/colorBlue"
+                    android:textSize="14sp"
+                    />
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:src="@drawable/line"
+            android:tint="@color/colorBlue"
+            android:padding="0dp"
             />
 
 
+            <LinearLayout
+                android:id="@+id/feedActionLay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center_vertical"
+                >
+                <ImageButton
+                    android:id="@+id/feedJoinBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless"
+                    android:src="@drawable/ic_more"
+                    />
 
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:src="@color/colorBlue"
+                    android:padding="0dp"
+                    />
+
+                <ImageButton
+                    android:id="@+id/feedParticipantsBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless"
+                    android:src="@drawable/ic_social"
+                    />
+
+                <ImageView
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:src="@color/colorBlue"
+                    android:padding="0dp"
+                    />
+
+                <ImageButton
+                    android:id="@+id/feedCommentBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless"
+                    android:src="@drawable/ic_comments"
+
+                    />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
 
 
 </LinearLayout>
