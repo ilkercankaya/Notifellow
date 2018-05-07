@@ -187,7 +187,7 @@ public class LoginScreen extends AppCompatActivity {
             @Override
             public void idsAvailable(final String userId, final String registrationId) {
                 Log.d("debug", "User:" + userId);
-                if (registrationId != null) {
+                if (userId != null) {
                     StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                             new Response.Listener<String>() {
                                 @Override
