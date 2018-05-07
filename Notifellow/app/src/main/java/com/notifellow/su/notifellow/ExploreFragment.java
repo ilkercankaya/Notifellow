@@ -111,7 +111,7 @@ public class ExploreFragment extends Fragment {
                                 } catch (JSONException e) {
                                     Snackbar snackbar = Snackbar
                                             .make(getActivity().findViewById(android.R.id.content), e.getMessage(), Snackbar.LENGTH_LONG);
-                                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                     snackbar.show();
                                     swipeRefreshLayout.setRefreshing(false); // STOP ANIMATION
                                 }
@@ -123,7 +123,7 @@ public class ExploreFragment extends Fragment {
                                 // error
                                 Snackbar snackbar = Snackbar
                                         .make(getActivity().findViewById(android.R.id.content), "Internet Connection Fail!", Snackbar.LENGTH_LONG);
-                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                 snackbar.show();
                                 swipeRefreshLayout.setRefreshing(false); // STOP ANIMATION
                             }
@@ -193,7 +193,7 @@ public class ExploreFragment extends Fragment {
                                 } catch (JSONException e) {
                                     Snackbar snackbar = Snackbar
                                             .make(getActivity().findViewById(android.R.id.content), e.getMessage(), Snackbar.LENGTH_LONG);
-                                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                     snackbar.show();
                                 }
                             }
@@ -204,7 +204,7 @@ public class ExploreFragment extends Fragment {
                                 // error
                                 Snackbar snackbar = Snackbar
                                         .make(getActivity().findViewById(android.R.id.content), "Internet Connection Fail!", Snackbar.LENGTH_LONG);
-                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                 snackbar.show();
                             }
                         }

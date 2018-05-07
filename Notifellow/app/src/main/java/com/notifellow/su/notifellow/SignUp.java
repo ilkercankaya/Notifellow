@@ -79,7 +79,7 @@ public class SignUp extends AppCompatActivity {
                 if (TextUtils.isEmpty(username)) {
                     Snackbar snackbar = Snackbar
                             .make(findViewById(android.R.id.content), "Please Enter Username!", Snackbar.LENGTH_LONG);
-                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                     snackbar.show();
                     return;
                 }
@@ -88,7 +88,7 @@ public class SignUp extends AppCompatActivity {
                 if (TextUtils.isEmpty(email)) {
                     Snackbar snackbar = Snackbar
                             .make(findViewById(android.R.id.content), "Please Enter An Email Adress!", Snackbar.LENGTH_LONG);
-                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                     snackbar.show();
                     return;
                 }
@@ -97,7 +97,7 @@ public class SignUp extends AppCompatActivity {
                 if (TextUtils.isEmpty(password)) {
                     Snackbar snackbar = Snackbar
                             .make(findViewById(android.R.id.content), "Please Enter Password!", Snackbar.LENGTH_LONG);
-                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                     snackbar.show();
 
                     return;
@@ -106,7 +106,7 @@ public class SignUp extends AppCompatActivity {
                 if (TextUtils.isEmpty(passwordRpt)) {
                     Snackbar snackbar = Snackbar
                             .make(findViewById(android.R.id.content), "Please Enter Repeated Password!", Snackbar.LENGTH_LONG);
-                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                     snackbar.show();
 
                     return;
@@ -115,7 +115,7 @@ public class SignUp extends AppCompatActivity {
                 if (!password.equals(passwordRpt)) {
                     Snackbar snackbar = Snackbar
                             .make(findViewById(android.R.id.content), "Passwords Do Not Match!", Snackbar.LENGTH_LONG);
-                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                     snackbar.show();
 
                     return;
@@ -124,7 +124,7 @@ public class SignUp extends AppCompatActivity {
                 if (password.length() < 6) {
                     Snackbar snackbar = Snackbar
                             .make(findViewById(android.R.id.content), "Password Should Be Longer Than 6 Characters!", Snackbar.LENGTH_LONG);
-                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                     snackbar.show();
 
                     return;
@@ -171,7 +171,7 @@ public class SignUp extends AppCompatActivity {
                                             public void onFailure(@NonNull Exception e) {
                                                 Snackbar snackbar = Snackbar
                                                         .make(findViewById(android.R.id.content), e.getMessage(), Snackbar.LENGTH_LONG);
-                                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                                 snackbar.show();
                                                 progressDialog.dismiss();
                                             }
@@ -179,13 +179,13 @@ public class SignUp extends AppCompatActivity {
                                     } else if (response.equals("Failed to insert") || response.equals("Query Error Occured!")) {
                                         Snackbar snackbar = Snackbar
                                                 .make(findViewById(android.R.id.content), "Failed Due To Server Side", Snackbar.LENGTH_LONG);
-                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                         snackbar.show();
                                         progressDialog.dismiss();
                                     } else if (response.equals("EXISTS")) {
                                         Snackbar snackbar = Snackbar
                                                 .make(findViewById(android.R.id.content), "The Username Already Exists. Please Choice Another!", Snackbar.LENGTH_LONG);
-                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                         snackbar.show();
 
                                         progressDialog.dismiss();
@@ -197,7 +197,7 @@ public class SignUp extends AppCompatActivity {
                                     //This code is executed if there is an error.
                                     Snackbar snackbar = Snackbar
                                             .make(findViewById(android.R.id.content), "Internet Connection Fail!", Snackbar.LENGTH_LONG);
-                                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                     snackbar.show();
                                     progressDialog.dismiss();
                                 }
@@ -215,7 +215,7 @@ public class SignUp extends AppCompatActivity {
                         } else {
                             Snackbar snackbar = Snackbar
                                     .make(findViewById(android.R.id.content), "Internet Connection Fail!", Snackbar.LENGTH_LONG);
-                            snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                            snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                             snackbar.show();
                         }
                     }

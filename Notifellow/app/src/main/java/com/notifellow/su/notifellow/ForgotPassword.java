@@ -44,7 +44,7 @@ public class ForgotPassword extends AppCompatActivity{
                 if (TextUtils.isEmpty(UserEmail)) {
                     Snackbar snackbar = Snackbar
                             .make(findViewById(android.R.id.content), "Please Enter Your Email!", Snackbar.LENGTH_LONG);
-                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                     snackbar.show();
                     return;
                 }
@@ -60,7 +60,7 @@ public class ForgotPassword extends AppCompatActivity{
                                     // do something when mail was sent successfully.
                                     Snackbar snackbar = Snackbar
                                             .make(findViewById(android.R.id.content), "Please Check Your E-mail For Further Instructions!", Snackbar.LENGTH_LONG);
-                                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorBlue));
                                     snackbar.show();
                                     progressDialog.dismiss();
                                 }
@@ -70,7 +70,7 @@ public class ForgotPassword extends AppCompatActivity{
                     public void onFailure(@NonNull Exception e) {
                         Snackbar snackbar = Snackbar
                                 .make(findViewById(android.R.id.content), e.getMessage(), Snackbar.LENGTH_LONG);
-                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                         snackbar.show();
                         progressDialog.dismiss();
                     }

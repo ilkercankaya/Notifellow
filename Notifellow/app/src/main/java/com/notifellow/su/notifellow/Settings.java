@@ -164,7 +164,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                     } else {
                                         Snackbar snackbar = Snackbar
                                                 .make(getActivity().findViewById(android.R.id.content), "Internet Connection Fail!", Snackbar.LENGTH_LONG);
-                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                         snackbar.show();
                                     }
                                     break;
@@ -185,7 +185,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                                 editor.commit();
                                                 Snackbar snackbar = Snackbar
                                                         .make(getActivity().findViewById(android.R.id.content),"Profile Picture Deleted!", Snackbar.LENGTH_LONG);
-                                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorBlue));
                                                 snackbar.show();
                                                 ImageView img = (ImageView) getActivity().findViewById(R.id.pictureSettings);
                                                 img.setImageResource(R.drawable.ic_profile);
@@ -197,7 +197,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                                 // Uh-oh, an error occurred!
                                                 Snackbar snackbar = Snackbar
                                                         .make(getActivity().findViewById(android.R.id.content), exception.getMessage(), Snackbar.LENGTH_LONG);
-                                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                                 snackbar.show();
                                                 progressDialog.dismiss();
 
@@ -207,7 +207,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                     {
                                         Snackbar snackbar = Snackbar
                                                 .make(getActivity().findViewById(android.R.id.content), "Internet Connection Fail!", Snackbar.LENGTH_LONG);
-                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                         snackbar.show();
                                     }
                                     break;
@@ -241,7 +241,7 @@ public class Settings extends AppCompatPreferenceActivity {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             Snackbar snackbarUno = Snackbar
                                     .make(getActivity().findViewById(android.R.id.content),"Upload Successful", Snackbar.LENGTH_LONG);
-                            snackbarUno.getView().setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                            snackbarUno.getView().setBackgroundColor(getResources().getColor(R.color.colorBlue));
                             snackbarUno.show();
                             ImageView img = (ImageView) getActivity().findViewById(R.id.pictureSettings);
                             img.setImageURI(filePath);
@@ -259,13 +259,13 @@ public class Settings extends AppCompatPreferenceActivity {
                             }catch(FileNotFoundException e){
                                 Snackbar snackbar = Snackbar
                                         .make(getActivity().findViewById(android.R.id.content),e.getMessage(), Snackbar.LENGTH_LONG);
-                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                 snackbar.show();
 
                             }catch(IOException e){
                                 Snackbar snackbar = Snackbar
                                         .make(getActivity().findViewById(android.R.id.content),e.getMessage(), Snackbar.LENGTH_LONG);
-                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                 snackbar.show();
                             }
 
@@ -280,7 +280,7 @@ public class Settings extends AppCompatPreferenceActivity {
                         public void onFailure(@NonNull Exception e) {
                             Snackbar snackbar = Snackbar
                                     .make(getActivity().findViewById(android.R.id.content),e.getMessage(), Snackbar.LENGTH_LONG);
-                            snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                            snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                             snackbar.show();
                             progressDialog.dismiss();
                         }
@@ -288,7 +288,7 @@ public class Settings extends AppCompatPreferenceActivity {
                 } else {
                     Snackbar snackbar = Snackbar
                             .make(getActivity().findViewById(android.R.id.content),"Select an image", Snackbar.LENGTH_LONG);
-                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                     snackbar.show();
                 }
             }
@@ -333,7 +333,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                             public boolean onException(Exception e, File model, Target<GlideDrawable> target, boolean isFirstResource) {
                                                 Snackbar snackbar = Snackbar
                                                         .make(getActivity().findViewById(android.R.id.content),e.getMessage(), Snackbar.LENGTH_LONG);
-                                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                                 snackbar.show();
                                                 progressDialog.dismiss();
 
@@ -367,7 +367,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                     public boolean onException(Exception e, File model, Target<GlideDrawable> target, boolean isFirstResource) {
                                         Snackbar snackbar = Snackbar
                                                 .make(getActivity().findViewById(android.R.id.content),e.getMessage(), Snackbar.LENGTH_LONG);
-                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                         snackbar.show();
 
                                         progressDialog.dismiss();
@@ -411,7 +411,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                     public boolean onException(Exception e, File model, Target<GlideDrawable> target, boolean isFirstResource) {
                                         Snackbar snackbar = Snackbar
                                                 .make(getActivity().findViewById(android.R.id.content),e.getMessage(), Snackbar.LENGTH_LONG);
-                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                         snackbar.show();
                                         progressDialog.dismiss();
 
@@ -504,7 +504,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                                         // error
                                                         Snackbar snackbar = Snackbar
                                                                 .make(getActivity().findViewById(android.R.id.content),"Internet Connection Error!", Snackbar.LENGTH_LONG);
-                                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                                         snackbar.show();
                                                     }
                                                 }
@@ -522,7 +522,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                         // If sign in fails, display a message to the user.
                                         Snackbar snackbar = Snackbar
                                                 .make(getActivity().findViewById(android.R.id.content),task.getException().getMessage(), Snackbar.LENGTH_LONG);
-                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                         snackbar.show();
                                     }
                                 }
@@ -531,7 +531,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                 public void onFailure(@NonNull Exception e) {
                                     Snackbar snackbar = Snackbar
                                             .make(getActivity().findViewById(android.R.id.content),e.getMessage(), Snackbar.LENGTH_LONG);
-                                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                     snackbar.show();
                                 }
                             });
@@ -581,7 +581,7 @@ public class Settings extends AppCompatPreferenceActivity {
                             if (!newPw.getText().toString().trim().equals(repPw.getText().toString().trim())) {
                                 Snackbar snackbar = Snackbar
                                         .make(getActivity().findViewById(android.R.id.content),"Your New Passwords Dont Match!", Snackbar.LENGTH_LONG);
-                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                 snackbar.show();
 
                             } else {
@@ -605,12 +605,12 @@ public class Settings extends AppCompatPreferenceActivity {
                                                             if (task.isSuccessful()) {
                                                                 Snackbar snackbar = Snackbar
                                                                         .make(getActivity().findViewById(android.R.id.content),"Your Password Has Been Updated!", Snackbar.LENGTH_LONG);
-                                                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                                                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorBlue));
                                                                 snackbar.show();
                                                             } else {
                                                                 Snackbar snackbar = Snackbar
                                                                         .make(getActivity().findViewById(android.R.id.content),task.getException().getMessage(), Snackbar.LENGTH_LONG);
-                                                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                                                 snackbar.show();
 
                                                             }
@@ -619,7 +619,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                                 } else {
                                                     Snackbar snackbar = Snackbar
                                                             .make(getActivity().findViewById(android.R.id.content),task.getException().getMessage(), Snackbar.LENGTH_LONG);
-                                                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                                     snackbar.show();
                                                 }
                                             }
@@ -628,7 +628,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                     public void onFailure(@NonNull Exception e) {
                                         Snackbar snackbar = Snackbar
                                                 .make(getActivity().findViewById(android.R.id.content),e.getMessage(), Snackbar.LENGTH_LONG);
-                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                         snackbar.show();
                                     }
                                 });
@@ -686,7 +686,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                 name.setSummary("No internet Connection To Display Fullname!");
                                 Snackbar snackbar = Snackbar
                                         .make(getActivity().findViewById(android.R.id.content),"Internet Connection Error!", Snackbar.LENGTH_LONG);
-                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                 snackbar.show();
                             }
                         }
@@ -728,7 +728,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                         editor.commit();
                                         Snackbar snackbar = Snackbar
                                                 .make(getActivity().findViewById(android.R.id.content),"Your Name Has Been Updated!", Snackbar.LENGTH_LONG);
-                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorBlue));
                                         snackbar.show();
                                         name.setText(value);
                                         name.setSummary(value);
@@ -741,7 +741,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                     // error
                                     Snackbar snackbar = Snackbar
                                             .make(getActivity().findViewById(android.R.id.content),"Internet Connection Error!", Snackbar.LENGTH_LONG);
-                                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                     snackbar.show();
                                     String prevValue = shared.getString("name", null);
                                     if (prevValue == null || prevValue.equals("")) {
@@ -796,7 +796,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                 username.setSummary("No internet Connection To Display Username!");
                                 Snackbar snackbar = Snackbar
                                         .make(getActivity().findViewById(android.R.id.content),"Internet Connection Error!", Snackbar.LENGTH_LONG);
-                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                 snackbar.show();
                             }
                         }
@@ -829,7 +829,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                         //if exists store the old user back
                                         Snackbar snackbar = Snackbar
                                                 .make(getActivity().findViewById(android.R.id.content),"The Username Is Choicen!", Snackbar.LENGTH_LONG);
-                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                         snackbar.show();
 
                                         final String prevUsername = shared.getString("username", null);
@@ -841,7 +841,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                         //giving in dummy values since rooted phones can access shared objects without security.
                                         Snackbar snackbar = Snackbar
                                                 .make(getActivity().findViewById(android.R.id.content),"Your Username Has Been Updated!", Snackbar.LENGTH_LONG);
-                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorBlue));
                                         snackbar.show();
                                         editor.putString("username", value);
                                         editor.commit();
@@ -861,7 +861,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                     username.setSummary(prevUsername);
                                     Snackbar snackbar = Snackbar
                                             .make(getActivity().findViewById(android.R.id.content),"Internet Connection Error!", Snackbar.LENGTH_LONG);
-                                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                     snackbar.show();
                                 }
                             }
@@ -914,7 +914,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                                             Log.i("Settings: ", "Email updated, change in LocalDB");
                                                             Snackbar snackbar = Snackbar
                                                                     .make(getActivity().findViewById(android.R.id.content),"Your Email Has Been Updated!", Snackbar.LENGTH_LONG);
-                                                            snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                                                            snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorBlue));
                                                             snackbar.show();
                                                             Main.updateEmailAddressesLocalDB(oldEmail, value);
                                                             NoteCreateActivity.updateEmailAddressesNotesDB(oldEmail, value);
@@ -934,7 +934,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                                         usermailREF.setSummary(prevUsername);
                                                         Snackbar snackbar = Snackbar
                                                                 .make(getActivity().findViewById(android.R.id.content),"Internet Connection Error!", Snackbar.LENGTH_LONG);
-                                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                                         snackbar.show();
                                                     }
                                                 }
@@ -955,7 +955,7 @@ public class Settings extends AppCompatPreferenceActivity {
 
                                         Snackbar snackbar = Snackbar
                                                 .make(getActivity().findViewById(android.R.id.content),task.getException().getMessage(), Snackbar.LENGTH_LONG);
-                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                         snackbar.show();
                                     }
                                 }
@@ -996,7 +996,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                 pnumber.setSummary("No internet Connection To Display Phone Number!");
                                 Snackbar snackbar = Snackbar
                                         .make(getActivity().findViewById(android.R.id.content),"Internet Connection Error!", Snackbar.LENGTH_LONG);
-                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                 snackbar.show();
                             }
                         }
@@ -1046,7 +1046,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                     // error
                                     Snackbar snackbar = Snackbar
                                             .make(getActivity().findViewById(android.R.id.content),"Internet Connection Error!", Snackbar.LENGTH_LONG);
-                                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                                     snackbar.show();
                                     String prevValue = shared.getString("pnumber", null);
                                     if (prevValue == null || prevValue.equals("")) {

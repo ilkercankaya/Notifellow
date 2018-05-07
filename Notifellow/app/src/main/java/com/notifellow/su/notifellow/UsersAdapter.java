@@ -137,7 +137,7 @@ public class UsersAdapter extends BaseAdapter {
                                 button.setVisibility(View.INVISIBLE);
                                 Snackbar snackbar = Snackbar
                                         .make(activity.findViewById(android.R.id.content), "You have sent friend request to " + userList.get(position).getNameSurname() + ".", Snackbar.LENGTH_LONG);
-                                snackbar.getView().setBackgroundColor(mContext.getResources().getColor(R.color.colorGreen));
+                                snackbar.getView().setBackgroundColor(mContext.getResources().getColor(R.color.colorBlue));
                                 snackbar.show();
                             }
                         },
@@ -147,7 +147,7 @@ public class UsersAdapter extends BaseAdapter {
                                 // error
                                 Snackbar snackbar = Snackbar
                                         .make(activity.findViewById(android.R.id.content), "Internet Connection Fail!", Snackbar.LENGTH_LONG);
-                                snackbar.getView().setBackgroundColor(mContext.getResources().getColor(R.color.colorRed));
+                                snackbar.getView().setBackgroundColor(mContext.getResources().getColor(R.color.colorGray));
                                 snackbar.show();
                             }
                         }

@@ -65,7 +65,7 @@ public class PendingFriendsAdapter extends ArrayAdapter<Friends> {
                         if (response.equals("UPDATED 201")) {
                             Snackbar snackbar = Snackbar
                                     .make(parent, "Added User " + getItem(position).getUserName()+ "!", Snackbar.LENGTH_LONG);
-                            snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorGreen));
+                            snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorBlue));
                             snackbar.show();
 
                             SocialFriends.friendsList.add(getItem(position));
@@ -76,7 +76,7 @@ public class PendingFriendsAdapter extends ArrayAdapter<Friends> {
                         } else {
                             Snackbar snackbar = Snackbar
                                     .make(parent, "Database Error!", Snackbar.LENGTH_LONG);
-                            snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorRed));
+                            snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorGray));
                             snackbar.show();
                         }
                     }
@@ -87,7 +87,7 @@ public class PendingFriendsAdapter extends ArrayAdapter<Friends> {
                                 // error
                                 Snackbar snackbar = Snackbar
                                         .make(parent, "Internet Connection Error!", Snackbar.LENGTH_LONG);
-                                snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorRed));
+                                snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorGray));
                                 snackbar.show();
                             }
                         }) {
@@ -116,14 +116,14 @@ public class PendingFriendsAdapter extends ArrayAdapter<Friends> {
                         if (response.equals("DELETED 201")) {
                             Snackbar snackbar = Snackbar
                                     .make(parent, "Deleted User " + getItem(position).getUserName()+ "!", Snackbar.LENGTH_LONG);
-                            snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorGreen));
+                            snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorBlue));
                             snackbar.show();
                             SocialRequests.pendingFriendsList.remove(position);
                             SocialRequests.pendingFriendsAdapter.notifyDataSetChanged();
                         } else {
                             Snackbar snackbar = Snackbar
                                     .make(parent, "Database Error!", Snackbar.LENGTH_LONG);
-                            snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorRed));
+                            snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorGray));
                             snackbar.show();
                         }
                     }
@@ -134,7 +134,7 @@ public class PendingFriendsAdapter extends ArrayAdapter<Friends> {
                                 // error
                                 Snackbar snackbar = Snackbar
                                         .make(parent, "Internet Connection Error!", Snackbar.LENGTH_LONG);
-                                snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorRed));
+                                snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorGray));
                                 snackbar.show();
                             }
                         }) {

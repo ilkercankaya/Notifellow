@@ -149,25 +149,25 @@ public class LoginScreen extends AppCompatActivity {
                     case 15:
                         Snackbar snackbar = Snackbar
                                 .make(findViewById(android.R.id.content), "Timeout Occured!", Snackbar.LENGTH_LONG);
-                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                         snackbar.show();
                         break;
                     case 7:
                         Snackbar snackbarTwo = Snackbar
                                 .make(findViewById(android.R.id.content), "Network Error Occured!", Snackbar.LENGTH_LONG);
-                        snackbarTwo.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                        snackbarTwo.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                         snackbarTwo.show();
                         break;
                     case 5:
                         Snackbar snackbarThree = Snackbar
                                 .make(findViewById(android.R.id.content), "Invalid Account!", Snackbar.LENGTH_LONG);
-                        snackbarThree.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                        snackbarThree.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                         snackbarThree.show();
                         break;
                     case 13:
                         Snackbar snackbarFour = Snackbar
                                 .make(findViewById(android.R.id.content), "An Unknown Error Account!", Snackbar.LENGTH_LONG);
-                        snackbarFour.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                        snackbarFour.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                         snackbarFour.show();
                         break;
                 }
@@ -219,7 +219,7 @@ public class LoginScreen extends AppCompatActivity {
                 {
                     Snackbar snackbar = Snackbar
                             .make(findViewById(android.R.id.content), "Internet Connection Fail!", Snackbar.LENGTH_LONG);
-                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                     snackbar.show();
                 }
 
@@ -264,7 +264,7 @@ public class LoginScreen extends AppCompatActivity {
 
                 Snackbar snackbar = Snackbar
                         .make(findViewById(android.R.id.content), e.getMessage(), Snackbar.LENGTH_LONG);
-                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
                 snackbar.show();
                 progressDialog.dismiss();
                 exception.setText(e.getLocalizedMessage());
@@ -297,7 +297,7 @@ public class LoginScreen extends AppCompatActivity {
         if (TextUtils.isEmpty(email)) {
             Snackbar snackbar = Snackbar
                     .make(findViewById(android.R.id.content), "Enter an email address!", Snackbar.LENGTH_LONG);
-            snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+            snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
             snackbar.show();
             return;
         }
@@ -305,7 +305,7 @@ public class LoginScreen extends AppCompatActivity {
         if (TextUtils.isEmpty(password)) {
             Snackbar snackbar = Snackbar
                     .make(findViewById(android.R.id.content), "Enter a password!", Snackbar.LENGTH_LONG);
-            snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorRed));
+            snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
             snackbar.show();
             return;
         }

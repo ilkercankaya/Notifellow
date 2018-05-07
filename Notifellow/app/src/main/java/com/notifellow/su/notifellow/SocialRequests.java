@@ -87,7 +87,7 @@ public class SocialRequests extends Fragment{
                         // error
                         Snackbar snackbar = Snackbar
                                 .make(rootView, "Internet Connection Error!", Snackbar.LENGTH_LONG);
-                        snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorRed));
+                        snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorGray));
                         snackbar.show();
 
                     }
@@ -152,7 +152,7 @@ public class SocialRequests extends Fragment{
                                 // error
                                 Snackbar snackbar = Snackbar
                                         .make(rootView, "Internet Connection Error!", Snackbar.LENGTH_LONG);
-                                snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorRed));
+                                snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorGray));
                                 snackbar.show();
                                 swipeRefreshLayout.setRefreshing(false); // STOP ANIMATION
 

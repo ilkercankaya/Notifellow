@@ -71,7 +71,7 @@ public class FriendsAdapter extends ArrayAdapter<Friends> {
                             public void onResponse(String response) {
                                 Snackbar snackbar = Snackbar
                                         .make(parent, "Deleted User " + getItem(position).getUserName()+ "!", Snackbar.LENGTH_LONG);
-                                snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorGreen));
+                                snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorBlue));
                                 snackbar.show();
                                 remove(getItem(position));
                                 notifyDataSetChanged();
@@ -84,7 +84,7 @@ public class FriendsAdapter extends ArrayAdapter<Friends> {
                                 // error
                                 Snackbar snackbar = Snackbar
                                         .make(parent, "Database Error!", Snackbar.LENGTH_LONG);
-                                snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorRed));
+                                snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorGray));
                                 snackbar.show();
                             }
                         }
