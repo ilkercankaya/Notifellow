@@ -22,14 +22,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import static com.notifellow.su.notifellow.NotePathUtils.isDownloadsDocument;
 import static com.notifellow.su.notifellow.NotePathUtils.isExternalStorageDocument;
@@ -37,27 +31,23 @@ import static com.notifellow.su.notifellow.NotePathUtils.isExternalStorageDocume
 
 public class NoteCreateActivity extends AppCompatActivity {
 
-    private static final String TASKS_KEY = "com.notifellow.su.notifellow.tasks_key";
+    private static final String TASKS_KEY = "com.notifellow.su.notifellow.notes_key";
     private static final String TAG = NoteCreateActivity.class.getSimpleName();
 
-    Uri uri;
-
-    private static final int CAMERA_REQUEST = 1888;
-    private static final int REQUEST_CODE_GALLERY = 999;
+    private static final int REQUEST_CAMERA_PERMISSION = 1888;
+//    private static final int EXTERNAL_STORAGE_PERMISSION = 665; // WE ARE NOT BEAST.. yet.
+    private static final int REQUEST_CAMERA_ACTION = 9001;
+    private static final int REQUEST_GALLERY = 999;
     private EditText etTitle;
     private EditText etEntry;
     private ImageView imageView;
     private ArrayList<Note> noteArrayList;
     private String path;
-    private NoteAdapter noteAdapter;
-
-
     private String email;
-    FloatingActionButton fabSet, fabImage, fabCamera;
-    static NotesDBSchema schema;
+    static NoteDBSchema schema;
 
 
-    public static void updateEmailAddressesNotesDB(String oldEmail, String value){
+    static void updateEmailAddressesNotesDB(String oldEmail, String value){
         schema.updateEmailAddresses(oldEmail, value);
     }
 
@@ -75,88 +65,120 @@ public class NoteCreateActivity extends AppCompatActivity {
 
         email = receivedIntent.getStringExtra("email");
 
-        fabSet = findViewById(R.id.fabSet);
+        FloatingActionButton fabSet = findViewById(R.id.fabSet);
         if (fabSet != null) {
             fabSet.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     createNoteTask();
+                    NoteFragment.noteAdapter.notifyDataSetChanged();
                     finish(); //navigates to schedule.
                 }
             });
         }
 
-        fabImage = findViewById(R.id.fabImage);
+        FloatingActionButton fabImage = findViewById(R.id.fabImage);
         if (fabImage != null) {
             fabImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ActivityCompat.requestPermissions(NoteCreateActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_GALLERY);
+                    ActivityCompat.requestPermissions(NoteCreateActivity.this,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_GALLERY);
                 }
             });
         }
 
 
 //        hasSystemFeature(PackageManager.FEATURE_CAMERA) ?? :)
-        fabCamera = findViewById(R.id.fabCamera);
+        FloatingActionButton fabCamera = findViewById(R.id.fabCamera);
         if (fabCamera != null) {
             fabCamera.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(NoteCreateActivity.this,
+//                            Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//                        ActivityCompat.requestPermissions(NoteCreateActivity.this,
+//                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, EXTERNAL_STORAGE_PERMISSION);
+//                    }
+                    ActivityCompat.requestPermissions(NoteCreateActivity.this,
+                            new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
                 }
             });
         }
 
-        schema = new NotesDBSchema(this);
+        schema = new NoteDBSchema(this);
         if (savedInstanceState == null) {
             noteArrayList = new ArrayList<>();
 
-            noteArrayList.add(new Note("0", "Default title", "Default note", String.valueOf(R.drawable.ic_launcher_background), "default email"));
+            noteArrayList.add(new Note("0", "Default title", "Default note",
+                    "defaultImagePath", "default email"));
         } else {
             noteArrayList = savedInstanceState.getParcelableArrayList(TASKS_KEY);
         }
 
-        noteAdapter = new NoteAdapter(this, noteArrayList);
+        NoteFragment.noteAdapter = new NoteAdapter(this, noteArrayList);
+    }
+
+    /**
+     * Callback received when a permissions request has been completed.
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if (requestCode == REQUEST_GALLERY) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, REQUEST_GALLERY);
+            } else {
+                Toast.makeText(getApplicationContext(), "You don't have perms to access file location", Toast.LENGTH_SHORT).show();
+            }
+            return;
+        } else if (requestCode == REQUEST_CAMERA_PERMISSION) {// Received permission result for camera permission.
+
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    cameraIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    startActivityForResult(cameraIntent, REQUEST_CAMERA_ACTION);
+            } else {
+                Toast.makeText(this, "Permissions were not granted.", Toast.LENGTH_SHORT).show();
+//                Snackbar.make(mLayout, "Permissions were not granted.", Snackbar.LENGTH_SHORT).show();
+            }
+
+        }
+
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private boolean AddData(String newTitle, String newNote, String newImagePath, String email) {
         boolean insertData = NoteCreateActivity.schema.addData(newTitle, newNote, newImagePath, email);
-        if (insertData) {
-            toastMessage("Data Successfully Inserted!");
-            return true;
-        } else {
+        if(!insertData){
+            Log.d(TAG, "During Data(note) insertion something went wrong.");
             toastMessage("Something went wrong");
             return false;
         }
+        Log.d(TAG, "Data (note) insertion was successful.");
+        return true;
     }
 
     private void createNoteTask() {
         String title = etTitle.getText().toString();
         if (title.equals("")) {
-            showToast("Please enter a title to note entry.");
+            toastMessage("Please enter a title to note entry.");
             return;
         }
 
         String note = etEntry.getText().toString();
-
-
+        if(path == null) path = "defaultImagePath";
         if (AddData(title, note, path, email)) {
-            Cursor cursor = NoteCreateActivity.schema.getItemID(title);
-            cursor.moveToFirst();
-            String id = cursor.getString(0);
+            String id = NoteCreateActivity.schema.getNoteID(title, note, path, email);
             noteArrayList.add(new Note(id, title, note, path, email));
-            noteAdapter.notifyDataSetChanged();
+            NoteFragment.noteAdapter.notifyDataSetChanged();
+            if(path.equals("defaultImagePath")) path = null;
         }
 
     }
-
-
-    public void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -165,7 +187,7 @@ public class NoteCreateActivity extends AppCompatActivity {
     }
 
     /**
-     * customizable toast
+     * generify toast
      *
      * @param message
      */
@@ -176,92 +198,33 @@ public class NoteCreateActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_GALLERY && resultCode == RESULT_OK && data != null) {
-            uri = data.getData();
+        if (requestCode == REQUEST_GALLERY && resultCode == RESULT_OK && data != null) {
+            Uri uri = data.getData();
             path = getRealPathFromURI_API19(this, uri);
             imageView.setImageURI(uri);
 
 //            Toast.makeText(this, path, Toast.LENGTH_LONG).show();
 
-        }
-        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+        } else if (requestCode == REQUEST_CAMERA_ACTION && resultCode == RESULT_OK) {
 
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
-            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-//            path = MediaStore.Images.Media.insertImage(getContentResolver(), photo, "Title", null);
-            path = storeImage(photo);
-            imageView.setImageBitmap(photo);
+            Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+            Cursor cursor = getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    new String[]{MediaStore.Images.Media.DATA, MediaStore.Images.Media.DATE_ADDED,
+                            MediaStore.Images.ImageColumns.ORIENTATION},
+                    MediaStore.Images.Media.DATE_ADDED, null, "date_added ASC");
+            if(cursor != null && cursor.moveToLast()){
+                Uri fileURI = Uri.parse(cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA)));
+                path = fileURI.toString();
+                cursor.close();
+            }
+            imageView.setImageBitmap(thumbnail);
+
         }
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    /**
-     * @param image
-     * @return string location of Photo taken.
-     */
-    private String storeImage(Bitmap image) {
-        File pictureFile = getOutputMediaFile();
-        if (pictureFile == null) {
-            Log.d(TAG,
-                    "Error creating media file, check storage permissions: ");// e.getMessage());
-            return null;
-        }
-        try {
-            FileOutputStream fos = new FileOutputStream(pictureFile);
-            image.compress(Bitmap.CompressFormat.PNG, 90, fos);
-            fos.close();
-        } catch (FileNotFoundException e) {
-            Log.d(TAG, "File not found: " + e.getMessage());
-        } catch (IOException e) {
-            Log.d(TAG, "Error accessing file: " + e.getMessage());
-        }
-        return pictureFile.getAbsolutePath();
-    }
-
-    /** Create a File for saving an image or video */
-    private  File getOutputMediaFile(){
-        // To be safe, you should check that the SDCard is mounted
-        // using Environment.getExternalStorageState() before doing this.
-        File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
-                + "/Android/data/"
-                + getApplicationContext().getPackageName()
-                + "/Files");
-
-        // This location works best if you want the created images to be shared
-        // between applications and persist after your app has been uninstalled.
-
-        // Create the storage directory if it does not exist
-        if (! mediaStorageDir.exists()){
-            if (! mediaStorageDir.mkdirs()){
-                return null;
-            }
-        }
-        // Create a media file name
-        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
-        File mediaFile;
-        String mImageName="MI_"+ timeStamp +".jpg";
-        mediaFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
-        return mediaFile;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
-        if (requestCode == REQUEST_CODE_GALLERY) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType("image/*");
-                startActivityForResult(intent, REQUEST_CODE_GALLERY);
-            } else {
-                Toast.makeText(getApplicationContext(), "You don't have perms to access file location", Toast.LENGTH_SHORT).show();
-            }
-            return;
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-    public static String getRealPathFromURI_API19(Context context, Uri uri) {
+    static String getRealPathFromURI_API19(Context context, Uri uri) {
         String filePath = "";
 
         // ExternalStorageProvider

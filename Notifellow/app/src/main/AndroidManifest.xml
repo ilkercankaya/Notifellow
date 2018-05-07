@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!--do we need write_external_storage? internal storage seems just fine.-->
     <uses-feature android:name="android.hardware.wifi" />
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
+    <uses-feature android:name="android.hardware.camera" />
 
     <application
         android:allowBackup="true"

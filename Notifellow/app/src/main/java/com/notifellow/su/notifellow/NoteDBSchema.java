@@ -11,11 +11,11 @@ import android.util.Log;
  * Created by User on 2/28/2017.
  */
 
-public class NotesDBSchema extends SQLiteOpenHelper {
+public class NoteDBSchema extends SQLiteOpenHelper {
 
-    private static NotesDBSchema schemaInstance;
+    private static NoteDBSchema schemaInstance;
 
-    private static final String TAG = NotesDBSchema.class.getSimpleName();
+    private static final String TAG = NoteDBSchema.class.getSimpleName();
 
     private static final String TABLE_NAME = "NOTE_TABLE";
     private static final String ID = "ID";
@@ -32,13 +32,13 @@ public class NotesDBSchema extends SQLiteOpenHelper {
             EMAIL + " TEXT);";
     private static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
-    NotesDBSchema(Context context) {
+    NoteDBSchema(Context context) {
         super(context, TABLE_NAME, null, 1);
     }
 
-    public static NotesDBSchema getInstance(Context context) {
+    public static NoteDBSchema getInstance(Context context) {
         if (schemaInstance == null) {
-            schemaInstance = new NotesDBSchema(context.getApplicationContext());
+            schemaInstance = new NoteDBSchema(context.getApplicationContext());
         }
         return schemaInstance;
     }
@@ -63,7 +63,7 @@ public class NotesDBSchema extends SQLiteOpenHelper {
         contentValues.put(IMAGE_PATH, itemPath);
         contentValues.put(EMAIL, email);
 
-        Log.d(TAG, "addData: Adding " + title + "\n" + note + "\nand \n" + itemPath + "\nto " + TABLE_NAME);
+        Log.d(TAG, "addData: Adding " + title + "\nand\n" + note + "\nand\n" + itemPath + "\nto " + TABLE_NAME);
 
         long result = db.insert(TABLE_NAME, null, contentValues);
         //if date as inserted incorrectly it will return -1
@@ -71,11 +71,11 @@ public class NotesDBSchema extends SQLiteOpenHelper {
     }
 
     /**
-     * Returns all the data from database
+     * Returns all the Notes from database
      *
      * @return
      */
-    public Cursor getData() {
+    public Cursor getAllNotes() {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME;
         return db.rawQuery(query, null);
@@ -84,13 +84,28 @@ public class NotesDBSchema extends SQLiteOpenHelper {
     /**
      * Returns only the ID that matches the name passed in
      *
-     * @param name
-     * @return
+     * @param title
+     * @param note
+     * @param image_path
+     * @param email
+     * @return ID
      */
-    public Cursor getItemID(String name) {
+    public String getNoteID(String title, String note, String image_path, String email) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT " + ID + " FROM " + TABLE_NAME + " WHERE " + TITLE + " = '" + name + "'";
-        return db.rawQuery(query, null);
+
+        Cursor cursor = db.query(TABLE_NAME, new String[]{ID},
+                TITLE      + " = ? " + " AND " +
+                         NOTE       + " = ? " + " AND " +
+                         IMAGE_PATH + " = ? " + " AND " +
+                         EMAIL      + " = ?",
+                new String[]{title, note, image_path, email},
+                null, null, null);
+        if(cursor != null)
+            cursor.moveToFirst();
+
+        String id = cursor.getString(cursor.getColumnIndex(ID));
+        cursor.close();
+        return id;
     }
 
     /**
@@ -99,10 +114,20 @@ public class NotesDBSchema extends SQLiteOpenHelper {
      * @param id
      * @return
      */
-    public Cursor getItemImagePath(String id) {
+    public String getItemImagePath(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT " + IMAGE_PATH + " FROM " + TABLE_NAME + " WHERE " + ID + " = '" + id + "'";
-        return db.rawQuery(query, null);
+//        String query = "SELECT " + IMAGE_PATH + " FROM " + TABLE_NAME + " WHERE " + ID + " = '" + id + "'";
+//        return db.rawQuery(query, null);
+
+        Cursor cursor = db.query(TABLE_NAME, new String[]{IMAGE_PATH}, ID + " = ? ",
+                new String[]{String.valueOf(id)},null,null,null);
+
+        if(cursor != null)
+            cursor.moveToFirst();
+
+        String imagePath = cursor.getString(cursor.getColumnIndex(IMAGE_PATH));
+        cursor.close();
+        return imagePath;
     }
 
 
@@ -170,34 +195,36 @@ public class NotesDBSchema extends SQLiteOpenHelper {
 
     public String getTitle(String ID) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_NAME, new String[]{TITLE}, this.ID + " = ? ", new String[]{ID}, null, null, null);
+        Cursor cursor = db.query(TABLE_NAME, new String[]{TITLE}, NoteDBSchema.ID + " = ? ", new String[]{ID}, null, null, null);
 
         if (cursor != null) cursor.moveToFirst();
 
         String title = cursor.getString(cursor.getColumnIndex(TITLE));
+        cursor.close();
         return title;
     }
 
     public String getEmail(String ID) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_NAME, new String[]{EMAIL}, this.ID + " = ? ", new String[]{ID}, null, null, null);
+        Cursor cursor = db.query(TABLE_NAME, new String[]{EMAIL}, NoteDBSchema.ID + " = ? ", new String[]{ID}, null, null, null);
 
         if (cursor != null) cursor.moveToFirst();
 
         String email = cursor.getString(cursor.getColumnIndex(EMAIL));
+        cursor.close();
         return email;
     }
 
     public int deleteByID(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        int num = db.delete(TABLE_NAME, ID + " = ? ", new String[]{id});
-        return num;
+        int result_code = db.delete(TABLE_NAME, ID + " = ? ", new String[]{id});
+        return result_code;
     }
 
     public int deleteByEmail(String email) {
         SQLiteDatabase db = this.getWritableDatabase();
-        int num = db.delete(TABLE_NAME, EMAIL + " = ? ", new String[]{email});
-        return num;
+        int result_code = db.delete(TABLE_NAME, EMAIL + " = ? ", new String[]{email});
+        return result_code;
     }
 
 

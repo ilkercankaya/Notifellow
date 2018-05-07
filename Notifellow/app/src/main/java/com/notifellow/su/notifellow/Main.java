@@ -64,7 +64,7 @@ public class Main extends AppCompatActivity
     private FrameLayout mainFrame;
 
     private FeedFragment feedFragment;
-    private NotesFragment notesFragment;
+    private NoteFragment noteFragment;
     private MessagingFragment messagingFragment;
     private ScheduleFragment scheduleFragment;
     private ExploreFragment exploreFragment;
@@ -195,7 +195,7 @@ public class Main extends AppCompatActivity
 
 
         feedFragment = new FeedFragment();
-        notesFragment= new NotesFragment();
+        noteFragment = new NoteFragment();
         messagingFragment = new MessagingFragment();
         scheduleFragment = new ScheduleFragment();
         exploreFragment = new ExploreFragment();
@@ -234,7 +234,7 @@ public class Main extends AppCompatActivity
                         return true;
                     case R.id.btnNotes:
                         toolbar.setTitle("Notes");
-                        setFragment(notesFragment);
+                        setFragment(noteFragment);
                         return true;
                     case R.id.btnMessages:
                         toolbar.setTitle("Direct Messaging");
@@ -344,9 +344,9 @@ public class Main extends AppCompatActivity
         schema = AlarmDBSchema.getInstance(getApplicationContext());
 //        NoteCreateActivity.notesSchema = Schema.getInstance(this); //TODO: Uncomment and change this once you put notes.
 
-        NoteCreateActivity.schema = NotesDBSchema.getInstance(this);
+        NoteCreateActivity.schema = NoteDBSchema.getInstance(this);
 
-//        NotesListActivity.schema = NotesDBSchema.getInstance(this);
+//        NotesListActivity.schema = NoteDBSchema.getInstance(this);
 
         Main.context = getApplicationContext();
     }
