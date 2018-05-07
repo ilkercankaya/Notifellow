@@ -136,7 +136,7 @@ public class SignUp extends AppCompatActivity {
                 //Now create user on Notifellow server
                 OneSignal.idsAvailable(new OneSignal.IdsAvailableHandler() {
                     @Override
-                    public void idsAvailable(String userId, final String registrationId) {
+                    public void idsAvailable(final String userId, final String registrationId) {
                         Log.d("debug", "User:" + userId);
                         if (registrationId != null) {
                             StringRequest MyStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -206,7 +206,7 @@ public class SignUp extends AppCompatActivity {
                                     Map<String, String> MyData = new HashMap<String, String>();
                                     MyData.put("usernameGiven", username); //Add the data you'd like to send to the server.
                                     MyData.put("emailGiven", lowerCaseMail); //Add the data you'd like to send to the server. oneSignal
-                                    MyData.put("oneSignal", registrationId); //Add the data you'd like to send to the server.
+                                    MyData.put("oneSignal", userId); //Add the data you'd like to send to the server.
 
                                     return MyData;
                                 }

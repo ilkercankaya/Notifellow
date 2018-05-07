@@ -185,7 +185,7 @@ public class LoginScreen extends AppCompatActivity {
         //Create user on Notifellow server
         OneSignal.idsAvailable(new OneSignal.IdsAvailableHandler() {
             @Override
-            public void idsAvailable(String userId, final String registrationId) {
+            public void idsAvailable(final String userId, final String registrationId) {
                 Log.d("debug", "User:" + userId);
                 if (registrationId != null) {
                     StringRequest postRequest = new StringRequest(Request.Method.POST, url,
@@ -209,7 +209,7 @@ public class LoginScreen extends AppCompatActivity {
                             Map<String, String> params = new HashMap<String, String>();
                             params.put("usernameGiven", UserMailName);
                             params.put("emailGiven", lowerCaseMail); //Add the data you'd like to send to the server.
-                            params.put("oneSignal", registrationId); //Add the data you'd like to send to the server.
+                            params.put("oneSignal", userId); //Add the data you'd like to send to the server.
                             return params;
                         }
                     };

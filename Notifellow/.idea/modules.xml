@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Notifellow.iml" filepath="$PROJECT_DIR$/Notifellow.iml" />
+      <module fileurl="file://C:\Users\not DATA\AndroidStudioProjects\NotifellowV2\notifellow_v0.2\Notifellow\Notifellow.iml" filepath="C:\Users\not DATA\AndroidStudioProjects\NotifellowV2\notifellow_v0.2\Notifellow\Notifellow.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\not DATA\AndroidStudioProjects\NotifellowV2\notifellow_v0.2\Notifellow\app\app.iml" filepath="C:\Users\not DATA\AndroidStudioProjects\NotifellowV2\notifellow_v0.2\Notifellow\app\app.iml" />
     </modules>
   </component>
 </project>
