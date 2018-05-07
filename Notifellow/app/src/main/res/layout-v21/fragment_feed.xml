@@ -5,12 +5,20 @@
     android:layout_height="match_parent"
     tools:context=".FeedFragment">
 
-    <TextView
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="FEED FRAGMENT"
-        android:layout_gravity="center"
-        android:gravity="center"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/feedLayout"
+        android:fitsSystemWindows="true"
+        >
+        <ListView
+            android:id="@+id/listView_Feed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </FrameLayout>
