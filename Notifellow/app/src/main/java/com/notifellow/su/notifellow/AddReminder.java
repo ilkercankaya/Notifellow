@@ -140,14 +140,14 @@ public class AddReminder extends AppCompatActivity {
         //// INFO DIALOG IMPLEMENTATION END /////
 
 
-        //// Comment Section /////
+        //// Comment Section ///// //TODO: ILKERE COMMENTS ARE HERE
         comment = findViewById(R.id.makeInitialComment); // text of comment, you will take the comment data from here.
         commentTitle = findViewById(R.id.reminderComment);  // title, you dont have any business with this
         // i will disable comments if visible to friends is not setted true.
         // because comment is needed for feed, if a task will not be visible to others,
         // comments is not needed.
-        comment.setEnabled(false);
-        commentTitle.setTextColor(getResources().getColor(R.color.colorGray));
+           comment.setEnabled(false);
+           commentTitle.setTextColor(getResources().getColor(R.color.colorGray));
         /// end of comment section ///
 
         refreshWifi = findViewById(R.id.RefreshBtn);
@@ -172,18 +172,18 @@ public class AddReminder extends AppCompatActivity {
                 if (isChecked) {
                     publicity = "1";
                     // make comment section enabled
+                    comment.setClickable(true);
                     comment.setEnabled(true);
-                    comment.setInputType(InputType.TYPE_CLASS_TEXT);
                     comment.setFocusable(true);
                     commentTitle.setTextColor(getResources().getColor(R.color.colorBlue));
+                    comment.requestFocus();
+                    comment.setPressed(true);
 
                 } else {
                     publicity = "0";
                     //Make comment section grayed out and not editable
                     comment.setText("");
                     comment.setEnabled(false);
-                    comment.setInputType(InputType.TYPE_NULL);
-                    comment.setFocusable(false);
                     commentTitle.setTextColor(getResources().getColor(R.color.colorGray));
                 }
             }
