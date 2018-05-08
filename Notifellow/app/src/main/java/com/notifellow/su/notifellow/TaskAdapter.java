@@ -15,7 +15,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.EnumSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 //REMOVE COMMENTS AFTER LAYOUT IS DONE
 
@@ -24,6 +35,50 @@ public class TaskAdapter extends ArrayAdapter<Task>{
 
     Dialog taskInfoDialog;
     TextView titleTextView, startsTextView, endsTextView, remindsTextView, locationTextView, wifiTextView, noteTextView;
+
+
+    public static Map<TimeUnit,Long> computeDiff(Date date1, Date date2) {
+        long diffInMillies = date2.getTime() - date1.getTime();
+        List<TimeUnit> units = new ArrayList<TimeUnit>(EnumSet.allOf(TimeUnit.class));
+        Collections.reverse(units);
+        Map<TimeUnit,Long> result = new LinkedHashMap<TimeUnit,Long>();
+        long milliesRest = diffInMillies;
+        for ( TimeUnit unit : units ) {
+            long diff = unit.convert(milliesRest,TimeUnit.MILLISECONDS);
+            long diffInMilliesForUnit = unit.toMillis(diff);
+            milliesRest = milliesRest - diffInMilliesForUnit;
+            result.put(unit,diff);
+        }
+        return result;
+    }
+
+    private String getDayOfWeek(int value) {
+        String day = "";
+        switch (value) {
+            case 1:
+                day = "Sunday";
+                break;
+            case 2:
+                day = "Monday";
+                break;
+            case 3:
+                day = "Tuesday";
+                break;
+            case 4:
+                day = "Wednesday";
+                break;
+            case 5:
+                day = "Thursday";
+                break;
+            case 6:
+                day = "Friday";
+                break;
+            case 7:
+                day = "Saturday";
+                break;
+        }
+        return day;
+    }
 
     public TaskAdapter(Context context, List<Task> taskList){
         super(context, R.layout.schedule_row, taskList);
@@ -48,6 +103,7 @@ public class TaskAdapter extends ArrayAdapter<Task>{
         String date = splitted[0];
         String time = splitted[1];
         date = ScheduleFragment.formatDate(date);
+
         startsTextView.setText(time + "\t\t" + date);
 
         endsTextView.setText(task.getEndTime());
@@ -104,9 +160,57 @@ public class TaskAdapter extends ArrayAdapter<Task>{
         String date = splitted[0];
         String time = splitted[1];
         date = ScheduleFragment.formatDate(date);
-        holder.startTextView.setText(time + "\t\t" + date);
 
-        holder.endTextView.setText(getItem(position).getEndTime());
+        DateFormat format = new SimpleDateFormat("dd - MM - yyyy HH:mm");
+        Date startDate = new Date();
+        try {
+            startDate = format.parse(date + " " + time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Date currentDate = new Date();
+
+        Map<TimeUnit,Long> dayDifference = computeDiff(currentDate, startDate);
+        long days = dayDifference.get(TimeUnit.DAYS);
+
+        if(days < 7){
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(startDate);
+            holder.startTextView.setText(time + "\t\t" + getDayOfWeek(cal.get(Calendar.DAY_OF_WEEK)));
+        }
+        else{
+            holder.startTextView.setText(time + "\t\t" + date);
+        }
+
+
+
+
+        String endTime = getItem(position).getEndTime();
+        splitted = endTime.split("\t\t");
+        date = splitted[1];
+        time = splitted[0];
+
+        Date endDate = new Date();
+        try {
+            endDate = format.parse(date + " " + time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        dayDifference = computeDiff(currentDate, endDate);
+        days = dayDifference.get(TimeUnit.DAYS);
+
+        if(days < 7){
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(endDate);
+            holder.endTextView.setText(time + "\t\t" + getDayOfWeek(cal.get(Calendar.DAY_OF_WEEK)));
+        }
+        else{
+            holder.endTextView.setText(time + "\t\t" + date);
+        }
+
+
 
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
