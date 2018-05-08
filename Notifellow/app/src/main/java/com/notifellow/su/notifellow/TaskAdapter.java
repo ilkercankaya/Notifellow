@@ -133,6 +133,10 @@ public class TaskAdapter extends ArrayAdapter<Task>{
 
         noteTextView.setText(task.getNote());
 
+        int width = (int)(getContext().getResources().getDisplayMetrics().widthPixels); // fills the screen in terms of width
+        int height = (int)(getContext().getResources().getDisplayMetrics().heightPixels*0.90); //fills the 90% of screen in terms of height
+        taskInfoDialog.getWindow().setLayout(width, height); // set the layout width and height
+        
         taskInfoDialog.show();
     }
 
