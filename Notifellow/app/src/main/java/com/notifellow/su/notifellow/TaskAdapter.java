@@ -104,10 +104,52 @@ public class TaskAdapter extends ArrayAdapter<Task>{
         String time = splitted[1];
         date = ScheduleFragment.formatDate(date);
 
-        startsTextView.setText(time + "\t\t" + date);
+        DateFormat formatToDate = new SimpleDateFormat("dd - MM - yyyy HH:mm");
+        Date startDate = new Date();
+        try {
+            startDate = formatToDate.parse(date + " " + time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        endsTextView.setText(task.getEndTime());
-        remindsTextView.setText(task.getRemindTime());
+        DateFormat formatToString = new SimpleDateFormat("EEEE MMMM dd, HH:mm, yyyy");
+        String startDateInString = formatToString.format(startDate);
+        startsTextView.setText(startDateInString);
+
+
+
+        String endTime = task.getEndTime();
+        splitted = endTime.split("\t\t");
+        date = splitted[1];
+        time = splitted[0];
+
+        Date endDate = new Date();
+        try {
+            endDate = formatToDate.parse(date + " " + time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        String endDateInString = formatToString.format(endDate);
+        endsTextView.setText(endDateInString);
+
+
+
+        String remindTime = task.getRemindTime();
+        splitted = remindTime.split("\t\t");
+        date = splitted[1];
+        time = splitted[0];
+
+        Date remindDate = new Date();
+        try {
+            remindDate = formatToDate.parse(date + " " + time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        String remindDateInString = formatToString.format(remindDate);
+        remindsTextView.setText(remindDateInString);
+
 
         if(task.getLocation().equals("default")){
             locationTextView.setVisibility(View.GONE);
