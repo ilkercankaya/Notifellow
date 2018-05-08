@@ -140,7 +140,7 @@ public class AddReminder extends AppCompatActivity {
         //// INFO DIALOG IMPLEMENTATION END /////
 
 
-        //// Comment Section ///// //TODO: ILKERE COMMENTS ARE HERE
+        //// Comment Section ///// /
         comment = findViewById(R.id.makeInitialComment); // text of comment, you will take the comment data from here.
         commentTitle = findViewById(R.id.reminderComment);  // title, you dont have any business with this
         // i will disable comments if visible to friends is not setted true.
@@ -436,6 +436,7 @@ public class AddReminder extends AppCompatActivity {
                     MyData.put("startDate", startDateString); //Start of event
                     MyData.put("endDate", endDateString); //End of event
                     MyData.put("public", publicity); //Public or not
+                    MyData.put("initialComment", comment.getText().toString()); //initial comment
                     return MyData;
                 }
             };
