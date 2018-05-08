@@ -20,6 +20,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,6 +30,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -63,6 +65,7 @@ import java.util.Map;
 public class AddReminder extends AppCompatActivity {
 
     private Button locationButton, refreshWifi;
+
     FloatingActionButton fab;
     private String publicity;
     TextView titleTextView, startDateTextView, endDateTextView, remindDateTextView, notesTextView;
@@ -78,6 +81,7 @@ public class AddReminder extends AppCompatActivity {
     Calendar calendar;
     Spinner wifiSpinner;
     NetworkInfo netInfo;
+
 
     /**
      * Marker Location variable.
@@ -110,6 +114,7 @@ public class AddReminder extends AppCompatActivity {
     private Switch switchPublic;
     private Switch switchStat;
 
+
     String time, date;
 
     private SharedPreferences shared;
@@ -117,6 +122,9 @@ public class AddReminder extends AppCompatActivity {
     RequestQueue queue;
     private ProgressDialog progressDialog;
     Dialog InfoDialog;
+
+    private EditText comment;
+    private TextView commentTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +139,16 @@ public class AddReminder extends AppCompatActivity {
         InfoDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // DO NOT TOUCH, DESIGN ISSUES
         //// INFO DIALOG IMPLEMENTATION END /////
 
+
+        //// Comment Section /////
+        comment = findViewById(R.id.makeInitialComment); // text of comment, you will take the comment data from here.
+        commentTitle = findViewById(R.id.reminderComment);  // title, you dont have any business with this
+        // i will disable comments if visible to friends is not setted true.
+        // because comment is needed for feed, if a task will not be visible to others,
+        // comments is not needed.
+        comment.setEnabled(false);
+        commentTitle.setTextColor(getResources().getColor(R.color.colorGray));
+        /// end of comment section ///
 
         refreshWifi = findViewById(R.id.RefreshBtn);
         calendar = Calendar.getInstance();
@@ -153,12 +171,25 @@ public class AddReminder extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     publicity = "1";
+                    // make comment section enabled
+                    comment.setEnabled(true);
+                    comment.setInputType(InputType.TYPE_CLASS_TEXT);
+                    comment.setFocusable(true);
+                    commentTitle.setTextColor(getResources().getColor(R.color.colorBlue));
 
                 } else {
                     publicity = "0";
+                    //Make comment section grayed out and not editable
+                    comment.setText("");
+                    comment.setEnabled(false);
+                    comment.setInputType(InputType.TYPE_NULL);
+                    comment.setFocusable(false);
+                    commentTitle.setTextColor(getResources().getColor(R.color.colorGray));
                 }
             }
         });
+
+
 
 
         titleTextView = findViewById(R.id.reminderTxt);

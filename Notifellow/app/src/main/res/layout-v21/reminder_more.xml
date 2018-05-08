@@ -98,11 +98,41 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="28dp"
                 android:text="Set Task Visible to Friends"
-                android:layout_marginBottom="28dp"
                 android:textColor="@color/colorBlue"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:theme="@style/AlertDialog.AppCompat.Light" />
+
+            <TextView
+                android:id="@+id/reminderComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/imgMore"
+                android:layout_below="@+id/switchPublic"
+                android:layout_marginTop="16dp"
+                android:text="Comment"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorBlue"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/makeInitialComment"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/reminderComment"
+                android:layout_below="@+id/reminderComment"
+                android:backgroundTint="@color/colorGray"
+                android:layout_marginRight="28dp"
+                android:hint="Write your initial comment here."
+                android:ems="10"
+                android:inputType="textMultiLine"
+                android:text=""
+                android:textAlignment="textStart"
+                android:textColor="@color/colorGray"
+                android:textStyle="italic"
+                android:layout_marginBottom="28dp"
+                />
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
