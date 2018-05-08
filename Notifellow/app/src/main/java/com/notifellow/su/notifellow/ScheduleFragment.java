@@ -53,8 +53,6 @@ public class ScheduleFragment extends Fragment {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    Toast.makeText(getActivity(), "Add Reminder!", Toast.LENGTH_LONG).show();
                     Intent myIntent = new Intent(ScheduleFragment.this.getActivity(), AddReminder.class);
                     ScheduleFragment.this.startActivity(myIntent);
 
