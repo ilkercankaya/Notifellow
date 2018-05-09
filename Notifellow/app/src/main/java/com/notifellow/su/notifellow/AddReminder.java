@@ -389,6 +389,7 @@ public class AddReminder extends AppCompatActivity {
         if (netInfo != null) {
             final String startDateString = startDateObject.toString();
             final String endDateString = endDateObject.toString();
+            final String remindDateString = remind_time + "\t\t\t" + remind_date;
 
             queue = Volley.newRequestQueue(this);
             SharedPreferences settings = this.getSharedPreferences("shared", MODE_PRIVATE);
@@ -439,6 +440,7 @@ public class AddReminder extends AppCompatActivity {
                     MyData.put("location", loc); //Event Location
                     MyData.put("startDate", startDateString); //Start of event
                     MyData.put("endDate", endDateString); //End of event
+                    MyData.put("remindAt", remindDateString);
                     MyData.put("public", publicity); //Public or not
                     MyData.put("initialComment", comment.getText().toString()); //initial comment
                     return MyData;
