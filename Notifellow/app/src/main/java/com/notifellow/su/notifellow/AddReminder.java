@@ -19,6 +19,7 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
@@ -76,6 +77,8 @@ public class AddReminder extends AppCompatActivity {
 
     boolean isStartChosen = false;
     boolean isEndChosen = false;
+
+    boolean reminderAdded = false;
 
     String wifiName;
     Calendar calendar;
@@ -159,7 +162,8 @@ public class AddReminder extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     addTask();
-                    finish(); //navigates to schedule.
+                    if(reminderAdded)
+                        finish(); //navigates to schedule.
 
                 }
             });
@@ -450,17 +454,24 @@ public class AddReminder extends AppCompatActivity {
 
         wifiName = "";
         markerPlace = null;
+        reminderAdded = true;
     }
 
     //ToDo: This function will store information about the reminder in local database
     public void addTask() {
         if(titleTextView.getText().toString().equals("")){
-            Toast.makeText(getBaseContext(), "You should specify a title!", Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar
+                    .make(findViewById(android.R.id.content), "You should specify a title!", Snackbar.LENGTH_LONG);
+            snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
+            snackbar.show();
             return;
         }
 
         if (endYear != 0 && endYear <= startYear && endMonth <= startMonth && endDay <= startDay && endHour <= startHour && endMinute <= startMinute) {
-            Toast.makeText(getBaseContext(), "End date is not correct!", Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar
+                    .make(findViewById(android.R.id.content), "End date is not correct!", Snackbar.LENGTH_LONG);
+            snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
+            snackbar.show();
             return;
         }
 
@@ -480,10 +491,15 @@ public class AddReminder extends AppCompatActivity {
                 Intent intent = new Intent(this, ServiceListenWiFi.class);
                 this.startService(intent);
 
-                Toast.makeText(getBaseContext().getApplicationContext(), "Alarm set for: " + wifiName, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Alarm set for: " + wifiName, Toast.LENGTH_SHORT).show();
+
+                reminderAdded = true;
             }
             else{
-                Toast.makeText(getBaseContext(), "You should select a WiFi name, in order to set a WiFi based reminder!", Toast.LENGTH_SHORT).show();
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(android.R.id.content), "You should select a WiFi name, in order to set a WiFi based reminder!", Snackbar.LENGTH_LONG);
+                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
+                snackbar.show();
             }
             /*else if (markerPlace != null) {
                 //THIS ALARM WILL BE FIRED WHEN THE USER ONLY CHOOSE A LOCATION FOR ALARM
@@ -523,7 +539,10 @@ public class AddReminder extends AppCompatActivity {
             }
 
         } else {
-            Toast.makeText(getBaseContext(), "INVALID DATE. Please check the date and time for the reminder", Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar
+                    .make(findViewById(android.R.id.content), "INVALID DATE. Please check the date and time for the reminder", Snackbar.LENGTH_LONG);
+            snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
+            snackbar.show();
         }
     }
 
@@ -562,7 +581,10 @@ public class AddReminder extends AppCompatActivity {
 
 
         } catch (Exception ex) { //If WiFi is turned off
-            Toast.makeText(this, "Please turn on your WiFi, in order to see your saved WiFi's! " + wifiName, Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar
+                    .make(findViewById(android.R.id.content), "Please turn on your WiFi, in order to see your saved WiFi's!", Snackbar.LENGTH_LONG);
+            snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
+            snackbar.show();
         }
     }
 
@@ -572,7 +594,10 @@ public class AddReminder extends AppCompatActivity {
             public void onTimeSet(TimePicker timePicker, int hour, int minute) {
                 if (startDay == calendar.get(Calendar.DAY_OF_MONTH) && startMonth == calendar.get(Calendar.MONTH) && startYear == calendar.get(Calendar.YEAR)) {
                     if (hour <= calendar.get(Calendar.HOUR_OF_DAY) && minute <= calendar.get(Calendar.MINUTE)) {
-                        Toast.makeText(getBaseContext(), "You cannot choose time before now!", Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar
+                                .make(findViewById(android.R.id.content), "You cannot choose time before now!", Snackbar.LENGTH_LONG);
+                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
+                        snackbar.show();
                         startDateTextView.setText("Not Specified");
                     } else {
                         time = Integer.toString(hour) + ":" + String.format("%02d", minute);
@@ -623,7 +648,10 @@ public class AddReminder extends AppCompatActivity {
             public void onTimeSet(TimePicker timePicker, int hour, int minute) {
                 if (endDay == calendar.get(Calendar.DAY_OF_MONTH) && endMonth == calendar.get(Calendar.MONTH) && endYear == calendar.get(Calendar.YEAR)) {
                     if (hour <= calendar.get(Calendar.HOUR_OF_DAY) && minute <= calendar.get(Calendar.MINUTE)) {
-                        Toast.makeText(getBaseContext(), "You cannot choose time before now!", Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar
+                                .make(findViewById(android.R.id.content), "You cannot choose time before now!", Snackbar.LENGTH_LONG);
+                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
+                        snackbar.show();
                         endDateTextView.setText("Not Specified");
                     } else {
                         String time = Integer.toString(hour) + ":" + String.format("%02d", minute);
@@ -646,7 +674,10 @@ public class AddReminder extends AppCompatActivity {
 
     public void setEnd() {
         if (!isStartChosen) {
-            Toast.makeText(getBaseContext(), "You need choose Starting Time of the event first!", Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar
+                    .make(findViewById(android.R.id.content), "You need choose Starting Time of the event first!", Snackbar.LENGTH_LONG);
+            snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
+            snackbar.show();
         } else {
             endHour = calendar.get(Calendar.HOUR_OF_DAY);
             endMinute = calendar.get(Calendar.MINUTE);
@@ -677,7 +708,10 @@ public class AddReminder extends AppCompatActivity {
             public void onTimeSet(TimePicker timePicker, int hour, int minute) {
                 if (remindDay == calendar.get(Calendar.DAY_OF_MONTH) && remindMonth == calendar.get(Calendar.MONTH) && remindYear == calendar.get(Calendar.YEAR)) {
                     if (hour <= calendar.get(Calendar.HOUR_OF_DAY) && minute <= calendar.get(Calendar.MINUTE)) {
-                        Toast.makeText(getBaseContext(), "You cannot choose time before now!", Toast.LENGTH_SHORT).show();
+                        Snackbar snackbar = Snackbar
+                                .make(findViewById(android.R.id.content), "You cannot choose time before now!", Snackbar.LENGTH_LONG);
+                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
+                        snackbar.show();
                         remindDateTextView.setText("Not Specified");
                     } else {
                         String time = Integer.toString(hour) + ":" + String.format("%02d", minute);
@@ -698,7 +732,10 @@ public class AddReminder extends AppCompatActivity {
 
     public void setRemind() {
         if (!isStartChosen || !isEndChosen) {
-            Toast.makeText(this, "You need to choose Starting and Ending time of th event first!", Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar
+                    .make(findViewById(android.R.id.content), "You need to choose Starting and Ending time of the event first!", Snackbar.LENGTH_LONG);
+            snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
+            snackbar.show();
         } else {
             remindHour = calendar.get(Calendar.HOUR_OF_DAY);
             remindMinute = calendar.get(Calendar.MINUTE);
