@@ -108,8 +108,14 @@ public class UsersAdapter extends BaseAdapter {
         holder.statusUSR.setText(userList.get(position).getStatus());
         holder.profilepicIv.setImageURI(userList.get(position).getProfilePic());// used setImageResource but there are options,
         // setImageBitmap may be suitable for database i guess.
-        if (userList.get(position).getStatus().equals("You Can Add This User As A Friend."))
+        if (userList.get(position).getStatus().equals("You Can Add This User As A Friend.") ) {
             holder.addUSRBtn.setVisibility(View.VISIBLE);
+            holder.addUSRBtn.setText("+");
+        }
+        else if (userList.get(position).getStatus().equals("Friend Request Sent!") ) {
+            holder.addUSRBtn.setVisibility(View.VISIBLE);
+            holder.addUSRBtn.setText("-");
+        }
         final String user_info = (String) holder.name_surnameTv.getText();
 
         view.setOnClickListener(new View.OnClickListener() {
@@ -127,42 +133,79 @@ public class UsersAdapter extends BaseAdapter {
             public void onClick(final View view) {
                 final Button button = (Button) view;
                 final String email = shared.getString("email", null);
-                StringRequest postRequest = new StringRequest(Request.Method.POST, "http://188.166.149.168:3030/addFR",
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
+                if (button.getText().toString().equals("+"))
+                {
+                    StringRequest postRequest = new StringRequest(Request.Method.POST, "http://188.166.149.168:3030/addFR",
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
 
-                                holder.statusUSR.setText("Friend Request Sent!");
-                                userList.get(position).setStatus("Friend Request Sent!");
-                                button.setVisibility(View.INVISIBLE);
-                                Snackbar snackbar = Snackbar
-                                        .make(activity.findViewById(android.R.id.content), "You have sent friend request to " + userList.get(position).getNameSurname() + ".", Snackbar.LENGTH_LONG);
-                                snackbar.getView().setBackgroundColor(mContext.getResources().getColor(R.color.colorBlue));
-                                snackbar.show();
+                                    holder.statusUSR.setText("Friend Request Sent!");
+                                    userList.get(position).setStatus("Friend Request Sent!");
+                                    button.setText("-");
+                                    Snackbar snackbar = Snackbar
+                                            .make(activity.findViewById(android.R.id.content), "You have sent friend request to " + userList.get(position).getNameSurname() + ".", Snackbar.LENGTH_LONG);
+                                    snackbar.getView().setBackgroundColor(mContext.getResources().getColor(R.color.colorBlue));
+                                    snackbar.show();
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    // error
+                                    Snackbar snackbar = Snackbar
+                                            .make(activity.findViewById(android.R.id.content), "Internet Connection Fail!", Snackbar.LENGTH_LONG);
+                                    snackbar.getView().setBackgroundColor(mContext.getResources().getColor(R.color.colorGray));
+                                    snackbar.show();
+                                }
                             }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                // error
-                                Snackbar snackbar = Snackbar
-                                        .make(activity.findViewById(android.R.id.content), "Internet Connection Fail!", Snackbar.LENGTH_LONG);
-                                snackbar.getView().setBackgroundColor(mContext.getResources().getColor(R.color.colorGray));
-                                snackbar.show();
-                            }
+                    ) {
+                        @Override
+                        protected Map<String, String> getParams() {
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put("UserID", email); //Add the data you'd like to send to the server.
+                            params.put("AddedID", userList.get(position).getUSREmail()); //Add the data you'd like to send to the server.
+                            return params;
                         }
-                ) {
-                    @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("UserID", email); //Add the data you'd like to send to the server.
-                        params.put("AddedID", userList.get(position).getUSREmail()); //Add the data you'd like to send to the server.
-                        return params;
-                    }
-                };
-                MyRequestQueue.add(postRequest);
+                    };
+                    MyRequestQueue.add(postRequest);
+                }
+                else if (button.getText().toString().equals("-")){
+                    StringRequest postRequest = new StringRequest(Request.Method.POST, "http://188.166.149.168:3030/deleteOrRejectFR",
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
 
-
+                                    holder.statusUSR.setText("You Can Add This User As A Friend.");
+                                    userList.get(position).setStatus("You Can Add This User As A Friend.");
+                                    button.setText("+");
+                                    Snackbar snackbar = Snackbar
+                                            .make(activity.findViewById(android.R.id.content), "You have deleted your request to " + userList.get(position).getNameSurname() + ".", Snackbar.LENGTH_LONG);
+                                    snackbar.getView().setBackgroundColor(mContext.getResources().getColor(R.color.colorBlue));
+                                    snackbar.show();
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    // error
+                                    Snackbar snackbar = Snackbar
+                                            .make(activity.findViewById(android.R.id.content), "Internet Connection Fail!", Snackbar.LENGTH_LONG);
+                                    snackbar.getView().setBackgroundColor(mContext.getResources().getColor(R.color.colorGray));
+                                    snackbar.show();
+                                }
+                            }
+                    ) {
+                        @Override
+                        protected Map<String, String> getParams() {
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put("UserID", email); //Add the data you'd like to send to the server.
+                            params.put("deletedID", userList.get(position).getUSREmail()); //Add the data you'd like to send to the server.
+                            return params;
+                        }
+                    };
+                    MyRequestQueue.add(postRequest);
+                }
             }
         });
        /* holder.addAsFriend.setOnClickListener(new View.OnClickListener() {
