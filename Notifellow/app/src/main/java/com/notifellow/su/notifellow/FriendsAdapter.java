@@ -1,7 +1,9 @@
 package com.notifellow.su.notifellow;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
@@ -64,40 +66,55 @@ public class FriendsAdapter extends ArrayAdapter<Friends> {
         holder.deleteImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String email = shared.getString("email", null);
-                StringRequest postRequest = new StringRequest(Request.Method.POST, "http://188.166.149.168:3030/deleteOrRejectFR",
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                Snackbar snackbar = Snackbar
-                                        .make(parent, "Deleted User " + getItem(position).getUserName()+ "!", Snackbar.LENGTH_LONG);
-                                snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorBlue));
-                                snackbar.show();
-                                remove(getItem(position));
-                                notifyDataSetChanged();
 
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                // error
-                                Snackbar snackbar = Snackbar
-                                        .make(parent, "Database Error!", Snackbar.LENGTH_LONG);
-                                snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorGray));
-                                snackbar.show();
-                            }
-                        }
-                ) {
-                    @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("UserID", email); //Add the data you'd like to send to the server.
-                        params.put("deletedID", getItem(position).getEmail()); //Add the data you'd like to send to the server.
-                        return params;
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("WARNING");
+                builder.setMessage("Do you really want to delete this user from your friends list?");
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
                     }
-                };
-                MyRequestQueue.add(postRequest);
+                });
+                builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        final String email = shared.getString("email", null);
+                        StringRequest postRequest = new StringRequest(Request.Method.POST, "http://188.166.149.168:3030/deleteOrRejectFR",
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        Snackbar snackbar = Snackbar
+                                                .make(parent, "Deleted User " + getItem(position).getUserName()+ "!", Snackbar.LENGTH_LONG);
+                                        snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorBlue));
+                                        snackbar.show();
+                                        remove(getItem(position));
+                                        notifyDataSetChanged();
+
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        // error
+                                        Snackbar snackbar = Snackbar
+                                                .make(parent, "Database Error!", Snackbar.LENGTH_LONG);
+                                        snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorGray));
+                                        snackbar.show();
+                                    }
+                                }
+                        ) {
+                            @Override
+                            protected Map<String, String> getParams() {
+                                Map<String, String> params = new HashMap<String, String>();
+                                params.put("UserID", email); //Add the data you'd like to send to the server.
+                                params.put("deletedID", getItem(position).getEmail()); //Add the data you'd like to send to the server.
+                                return params;
+                            }
+                        };
+                        MyRequestQueue.add(postRequest);
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 
