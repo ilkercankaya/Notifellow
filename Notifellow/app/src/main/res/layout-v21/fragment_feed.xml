@@ -12,11 +12,11 @@
         android:id="@+id/feedLayout"
         android:fitsSystemWindows="true"
         >
+
         <ListView
             android:id="@+id/listView_Feed"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
 
     </android.support.v4.widget.SwipeRefreshLayout>

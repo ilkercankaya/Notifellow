@@ -12,7 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class FeedTaskAdapter extends ArrayAdapter<FeedTask> {
 
@@ -41,8 +48,62 @@ public class FeedTaskAdapter extends ArrayAdapter<FeedTask> {
         holder.profilePicture.setImageURI(getItem(position).getProfilePic()); //MAY PRODUCE ERROR
         holder.userName.setText(getItem(position).getUserName());
         holder.title.setText(getItem(position).getTask().getTitle());
-        holder.startDate.setText(getItem(position).getTask().getStartTime());
-        holder.endDate.setText(getItem(position).getTask().getEndTime());
+
+
+        String startTime = getItem(position).getTask().getStartTime();
+        String[] splitted = startTime.split("\t\t\t");
+        String date = splitted[0];
+        String time = splitted[1];
+        date = ScheduleFragment.formatDate(date);
+
+        DateFormat format = new SimpleDateFormat("dd - MM - yyyy HH:mm");
+        Date startDate = new Date();
+        try {
+            startDate = format.parse(date + " " + time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Date currentDate = new Date();
+
+        Map<TimeUnit,Long> dayDifference = TaskAdapter.computeDiff(currentDate, startDate);
+        long days = dayDifference.get(TimeUnit.DAYS);
+
+        if(days < 7){
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(startDate);
+            holder.startDate.setText(time + "\t\t" + TaskAdapter.getDayOfWeek(cal.get(Calendar.DAY_OF_WEEK)));
+        }
+        else{
+            holder.startDate.setText(time + "\t\t" + date);
+        }
+
+
+        String endTime = getItem(position).getTask().getEndTime();
+        splitted = endTime.split("\t\t\t");
+        date = splitted[0];
+        time = splitted[1];
+
+        Date endDate = new Date();
+        try {
+            endDate = format.parse(date + " " + time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        dayDifference = TaskAdapter.computeDiff(currentDate, endDate);
+        days = dayDifference.get(TimeUnit.DAYS);
+
+        if(days < 7){
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(endDate);
+            holder.endDate.setText(time + "\t\t" + TaskAdapter.getDayOfWeek(cal.get(Calendar.DAY_OF_WEEK)));
+        }
+        else{
+            holder.endDate.setText(time + "\t\t" + date);
+        }
+
+
         holder.location.setText(getItem(position).getTask().getLocation());
 
         holder.join.setOnClickListener(new View.OnClickListener() {

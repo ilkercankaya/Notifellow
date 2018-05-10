@@ -14,6 +14,15 @@ public class Task implements Comparable<Task>{
         this.id = id;
     }
 
+    public Task(String id, String title, String startTime, String endTime, String remindTime, String location){
+        this.id = id;
+        this.title = title;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.remindTime = remindTime;
+        this.location = location;
+    }
+
     public Task(String id, String title, String startTime, String endTime, String remindTime, String location, String wifi, String note){
         this.id = id;
         this.title = title;

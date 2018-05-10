@@ -387,8 +387,8 @@ public class AddReminder extends AppCompatActivity {
 
 
         if (netInfo != null) {
-            final String startDateString = startDateObject.toString();
-            final String endDateString = endDateObject.toString();
+            final String startDateString = start_date + "\t\t\t" + start_time;
+            final String endDateString = end_time + "\t\t\t" + end_date;
             final String remindDateString = remind_time + "\t\t\t" + remind_date;
 
             queue = Volley.newRequestQueue(this);

@@ -52,7 +52,7 @@ public class TaskAdapter extends ArrayAdapter<Task>{
         return result;
     }
 
-    private String getDayOfWeek(int value) {
+    public static String getDayOfWeek(int value) {
         String day = "";
         switch (value) {
             case 1:
@@ -198,9 +198,10 @@ public class TaskAdapter extends ArrayAdapter<Task>{
             holder = (MyViewHolder) rowView.getTag();
         }
 
-
         holder.titleTextView.setText(getItem(position).getTitle());
 
+
+        
         String startTime = getItem(position).getStartTime();
         String[] splitted = startTime.split("\t\t");
         String date = splitted[0];
@@ -228,7 +229,6 @@ public class TaskAdapter extends ArrayAdapter<Task>{
         else{
             holder.startTextView.setText(time + "\t\t" + date);
         }
-
 
 
 
