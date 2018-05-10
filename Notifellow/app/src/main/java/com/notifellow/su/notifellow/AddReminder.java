@@ -58,6 +58,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -381,6 +382,7 @@ public class AddReminder extends AppCompatActivity {
         remind_date = ScheduleFragment.formatDate(remind_date);
 
         ScheduleFragment.taskList.add(new Task(String.valueOf(alarmCode), titleTextView.getText().toString(), start_date + "\t\t\t" + start_time, end_time + "\t\t\t" + end_date, remind_time + "\t\t\t" + remind_date, location, wifiName, notesTextView.getText().toString()));
+        Collections.sort(ScheduleFragment.taskList);
         ScheduleFragment.taskAdapter.notifyDataSetChanged();
 
         updateAlarmCode(++alarmCode);

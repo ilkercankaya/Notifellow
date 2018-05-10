@@ -57,7 +57,7 @@ public class FeedFragment extends Fragment {
                 String date = splitted[0];
                 String time = splitted[1];
 
-                DateFormat format = new SimpleDateFormat("yyyy - MM - dd HH:mm");
+                DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 Date startDate = new Date();
                 try {
                     startDate = format.parse(date + " " + time);

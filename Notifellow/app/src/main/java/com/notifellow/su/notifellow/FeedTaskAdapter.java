@@ -81,8 +81,8 @@ public class FeedTaskAdapter extends ArrayAdapter<FeedTask> {
 
         String endTime = getItem(position).getTask().getEndTime();
         splitted = endTime.split("\t\t\t");
-        date = splitted[0];
-        time = splitted[1];
+        date = splitted[1];
+        time = splitted[0];
 
         Date endDate = new Date();
         try {
@@ -104,7 +104,15 @@ public class FeedTaskAdapter extends ArrayAdapter<FeedTask> {
         }
 
 
-        holder.location.setText(getItem(position).getTask().getLocation());
+        if(getItem(position).getTask().getLocation().equals("default")){
+            holder.location.setVisibility(View.GONE);
+            ImageView feedLocImg = rowView.findViewById(R.id.feedLocationImg);
+            feedLocImg.setVisibility(View.GONE);
+        }
+        else {
+            holder.location.setText(getItem(position).getTask().getLocation());
+        }
+
 
         holder.join.setOnClickListener(new View.OnClickListener() {
             @Override

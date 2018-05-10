@@ -120,6 +120,8 @@ public class Settings extends AppCompatPreferenceActivity {
 
             long rowCount = schema.getRowCountByEmail(email);
 
+            cursor.moveToFirst();
+
             if (cursor != null && (rowCount > 0)) {
                 do {
                     String ID = cursor.getString(colID);

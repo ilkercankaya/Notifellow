@@ -201,7 +201,7 @@ public class TaskAdapter extends ArrayAdapter<Task>{
         holder.titleTextView.setText(getItem(position).getTitle());
 
 
-        
+
         String startTime = getItem(position).getStartTime();
         String[] splitted = startTime.split("\t\t");
         String date = splitted[0];
