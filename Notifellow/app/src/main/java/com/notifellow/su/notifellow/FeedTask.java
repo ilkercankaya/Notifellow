@@ -40,4 +40,8 @@ public class FeedTask implements Comparable<FeedTask>{
     public int compareTo(FeedTask other){
         return this.task.getStartTime().compareTo(other.task.getStartTime());
     }
+
+    public String getEmail(){
+        return email;
+    }
 }

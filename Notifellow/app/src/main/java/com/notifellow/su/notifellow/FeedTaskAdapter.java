@@ -137,6 +137,8 @@ public class FeedTaskAdapter extends ArrayAdapter<FeedTask> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent (context, Comments.class);
+                intent.putExtra("taskEmail", getItem(position).getEmail());
+                intent.putExtra("taskID", getItem(position).getTask().getID());
                 context.startActivity(intent);
 
             }
