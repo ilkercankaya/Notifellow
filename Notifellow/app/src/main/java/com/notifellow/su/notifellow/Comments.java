@@ -48,6 +48,7 @@ public class Comments extends AppCompatActivity {
     public void addComment(final String feedTaskEmail, final String taskID){
         final String commentedEmail = shared.getString("email", null);
         final String comment = commentTxt.getText().toString();
+        final String username = shared.getString("username", null);
 
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd MMMM");
         final String currentDateandTime = sdf.format(new Date());
@@ -55,16 +56,17 @@ public class Comments extends AppCompatActivity {
         StringRequest postRequest = new StringRequest(Request.Method.POST, "http://188.166.149.168:3030/addComment", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if (response.equals("UPDATED 201")) {
+                if (response.equals("CREATED 201")) {
                     View parentLayout = findViewById(android.R.id.content);
                     Snackbar snackbar = Snackbar
                             .make(parentLayout, "Comment added!", Snackbar.LENGTH_LONG);
                     snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorBlue));
                     snackbar.show();
 
-                    //commentList.add(new Comment(commentedEmail, null, ,comment));
-                    //commentAdapter.notifyDataSetChanged();
+                    commentList.add(new Comment(commentedEmail, null, username, comment, currentDateandTime));
+                    commentAdapter.notifyDataSetChanged();
 
+                    commentTxt.setText("");
                 } else {
                     View parentLayout = findViewById(android.R.id.content);
                     Snackbar snackbar = Snackbar
@@ -183,9 +185,6 @@ public class Comments extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addComment(feedTaskEmail, taskID);
-
-                Toast.makeText(Comments.this,"Comment Sent.",
-                        Toast.LENGTH_SHORT).show();
             }
         });
 
