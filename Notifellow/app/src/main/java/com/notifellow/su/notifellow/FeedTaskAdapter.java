@@ -2,6 +2,7 @@ package com.notifellow.su.notifellow;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +24,12 @@ import java.util.concurrent.TimeUnit;
 
 public class FeedTaskAdapter extends ArrayAdapter<FeedTask> {
 
+    private Context context;
+
+
     public FeedTaskAdapter(Context context, List<FeedTask> feedTaskList){
         super(context, R.layout.row_feed, feedTaskList);
+        this.context = context;
     }
 
     @Override
@@ -131,6 +136,8 @@ public class FeedTaskAdapter extends ArrayAdapter<FeedTask> {
         holder.comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent (context, Comments.class);
+                context.startActivity(intent);
 
             }
         });
@@ -143,7 +150,7 @@ public class FeedTaskAdapter extends ArrayAdapter<FeedTask> {
         //LAYOUT COMPONENTS
         ImageView profilePicture;
         TextView userName, title, startDate, endDate, location;
-        ImageButton join, participants, comment;
+        ImageView join, participants, comment;
 
         public MyViewHolder(View itemView) {
             super(itemView);

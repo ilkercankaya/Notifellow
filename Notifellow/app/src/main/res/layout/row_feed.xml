@@ -52,9 +52,8 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:src="@drawable/line"
-            android:tint="@color/colorBlue"
+            android:layout_height="2dp"
+            android:src="@color/colorBlue"
             android:padding="0dp"
             />
 
@@ -216,9 +215,8 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:src="@drawable/line"
-            android:tint="@color/colorBlue"
+            android:layout_height="2dp"
+            android:src="@color/colorBlue"
             android:padding="0dp"
             />
 
@@ -232,16 +230,18 @@
                 android:layout_marginEnd="8dp"
                 android:gravity="center_vertical"
                 >
-                <ImageButton
+
+                <ImageView
                     android:id="@+id/feedJoinBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="32dp"
                     android:layout_weight="1"
+                    android:padding="4dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    style="@style/Base.Widget.AppCompat.Button.Borderless"
                     android:src="@drawable/ic_more"
+                    android:tint="@color/colorbtnfeed"
                     />
 
                 <ImageView
@@ -251,17 +251,18 @@
                     android:padding="0dp"
                     />
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/feedParticipantsBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="32dp"
                     android:layout_weight="1"
+                    android:padding="4dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    style="@style/Base.Widget.AppCompat.Button.Borderless"
                     android:src="@drawable/ic_social"
+                    android:tint="@color/colorbtnfeed"
                     />
 
                 <ImageView
@@ -271,16 +272,17 @@
                     android:padding="0dp"
                     />
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/feedCommentBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="32dp"
                     android:layout_weight="1"
+                    android:padding="4dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    style="@style/Base.Widget.AppCompat.Button.Borderless"
                     android:src="@drawable/ic_comments"
+                    android:tint="@color/colorbtnfeed"
 
                     />
 

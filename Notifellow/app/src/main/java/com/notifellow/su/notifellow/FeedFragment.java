@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ public class FeedFragment extends Fragment {
 
     static FeedTaskAdapter feedTaskAdapter;
     static ArrayList<FeedTask> feedTaskList = new ArrayList<FeedTask>();
+    SwipeRefreshLayout swipeRefreshLayout;
 
     private RequestQueue MyRequestQueue;
 
@@ -103,6 +105,8 @@ public class FeedFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_feed, container, false);
 
+
+
         shared = getActivity().getSharedPreferences("shared", MODE_PRIVATE);
         MyRequestQueue = Volley.newRequestQueue(getActivity());
 
@@ -141,6 +145,19 @@ public class FeedFragment extends Fragment {
         };
         MyRequestQueue.add(postRequest);
 
+
+        //// SWIPE TO REFRESH ////
+        swipeRefreshLayout = view.findViewById(R.id.feedLayout);
+        swipeRefreshLayout.setColorSchemeResources(R.color.refresh_progress_3, R.color.refresh_progress_3, R.color.refresh_progress_3); //CHANGE COLOR SCHEME
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                feedTaskAdapter.notifyDataSetChanged(); // REFRESH THE LIST (I GUESS :P)
+                swipeRefreshLayout.setRefreshing(false); // STOP ANIMATION
+            }
+        });
+        //// END OF SWIPE TO REFRESH ///
 
 
         return view;

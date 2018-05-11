@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--do we need write_external_storage? internal storage seems just fine.-->
+    <!-- do we need write_external_storage? internal storage seems just fine. -->
     <uses-feature android:name="android.hardware.wifi" />
     <uses-feature android:name="android.hardware.camera" />
 
@@ -30,23 +30,24 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-
         <receiver
             android:name=".AlarmReceiver"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".ForgotPassword"  android:theme="@style/AppTheme.NoActionBar"
+        <activity
+            android:name=".ForgotPassword"
             android:screenOrientation="portrait"
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SignUp"
-            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
 
         <service android:name=".ServiceListenWiFi" />
         <service android:name=".LocationService" />
+
         <receiver android:name=".OnBootAlarmSetter">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -60,15 +61,14 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Main"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".AddReminder"
             android:screenOrientation="portrait"
@@ -77,20 +77,20 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.notifellow.su.notifellow.Main" />
         </activity>
-
         <activity
             android:name=".Settings"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".Main"
-            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
-            >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.notifellow.su.notifellow.Main" />
         </activity>
-
-        <activity android:name=".MapsPlaces" android:screenOrientation="portrait"  android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".MapsPlaces"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Social"
             android:label="@string/title_activity_social"
@@ -101,8 +101,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.notifellow.su.notifellow.Main" />
         </activity>
-        <activity android:name=".NoteCreateActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".GalleryActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".NoteCreateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GalleryActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Comments"
+            android:label="Comments"
+            android:theme="@style/AppTheme.AppCompat.New"
+            >
+
+        </activity>
     </application>
 
 </manifest>

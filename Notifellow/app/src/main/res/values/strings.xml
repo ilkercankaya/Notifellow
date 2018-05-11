@@ -141,7 +141,6 @@
     <!--<string name="map_activity">mapActivity</string>-->
 
 
-
     <!--Testing purposes start-->
     <string name="quickstart_message">Click the SUBSCRIBE TO NEWS button below to subscribe to the
         news topic. Messages sent to the news topic will be received. The LOG TOKEN button logs the
