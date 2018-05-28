@@ -565,6 +565,9 @@ public class Main extends AppCompatActivity
 
         } else if (id == R.id.nav_interests) {
 
+            Intent myIntent = new Intent(Main.this, EventRequests.class);
+            Main.this.startActivity(myIntent);
+
         } else if (id == R.id.nav_social) {
             Intent myIntent = new Intent(Main.this, Social.class);
             Main.this.startActivity(myIntent);

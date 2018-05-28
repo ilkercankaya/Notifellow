@@ -68,7 +68,7 @@
         <activity
             android:name=".Main"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddReminder"
             android:screenOrientation="portrait"
@@ -107,11 +107,16 @@
         <activity
             android:name=".GalleryActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Comments"
+        <activity
+            android:name=".Comments"
             android:label="Comments"
-            android:theme="@style/AppTheme.AppCompat.New"
-            >
+            android:theme="@style/AppTheme.AppCompat.New"></activity>
 
+        <activity android:name=".EventRequests"
+            android:theme="@style/AppTheme.AppCompat.New"
+            ><meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.notifellow.su.notifellow.Main" />
         </activity>
     </application>
 

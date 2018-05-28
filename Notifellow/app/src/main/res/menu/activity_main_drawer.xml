@@ -7,8 +7,8 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_interests"
-            android:icon="@drawable/ic_interest"
-            android:title="Interests"
+            android:icon="@drawable/ic_participants"
+            android:title="Event Requests"
             android:iconTint="@color/colorBlue"
             tools:targetApi="o"
             />
