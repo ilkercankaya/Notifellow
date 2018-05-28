@@ -77,6 +77,7 @@ public class ScheduleFragment extends Fragment {
         int wifiCol = allTasks.getColumnIndex("wifiname");
         int noteCol = allTasks.getColumnIndex("notes");
         int emailCol = allTasks.getColumnIndex("email");
+        int globalCol = allTasks.getColumnIndex("global");
 
         allTasks.moveToFirst();
         rowCount = allTasks.getCount();
@@ -100,11 +101,12 @@ public class ScheduleFragment extends Fragment {
                     String location = allTasks.getString(locationCol);
                     String wifi = allTasks.getString(wifiCol);
                     String note = allTasks.getString(noteCol);
+                    String global = allTasks.getString(globalCol);
 
                     endDate = formatDate(endDate);
                     remindDate = formatDate(remindDate);
 
-                    taskList.add(new Task(id, title, startDate + "\t\t" + startTime, endTime + "\t\t" + endDate, remindTime + "\t\t" + remindDate, location, wifi, note));
+                    taskList.add(new Task(id, title, startDate + "\t\t" + startTime, endTime + "\t\t" + endDate, remindTime + "\t\t" + remindDate, location, wifi, note, global));
                 }
                 tempCount--;
             }

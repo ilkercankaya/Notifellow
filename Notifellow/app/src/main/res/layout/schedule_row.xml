@@ -166,6 +166,53 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/feedActionLay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center_vertical"
+        >
+
+        <ImageView
+            android:id="@+id/scheduleParticipantsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:padding="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/ic_social"
+            android:tint="@color/colorbtnfeed"
+            />
+
+        <ImageView
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:src="@color/colorBlue"
+            android:padding="0dp"
+            />
+
+        <ImageView
+            android:id="@+id/scheduleCommentBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:padding="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/ic_comments"
+            android:tint="@color/colorbtnfeed"
+
+            />
+
+
+    </LinearLayout>
 
 
 </LinearLayout>

@@ -27,6 +27,7 @@ public class AlarmDBSchema extends SQLiteOpenHelper{
     private static final String WIFINAME = "wifiname";
     private static final String NOTES = "notes";
     private static final String EMAIL = "email";
+    private static final String GLOBAL = "global";
     private static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" +
             ID + " TEXT, " +
             TITLE + " TEXT, " +
@@ -39,7 +40,8 @@ public class AlarmDBSchema extends SQLiteOpenHelper{
             LOCATION + " TEXT, " +
             WIFINAME + " TEXT, " +
             NOTES + " TEXT, " +
-            EMAIL + " TEXT);";
+            EMAIL + " TEXT, " +
+            GLOBAL + ");";
     private static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
     public AlarmDBSchema(Context context) {
@@ -63,7 +65,7 @@ public class AlarmDBSchema extends SQLiteOpenHelper{
         onCreate(db);
     }
 
-    public long insertData(String id, String title, String start_date, String start_time, String end_date, String end_time, String remind_date, String remind_time, String location, String wifiname, String notes, String email){
+    public long insertData(String id, String title, String start_date, String start_time, String end_date, String end_time, String remind_date, String remind_time, String location, String wifiname, String notes, String email, String global){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(ID, id);
@@ -78,6 +80,7 @@ public class AlarmDBSchema extends SQLiteOpenHelper{
         contentValues.put(WIFINAME, wifiname);
         contentValues.put(NOTES, notes);
         contentValues.put(EMAIL, email);
+        contentValues.put(GLOBAL, global);
         return db.insert(TABLE_NAME, null, contentValues);
     }
 
@@ -90,7 +93,7 @@ public class AlarmDBSchema extends SQLiteOpenHelper{
 
     public Cursor getAllRowsForEvents() {
         SQLiteDatabase db = this.getWritableDatabase();
-        String[] columns = {ID, TITLE, START_DATE, START_TIME, END_DATE, END_TIME, REMIND_DATE, REMIND_TIME, LOCATION, WIFINAME, NOTES, EMAIL};
+        String[] columns = {ID, TITLE, START_DATE, START_TIME, END_DATE, END_TIME, REMIND_DATE, REMIND_TIME, LOCATION, WIFINAME, NOTES, EMAIL, GLOBAL};
         Cursor cursor = db.query(TABLE_NAME, columns, REMIND_DATE + " != ?", new String[]{"NA"}, null, null, null);
         return cursor;
     }

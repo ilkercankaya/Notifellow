@@ -3,8 +3,11 @@ package com.notifellow.su.notifellow;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +30,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import static android.content.Context.MODE_PRIVATE;
 
 //REMOVE COMMENTS AFTER LAYOUT IS DONE
 
@@ -274,6 +279,37 @@ public class TaskAdapter extends ArrayAdapter<Task>{
             }
         });
 
+        holder.participants.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        holder.comments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences shared;
+                shared = getContext().getSharedPreferences("shared", MODE_PRIVATE);
+                final String email = shared.getString("email", null);
+
+                Intent intent = new Intent(getContext(), Comments.class);
+                intent.putExtra("taskEmail", email);
+                int taskID = Integer.parseInt(getItem(position).getID()) + 1;
+                intent.putExtra("taskID", String.valueOf(taskID));
+                getContext().startActivity(intent);
+            }
+        });
+
+        if(getItem(position).getGlobal().equals("0")){
+            holder.participants.setVisibility(View.GONE);
+            holder.comments.setVisibility(View.GONE);
+        }
+        else{
+            holder.participants.setVisibility(View.VISIBLE);
+            holder.comments.setVisibility(View.VISIBLE);
+        }
+
         return rowView;
     }
 
@@ -283,6 +319,9 @@ public class TaskAdapter extends ArrayAdapter<Task>{
         private TextView startTextView;
         private TextView endTextView;
         private ImageView cancelTask;
+        private ImageView participants;
+        private ImageView comments;
+
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -291,6 +330,8 @@ public class TaskAdapter extends ArrayAdapter<Task>{
             startTextView = itemView.findViewById(R.id.taskStartTime);
             endTextView = itemView.findViewById(R.id.taskEndTime);
             cancelTask = itemView.findViewById(R.id.cancelTaskButton);
+            participants = itemView.findViewById(R.id.scheduleParticipantsBtn);
+            comments = itemView.findViewById(R.id.scheduleCommentBtn);
         }
     }
 }

@@ -9,6 +9,7 @@ public class Task implements Comparable<Task>{
     private String wifi;
     private String note;
     private String id;
+    private String global;
 
     public Task(String id){
         this.id = id;
@@ -23,7 +24,7 @@ public class Task implements Comparable<Task>{
         this.location = location;
     }
 
-    public Task(String id, String title, String startTime, String endTime, String remindTime, String location, String wifi, String note){
+    public Task(String id, String title, String startTime, String endTime, String remindTime, String location, String wifi, String note, String global){
         this.id = id;
         this.title = title;
         this.startTime = startTime;
@@ -32,6 +33,7 @@ public class Task implements Comparable<Task>{
         this.location = location;
         this.wifi = wifi;
         this.note = note;
+        this.global = global;
     }
 
     public String getID(){
@@ -65,6 +67,8 @@ public class Task implements Comparable<Task>{
     public String getNote(){
         return note;
     }
+
+    public String getGlobal(){return global;}
 
     public int compareTo(Task other){
         return this.getStartTime().compareTo(other.getStartTime());
