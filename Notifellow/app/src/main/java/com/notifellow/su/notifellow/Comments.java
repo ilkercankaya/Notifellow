@@ -117,10 +117,10 @@ public class Comments extends AppCompatActivity {
                                 String email = oneUser.getString("email");
                                 String username = oneUser.getString("username");
                                 String comment = oneUser.getString("comment");
-                                String ppDEST = oneUser.getString("ppDest");
-                                String timeCommented = oneUser.getString("timeCommented");
+                                //String ppDEST = oneUser.getString("ppDest");
+                                //String timeCommented = oneUser.getString("timeCommented");
 
-                                Comment commentObject = new Comment(email, null, username, comment, timeCommented);
+                                Comment commentObject = new Comment(email, null, username, comment, null);
                                 commentList.add(commentObject);
                             }
                             commentAdapter.notifyDataSetChanged(); // REFRESH THE LIST (I GUESS :P)
@@ -176,6 +176,11 @@ public class Comments extends AppCompatActivity {
 
         final String feedTaskEmail = intent.getStringExtra("taskEmail");
         final String taskID = intent.getStringExtra("taskID");
+
+        SharedPreferences.Editor prefEdit = shared.edit();
+        prefEdit.putString("taskOwnerEmail", feedTaskEmail);
+        prefEdit.putString("taskOwnerID", taskID);
+        prefEdit.commit();
 
         MyRequestQueue = Volley.newRequestQueue(getApplicationContext());
 
