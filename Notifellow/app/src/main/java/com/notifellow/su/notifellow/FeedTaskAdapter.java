@@ -212,6 +212,13 @@ public class FeedTaskAdapter extends ArrayAdapter<FeedTask> {
         }
 
 
+        if(getItem(position).getTask().getHasJoined().equals("0")){
+            holder.join.setImageResource(R.drawable.ic_join_event);
+        }
+        else{
+            holder.join.setImageResource(R.drawable.ic_cancel_join);
+        }
+
         holder.join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
