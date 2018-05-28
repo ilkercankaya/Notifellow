@@ -70,6 +70,8 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class Settings extends AppCompatPreferenceActivity {
     private static RequestQueue MyRequestQueue;
@@ -189,7 +191,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                                         .make(getActivity().findViewById(android.R.id.content),"Profile Picture Deleted!", Snackbar.LENGTH_LONG);
                                                 snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorBlue));
                                                 snackbar.show();
-                                                ImageView img = (ImageView) getActivity().findViewById(R.id.pictureSettings);
+                                                CircleImageView img = getActivity().findViewById(R.id.pictureSettings);
                                                 img.setImageResource(R.drawable.ic_profile);
                                                 progressDialog.dismiss();
                                             }
@@ -245,7 +247,7 @@ public class Settings extends AppCompatPreferenceActivity {
                                     .make(getActivity().findViewById(android.R.id.content),"Upload Successful", Snackbar.LENGTH_LONG);
                             snackbarUno.getView().setBackgroundColor(getResources().getColor(R.color.colorBlue));
                             snackbarUno.show();
-                            ImageView img = (ImageView) getActivity().findViewById(R.id.pictureSettings);
+                            CircleImageView img = getActivity().findViewById(R.id.pictureSettings);
                             img.setImageURI(filePath);
 
                             try {
@@ -317,7 +319,7 @@ public class Settings extends AppCompatPreferenceActivity {
                     uniqID = response;
                     final String ppSTAT = shared.getString("ppSTAT", null);
 
-                    final ImageView ppImg = getActivity().findViewById(R.id.pictureSettings);
+                    final CircleImageView ppImg = getActivity().findViewById(R.id.pictureSettings);
                     final File localFile = new File(getActivity().getCacheDir(), response + ".jpg");
                     if (ppSTAT == null) {
                         storageRef.child(response).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
@@ -401,7 +403,7 @@ public class Settings extends AppCompatPreferenceActivity {
                     //   Toast.makeText(getApplicationContext(), "" + "" + " Cannot connect to Internet!", Toast.LENGTH_LONG).show();
                     //uniqID = "404_NOT_FOUND"; //For errors
                     //if exists with no internet
-                    final ImageView ppImg = getActivity().findViewById(R.id.pictureSettings);
+                    final CircleImageView ppImg = getActivity().findViewById(R.id.pictureSettings);
                     final String ppDir = shared.getString("ppDIR", null);
                     final String ppSTAT = shared.getString("ppSTAT", null);
                     if(! (ppDir == null) &&  ppSTAT.equals("exists") ){ //PP exists

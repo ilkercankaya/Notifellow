@@ -57,6 +57,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class Main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -69,7 +71,7 @@ public class Main extends AppCompatActivity
     private ScheduleFragment scheduleFragment;
     private ExploreFragment exploreFragment;
     private TextView usernameAT, userfullNameAT;
-    private ImageView userPP;
+    private CircleImageView userPP;
     static AlarmDBSchema schema;
     private ProgressDialog progressDialog;
     private FirebaseStorage storage;
@@ -373,7 +375,7 @@ public class Main extends AppCompatActivity
         String value = shared.getString("name", null);
         final String ppSTAT = shared.getString("ppSTAT", null);
         final String ppDir = shared.getString("ppDIR", null);
-        final ImageView ppImg = findViewById(R.id.profilePic);
+        final CircleImageView ppImg = findViewById(R.id.profilePic);
         final File localFile = new File(getCacheDir(), ppDir + ".jpg");
 
         if (!(ppDir == null) && ppSTAT.equals("exists")) { //PP exists
