@@ -39,7 +39,7 @@ public class FeedTaskAdapter extends ArrayAdapter<FeedTask> {
 
     private Context context;
 
-    public void leaveEvent(final int position, final String deletedID, final String UserID, final String eventID){
+    public void leaveEvent(final int position, final String deletedID, final String UserID, final String eventID, final MyViewHolder holder){
         RequestQueue MyRequestQueue = Volley.newRequestQueue(getContext());
 
         StringRequest postRequest = new StringRequest(Request.Method.POST, "http://188.166.149.168:3030/leaveEvent",
@@ -50,6 +50,7 @@ public class FeedTaskAdapter extends ArrayAdapter<FeedTask> {
                         if(response.equals("DELETED 201")){
                             Toast.makeText(context, "You have left the Event!", Toast.LENGTH_SHORT).show();
                             getItem(position).getTask().setHasJoined("0");
+                            holder.join.setImageResource(R.drawable.ic_join_event);
                         }
                     }
                 },
@@ -77,7 +78,7 @@ public class FeedTaskAdapter extends ArrayAdapter<FeedTask> {
         MyRequestQueue.add(postRequest);
     }
 
-    public void joinEvent(final int position, final String UserID, final String AddedID, final String eventID, final String eventName){
+    public void joinEvent(final int position, final String UserID, final String AddedID, final String eventID, final String eventName, final MyViewHolder holder){
 
         RequestQueue MyRequestQueue = Volley.newRequestQueue(getContext());
 
@@ -89,6 +90,7 @@ public class FeedTaskAdapter extends ArrayAdapter<FeedTask> {
                         if(response.equals("CREATED 201")){
                             Toast.makeText(context, "Request sent!", Toast.LENGTH_SHORT).show();
                             getItem(position).getTask().setHasJoined("1");
+                            holder.join.setImageResource(R.drawable.ic_cancel_join);
                         }
                     }
                 },
@@ -126,7 +128,7 @@ public class FeedTaskAdapter extends ArrayAdapter<FeedTask> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent){
         View rowView = convertView;
-        FeedTaskAdapter.MyViewHolder holder;
+        final FeedTaskAdapter.MyViewHolder holder;
         if(rowView == null) {
             LayoutInflater inflater = ((Activity) getContext()).getLayoutInflater();
             rowView = inflater.inflate(R.layout.row_feed, null);
@@ -219,14 +221,14 @@ public class FeedTaskAdapter extends ArrayAdapter<FeedTask> {
                     String AddedID = getItem(position).getEmail();
                     String eventID = getItem(position).getTask().getID();
                     String eventName = getItem(position).getTask().getTitle();
-                    joinEvent(position, UserID, AddedID, eventID, eventName);
+                    joinEvent(position, UserID, AddedID, eventID, eventName, holder);
                 }
                 else{
                     SharedPreferences shared = getContext().getSharedPreferences("shared", MODE_PRIVATE);
                     String UserID = shared.getString("email", null);
                     String deletedID = getItem(position).getEmail();
                     String eventID = getItem(position).getTask().getID();
-                    leaveEvent(position, deletedID, UserID, eventID);
+                    leaveEvent(position, deletedID, UserID, eventID, holder);
                 }
             }
         });

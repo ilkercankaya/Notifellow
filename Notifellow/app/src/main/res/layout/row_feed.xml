@@ -240,7 +240,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:src="@drawable/ic_more"
+                    android:src="@drawable/ic_join_event"
                     android:tint="@color/colorbtnfeed"
                     />
 
@@ -261,7 +261,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:src="@drawable/ic_social"
+                    android:src="@drawable/ic_participants"
                     android:tint="@color/colorbtnfeed"
                     />
 
