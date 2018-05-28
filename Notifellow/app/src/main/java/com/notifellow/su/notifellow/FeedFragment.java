@@ -81,10 +81,11 @@ public class FeedFragment extends Fragment {
                     String location = oneUser.getString("location");
                     String endTime = oneUser.getString("endTime");
                     String remindTime = oneUser.getString("remindAt");
+                    String hasJoined = oneUser.getString("joinedForCurrUser");
                     //String eventJoiners = oneUser.getString("eventJoiners");
                     //String comments = oneUser.getString("comments");
 
-                    Task task = new Task(id, title, startTime, endTime, remindTime, location);
+                    Task task = new Task(id, title, startTime, endTime, remindTime, location, hasJoined);
                     FeedTask feedTask = new FeedTask(task, username, email, null, "", "");
                     feedTaskList.add(feedTask);
                 }

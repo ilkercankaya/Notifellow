@@ -3,6 +3,8 @@ package com.notifellow.su.notifellow;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,21 +13,110 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class FeedTaskAdapter extends ArrayAdapter<FeedTask> {
 
     private Context context;
 
+    public void leaveEvent(final int position, final String deletedID, final String UserID, final String eventID){
+        RequestQueue MyRequestQueue = Volley.newRequestQueue(getContext());
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, "http://188.166.149.168:3030/leaveEvent",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        if(response.equals("DELETED 201")){
+                            Toast.makeText(context, "You have left the Event!", Toast.LENGTH_SHORT).show();
+                            getItem(position).getTask().setHasJoined("0");
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        //Snackbar snackbar = Snackbar
+                        //.make(getView(), "Internet Connection Error!", Snackbar.LENGTH_LONG);
+                        //snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorGray));
+                        //snackbar.show();
+                        Toast.makeText(context, "Internet Connection Error!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("deletedID", deletedID); //Add the data you'd like to send to the server.
+                params.put("UserID", UserID);
+                params.put("eventID", eventID);
+                return params;
+            }
+        };
+        MyRequestQueue.add(postRequest);
+    }
+
+    public void joinEvent(final int position, final String UserID, final String AddedID, final String eventID, final String eventName){
+
+        RequestQueue MyRequestQueue = Volley.newRequestQueue(getContext());
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, "http://188.166.149.168:3030/joinEventReq",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        if(response.equals("CREATED 201")){
+                            Toast.makeText(context, "Request sent!", Toast.LENGTH_SHORT).show();
+                            getItem(position).getTask().setHasJoined("1");
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        //Snackbar snackbar = Snackbar
+                                //.make(getView(), "Internet Connection Error!", Snackbar.LENGTH_LONG);
+                        //snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorGray));
+                        //snackbar.show();
+                        Toast.makeText(context, "Internet Connection Error!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("UserID", UserID); //Add the data you'd like to send to the server.
+                params.put("AddedID", AddedID);
+                params.put("eventID", eventID);
+                params.put("eventName", eventName);
+
+                return params;
+            }
+        };
+        MyRequestQueue.add(postRequest);
+    }
 
     public FeedTaskAdapter(Context context, List<FeedTask> feedTaskList){
         super(context, R.layout.row_feed, feedTaskList);
@@ -122,7 +213,21 @@ public class FeedTaskAdapter extends ArrayAdapter<FeedTask> {
         holder.join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (getItem(position).getTask().getHasJoined().equals("0")) {
+                    SharedPreferences shared = getContext().getSharedPreferences("shared", MODE_PRIVATE);
+                    String UserID = shared.getString("email", null);
+                    String AddedID = getItem(position).getEmail();
+                    String eventID = getItem(position).getTask().getID();
+                    String eventName = getItem(position).getTask().getTitle();
+                    joinEvent(position, UserID, AddedID, eventID, eventName);
+                }
+                else{
+                    SharedPreferences shared = getContext().getSharedPreferences("shared", MODE_PRIVATE);
+                    String UserID = shared.getString("email", null);
+                    String deletedID = getItem(position).getEmail();
+                    String eventID = getItem(position).getTask().getID();
+                    leaveEvent(position, deletedID, UserID, eventID);
+                }
             }
         });
 

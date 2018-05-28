@@ -10,18 +10,20 @@ public class Task implements Comparable<Task>{
     private String note;
     private String id;
     private String global;
+    private String hasJoined;
 
     public Task(String id){
         this.id = id;
     }
 
-    public Task(String id, String title, String startTime, String endTime, String remindTime, String location){
+    public Task(String id, String title, String startTime, String endTime, String remindTime, String location, String hasJoined){
         this.id = id;
         this.title = title;
         this.startTime = startTime;
         this.endTime = endTime;
         this.remindTime = remindTime;
         this.location = location;
+        this.hasJoined = hasJoined;
     }
 
     public Task(String id, String title, String startTime, String endTime, String remindTime, String location, String wifi, String note, String global){
@@ -69,6 +71,12 @@ public class Task implements Comparable<Task>{
     }
 
     public String getGlobal(){return global;}
+
+    public String getHasJoined(){return hasJoined;}
+
+    public void setHasJoined(String s){
+        this.hasJoined = s;
+    }
 
     public int compareTo(Task other){
         return this.getStartTime().compareTo(other.getStartTime());
