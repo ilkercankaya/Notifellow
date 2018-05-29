@@ -1,6 +1,7 @@
 package com.notifellow.su.notifellow;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,6 +64,12 @@ public class FeedTaskAdapter extends ArrayAdapter<FeedTask> {
                                 String username = participantJSON.getString("username");
                                 usernameList.add(username);
                             }
+                            Dialog dialog = new Dialog(getContext());
+                            dialog.setContentView(R.layout.feed_participants_dialog);
+                            ListView participantsListView = dialog.findViewById(R.id.listParticipants);
+                            ParticipantsAdapter participantsAdapter = new ParticipantsAdapter(getContext(), usernameList);
+                            participantsListView.setAdapter(participantsAdapter);
+                            dialog.show();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
