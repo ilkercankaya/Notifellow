@@ -8,7 +8,7 @@
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/date"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_marginTop="10dp"
@@ -17,268 +17,285 @@
         card_view:cardCornerRadius="30dp"
         card_view:cardBackgroundColor="@color/colorWhite"
         >
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_write"
-            android:tint="@color/colorBlue"
-            android:id="@+id/editReminder"
-            android:layout_gravity="top|end"
+
+
+
+        <LinearLayout
             android:layout_margin="16dp"
-            />
-
-        <RelativeLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp">
+            android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_reminder"
-                android:id="@+id/imgRem"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_write"
                 android:tint="@color/colorBlue"
-                android:layout_alignTop="@id/reminderTitle_clicked"
-                android:layout_marginLeft="8dp"
-                />
-            <TextView
-                android:id="@+id/reminderTitle_clicked"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="20dp"
-                android:layout_toEndOf="@id/imgRem"
-                android:text="Reminder Title Comes Here."
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/colorBlue"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_clock"
-                android:id="@+id/imgClock"
-                android:layout_below="@+id/reminderTitle_clicked"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="8dp"
-                android:tint="@color/colorBlue"
+                android:id="@+id/editReminder"
+                android:layout_gravity="top|end"
+                android:layout_marginBottom="8dp"
                 />
 
-            <RelativeLayout
+            <LinearLayout
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical"
+                android:id="@+id/titleLay"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/startLayout_clicked"
-                android:layout_below="@id/reminderTitle_clicked"
-                android:layout_toEndOf="@id/imgClock"
-                android:layout_alignTop="@id/imgClock"
-
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                >
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_reminder"
+                    android:id="@+id/imgRem"
+                    android:tint="@color/colorBlue"
+                    android:layout_alignTop="@id/reminderTitle_clicked"
+                    android:layout_marginEnd="8dp"
+                    />
                 <TextView
-                    android:id="@+id/startDate_clicked"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Starts At: "
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/colorBlue"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/startDateTxt_clicked"
+                    android:id="@+id/reminderTitle_clicked"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Not Specified."
-                    android:layout_alignTop="@id/startDate_clicked"
-                    android:layout_toEndOf="@id/startDate_clicked"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/colorGray"
-                    android:textSize="14sp"
-                    android:textStyle="italic" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/endLayout_clicked"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/startLayout_clicked"
-                android:layout_alignStart="@id/startLayout_clicked"
-
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                >
-                <TextView
-                    android:id="@+id/EndDate_clicked"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ends At: "
+                    android:layout_toEndOf="@id/imgRem"
+                    android:text="Reminder Title Comes Here."
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/colorBlue"
                     android:textSize="14sp"
                     android:textStyle="bold" />
-                <TextView
-                    android:id="@+id/endDateTxt_clicked"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/EndDate_clicked"
-                    android:text="Not Specified."
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/colorGray"
-                    android:textSize="14sp"
-                    android:textStyle="italic" />
+            </LinearLayout>
 
-
-            </RelativeLayout>
-
-            <RelativeLayout
+            <LinearLayout
+                android:layout_marginBottom="8dp"
+                android:id="@+id/dateLay"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/remLayout_clicked"
-                android:layout_below="@id/endLayout_clicked"
-                android:layout_alignStart="@id/endLayout_clicked"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                >
-                <TextView
-                    android:id="@+id/RemindMeAt_clicked"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Remind Me At: "
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/colorBlue"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/RemindMeAtTxt_clicked"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/RemindMeAt_clicked"
-                    android:text="Not Specified."
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/colorGray"
-                    android:textSize="14sp"
-                    android:textStyle="italic" />
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_clock"
+                    android:id="@+id/imgClock"
+                    android:layout_marginEnd="8dp"
+                    android:tint="@color/colorBlue"
+                    />
 
-            </RelativeLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/imgLoc_clicked"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignStart="@+id/imgWifi"
-                android:layout_below="@+id/remLayout_clicked"
-                android:padding="0dp"
-                android:src="@drawable/ic_location_2"
-                android:tint="@color/colorBlue" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/startLayout_clicked"
 
-            <RelativeLayout
+                        >
+                        <TextView
+                            android:id="@+id/startDate_clicked"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Starts At: "
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/colorBlue"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/startDateTxt_clicked"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Not Specified."
+                            android:layout_alignTop="@id/startDate_clicked"
+                            android:layout_toEndOf="@id/startDate_clicked"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/colorGray"
+                            android:textSize="14sp"
+                            android:textStyle="italic" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:id="@+id/endLayout_clicked"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        >
+                        <TextView
+                            android:id="@+id/EndDate_clicked"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ends At: "
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/colorBlue"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/endDateTxt_clicked"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/EndDate_clicked"
+                            android:text="Not Specified."
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/colorGray"
+                            android:textSize="14sp"
+                            android:textStyle="italic" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/remLayout_clicked"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:id="@+id/RemindMeAt_clicked"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Remind Me At: "
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/colorBlue"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/RemindMeAtTxt_clicked"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@+id/RemindMeAt_clicked"
+                            android:text="Not Specified."
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/colorGray"
+                            android:textSize="14sp"
+                            android:textStyle="italic" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:id="@+id/locLayout_clicked"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/imgLoc_clicked"
-                android:layout_alignTop="@id/imgLoc_clicked"
-                android:layout_alignStart="@id/remLayout_clicked"
-                android:layout_marginEnd="20dp"
-
                 >
-                <TextView
-                    android:id="@+id/locName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Location of Task: "
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/colorBlue"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-                <TextView
-                    android:id="@+id/locNameTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/locName"
-                    android:text="Not Specified."
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/colorGray"
-                    android:textSize="14sp"
-                    android:textStyle="italic" />
+                <ImageView
+                    android:id="@+id/imgLoc_clicked"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_location_2"
+                    android:tint="@color/colorBlue" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/locName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Location of Task: "
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/colorBlue"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/locNameTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/locName"
+                        android:text="Not Specified."
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/colorGray"
+                        android:textSize="14sp"
+                        android:textStyle="italic" />
+                </LinearLayout>
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:padding="0dp"
-                android:src="@drawable/ic_wifi"
-                android:id="@+id/imgWifi"
-                android:layout_below="@+id/locLayout_clicked"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="8dp"
-                android:tint="@color/colorBlue"
-                />
 
-            <RelativeLayout
-                android:id="@+id/wifiLayout_clicked"
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/imgWifi"
-                android:layout_alignTop="@id/imgWifi"
-                android:layout_alignStart="@id/locLayout_clicked"
-                android:layout_marginEnd="20dp"
+                android:layout_height= "wrap_content">
 
-                >
-                <TextView
-                    android:id="@+id/wifiName"
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:padding="0dp"
+                    android:src="@drawable/ic_wifi"
+                    android:id="@+id/imgWifi"
+                    android:layout_marginEnd="8dp"
+                    android:tint="@color/colorBlue"
+                    />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:id="@+id/wifiLayout_clicked"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Wifi: "
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/colorBlue"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-                <TextView
-                    android:id="@+id/wifiNameTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/wifiName"
-                    android:text="Not Specified."
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/colorGray"
-                    android:textSize="14sp"
-                    android:textStyle="italic" />
+                    android:layout_toEndOf="@id/imgWifi"
+                    android:layout_alignTop="@id/imgWifi"
+                    android:layout_marginEnd="20dp"
 
-            </RelativeLayout>
+                    >
+                    <TextView
+                        android:id="@+id/wifiName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Wifi: "
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/colorBlue"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/wifiNameTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/wifiName"
+                        android:text="Not Specified."
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/colorGray"
+                        android:textSize="14sp"
+                        android:textStyle="italic" />
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:padding="0dp"
-                android:src="@drawable/ic_notes"
-                android:id="@+id/imgNotes"
-                android:layout_below="@+id/wifiLayout_clicked"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="8dp"
-                android:tint="@color/colorBlue"
-                />
+                </LinearLayout>
 
-            <RelativeLayout
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="24dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:id="@+id/noteLayout_clicked"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/imgNotes"
-                android:layout_alignTop="@id/imgNotes"
-                android:layout_alignStart="@id/locLayout_clicked"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="30dp"
 
                 >
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="8dp"
+                    android:padding="0dp"
+                    android:src="@drawable/ic_notes"
+                    android:id="@+id/imgNotes"
+                    android:layout_below="@+id/wifiLayout_clicked"
+                    android:tint="@color/colorBlue"
+                    />
+
                 <TextView
                     android:id="@+id/noteClicked"
                     android:layout_width="wrap_content"
@@ -288,12 +305,10 @@
                     android:textColor="@color/colorBlue"
                     android:textSize="14sp"
                     android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
 
 
-            </RelativeLayout>
-
-
-        </RelativeLayout>
     </android.support.v7.widget.CardView>
 
 </LinearLayout>
