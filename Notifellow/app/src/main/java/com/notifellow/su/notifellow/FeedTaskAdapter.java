@@ -23,9 +23,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -38,6 +43,52 @@ import static android.content.Context.MODE_PRIVATE;
 public class FeedTaskAdapter extends ArrayAdapter<FeedTask> {
 
     private Context context;
+
+    ArrayList<String> usernameList;
+
+    public void getParticipants(final String postOwner, final String taskID){
+        RequestQueue MyRequestQueue = Volley.newRequestQueue(getContext());
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, "http://188.166.149.168:3030/getGroups",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        try {
+                            usernameList.clear();
+                            JSONArray rootJson = new JSONArray(response);
+                            for (int i = 0; i < rootJson.length(); i++){
+                                JSONObject participantJSON = rootJson.getJSONObject(i);
+                                String username = participantJSON.getString("username");
+                                usernameList.add(username);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        //Snackbar snackbar = Snackbar
+                        //.make(getView(), "Internet Connection Error!", Snackbar.LENGTH_LONG);
+                        //snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorGray));
+                        //snackbar.show();
+                        Toast.makeText(context, "Internet Connection Error!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("postOwner", postOwner); //Add the data you'd like to send to the server.
+                params.put("taskID", taskID);
+                return params;
+            }
+        };
+        MyRequestQueue.add(postRequest);
+    }
 
     public void leaveEvent(final int position, final String deletedID, final String UserID, final String eventID, final MyViewHolder holder){
         RequestQueue MyRequestQueue = Volley.newRequestQueue(getContext());
@@ -143,6 +194,8 @@ public class FeedTaskAdapter extends ArrayAdapter<FeedTask> {
 
         //SETTEXT OF COMPONENTS IN THIS PART
 
+        usernameList = new ArrayList<String>();
+
         holder.profilePicture.setImageURI(getItem(position).getProfilePic()); //MAY PRODUCE ERROR
         holder.userName.setText(getItem(position).getUserName());
         holder.title.setText(getItem(position).getTask().getTitle());
@@ -243,7 +296,9 @@ public class FeedTaskAdapter extends ArrayAdapter<FeedTask> {
         holder.participants.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String email = getItem(position).getEmail();
+                String taskID = getItem(position).getTask().getID();
+                getParticipants(email, taskID);
             }
         });
 
