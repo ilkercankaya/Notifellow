@@ -47,28 +47,28 @@ public class ChatActivity extends AppCompatActivity {
         mLayoutManager.setReverseLayout(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-//        OpenChannel.getChannel(mChannelUrl, new OpenChannel.OpenChannelGetHandler() {
-//            @Override
-//            public void onResult(final OpenChannel openChannel, SendBirdException e) {
-//                if (e != null) {
-//                    e.printStackTrace();
-//                    return;
-//                }
-//
-//                openChannel.enter(new OpenChannel.OpenChannelEnterHandler() {
-//                    @Override
-//                    public void onResult(SendBirdException e) {
-//                        if (e != null) {
-//                            e.printStackTrace();
-//                            return;
-//                        };
-//
-//                        mChatAdapter = new ChatAdapter(openChannel);
-//                        mRecyclerView.setAdapter(mChatAdapter);
-//                    }
-//                });
-//            }
-//        });
+        OpenChannel.getChannel(mChannelUrl, new OpenChannel.OpenChannelGetHandler() {
+            @Override
+            public void onResult(final OpenChannel openChannel, SendBirdException e) {
+                if (e != null) {
+                    e.printStackTrace();
+                    return;
+                }
+
+                openChannel.enter(new OpenChannel.OpenChannelEnterHandler() {
+                    @Override
+                    public void onResult(SendBirdException e) {
+                        if (e != null) {
+                            e.printStackTrace();
+                            return;
+                        };
+
+                        mChatAdapter = new ChatAdapter(openChannel);
+                        mRecyclerView.setAdapter(mChatAdapter);
+                    }
+                });
+            }
+        });
 
 
 
