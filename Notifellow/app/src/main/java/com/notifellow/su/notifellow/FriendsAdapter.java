@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class FriendsAdapter extends ArrayAdapter<Friends> {
@@ -30,7 +32,7 @@ public class FriendsAdapter extends ArrayAdapter<Friends> {
     private static SharedPreferences shared;
 
     public FriendsAdapter(Context context, List<Friends> taskList) {
-        super(context, R.layout.row_friends, taskList);
+        super(context, R.layout.row_friends_v2, taskList);
         MyRequestQueue = Volley.newRequestQueue(context);
         shared = context.getSharedPreferences("shared", MODE_PRIVATE);
     }
@@ -42,7 +44,7 @@ public class FriendsAdapter extends ArrayAdapter<Friends> {
         MyViewHolder holder;
         if (rowView == null) {
             LayoutInflater inflater = ((Activity) getContext()).getLayoutInflater();
-            rowView = inflater.inflate(R.layout.row_friends, null); //SET IT TO SUITABLE LAYOUT
+            rowView = inflater.inflate(R.layout.row_friends_v2, null); //SET IT TO SUITABLE LAYOUT
         }
 
         if (rowView.getTag() == null) {
@@ -123,7 +125,7 @@ public class FriendsAdapter extends ArrayAdapter<Friends> {
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView profilePicImageView;
+        private CircleImageView profilePicImageView;
         private TextView nameSurnameTextView;
         private TextView userIDTextView;
         private ImageView messageImageView;
