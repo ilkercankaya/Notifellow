@@ -368,8 +368,8 @@ public class TaskAdapter extends ArrayAdapter<Task>{
                     SharedPreferences shared;
                     shared = getContext().getSharedPreferences("shared", MODE_PRIVATE);
                     final String email = shared.getString("email", null);
-
-                    getParticipants(email, getItem(position).getID());
+                    int ID = Integer.parseInt(getItem(position).getID()) + 1;
+                    getParticipants(email, String.valueOf(ID));
                 }
             }
         });
