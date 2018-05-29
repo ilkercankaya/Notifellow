@@ -130,7 +130,7 @@ public class SignUp extends AppCompatActivity {
                     return;
                 }
 
-                progressDialog.setMessage("Signing in Please Wait...");
+                progressDialog.setMessage("Registering. Please Wait...");
                 progressDialog.show();
 
                 //Now create user on Notifellow server

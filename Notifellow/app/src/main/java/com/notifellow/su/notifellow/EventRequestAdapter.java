@@ -87,7 +87,7 @@ public class EventRequestAdapter extends ArrayAdapter<EventRequest> {
         return day;
     }
 
-    public void rejectEventRequest(final String UserID, final String deletedID, final String eventID){
+    public void rejectEventRequest(final int position, final String UserID, final String deletedID, final String eventID){
         RequestQueue MyRequestQueue = Volley.newRequestQueue(getContext());
 
         StringRequest postRequest = new StringRequest(Request.Method.POST, "http://188.166.149.168:3030/leaveEvent",
@@ -97,6 +97,8 @@ public class EventRequestAdapter extends ArrayAdapter<EventRequest> {
                         // response
                         if(response.equals("DELETED 201")){
                             Toast.makeText(context, "You have rejected the request!", Toast.LENGTH_SHORT).show();
+                            EventRequests.eventRequestList.remove(position);
+                            EventRequests.eventRequestAdapter.notifyDataSetChanged();
                         }
                     }
                 },
@@ -147,7 +149,7 @@ public class EventRequestAdapter extends ArrayAdapter<EventRequest> {
         }
 
         //SETTEXT OF COMPONENTS IN THIS PART
-        holder.profilePicture.setImageURI(getItem(position).getProfilePicture());
+        //holder.profilePicture.setImageURI(null);
         holder.userName.setText(getItem(position).getUserName());
         holder.eventTitle.setText(getItem(position).getEventTitle());
         //holder.startDate.setText(getItem(position).getStartDate());
@@ -220,7 +222,7 @@ public class EventRequestAdapter extends ArrayAdapter<EventRequest> {
                 String UserID = shared.getString("email", null);
                 String deletedID = getItem(position).getEmail();
                 String eventID = getItem(position).getEventID();
-                rejectEventRequest(UserID, deletedID, eventID);
+                rejectEventRequest(position, UserID, deletedID, eventID);
             }
         });
 
@@ -238,10 +240,10 @@ public class EventRequestAdapter extends ArrayAdapter<EventRequest> {
 
             //FIND COMPONENTS FROM LAYOUT
 
-            profilePicture = itemView.findViewById(R.id.rowCommentProfilePicture);
+            profilePicture = itemView.findViewById(R.id.joinProfilePic);
             accept = itemView.findViewById(R.id.joinAcceptBtn);
             reject = itemView.findViewById(R.id.joinDeclineBtn);
-            userName = itemView.findViewById(R.id.rowCommentUsername);
+            userName = itemView.findViewById(R.id.joinUsernameTxt);
             eventTitle = itemView.findViewById(R.id.joinTitleTxt);
             startDate = itemView.findViewById(R.id.joinDateStartsAtTxt);
             endDate = itemView.findViewById(R.id.joinDateEndsAtTxt);

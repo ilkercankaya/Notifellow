@@ -56,8 +56,8 @@ public class EventRequests extends AppCompatActivity {
                                 String email = oneUser.getString("reqEmail");
                                 String title = oneUser.getString("title");
                                 String id = oneUser.getString("id");
-                                String startDate = oneUser.getString("startDate");
-                                String endDate = oneUser.getString("endDate");
+                                String startDate = oneUser.getString("startTime");
+                                String endDate = oneUser.getString("endTime");
                                 String username = oneUser.getString("username");
 
                                 EventRequest eventRequestObject = new EventRequest(username, email, null, title, id, startDate, endDate);
