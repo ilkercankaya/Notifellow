@@ -37,7 +37,6 @@ public class Comments extends AppCompatActivity {
     ListView commentListView;
 
     private RequestQueue MyRequestQueue;
-
     private SharedPreferences shared;
 
     private ImageView profilePic;
