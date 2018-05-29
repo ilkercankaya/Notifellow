@@ -73,7 +73,7 @@ public class FeedFragment extends Fragment {
                 long days = dayDifference.get(TimeUnit.DAYS);
                 long minutes = dayDifference.get(TimeUnit.MINUTES);
 
-                if(days > 0 && minutes > 0){
+                if(days >= 0 && minutes >= 0){
                     String email = oneUser.getString("email");
                     String username = oneUser.getString("username");
                     String id = oneUser.getString("id");

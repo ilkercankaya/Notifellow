@@ -290,7 +290,7 @@ public class LoginScreen extends AppCompatActivity {
 
     private void login() {
 
-        final String email = editTextEmail.getText().toString();
+        final String email = editTextEmail.getText().toString().toLowerCase();
         final String password = editTextPassword.getText().toString();
 
 
@@ -333,7 +333,7 @@ public class LoginScreen extends AppCompatActivity {
                             SharedPreferences shared = getSharedPreferences("shared", MODE_PRIVATE);
                             SharedPreferences.Editor editor = shared.edit();
                             //giving in dummy values since rooted phones can access shared objects without security.
-                            editor.putString("email", editTextEmail.getText().toString());
+                            editor.putString("email", editTextEmail.getText().toString().toLowerCase());
                             editor.remove("username");
                             editor.remove("name");
                             editor.remove("pnumber");

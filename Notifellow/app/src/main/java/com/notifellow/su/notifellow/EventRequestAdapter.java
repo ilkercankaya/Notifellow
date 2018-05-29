@@ -87,6 +87,44 @@ public class EventRequestAdapter extends ArrayAdapter<EventRequest> {
         return day;
     }
 
+    public void acceptEventRequest(final int position, final String UserID, final String AddedID, final String eventID, final String eventName){
+        RequestQueue MyRequestQueue = Volley.newRequestQueue(getContext());
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, "http://188.166.149.168:3030/joinEventAccept",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Toast.makeText(context, "You have accepted the request!", Toast.LENGTH_SHORT).show();
+                        EventRequests.eventRequestList.remove(position);
+                        EventRequests.eventRequestAdapter.notifyDataSetChanged();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        //Snackbar snackbar = Snackbar
+                        //.make(getView(), "Internet Connection Error!", Snackbar.LENGTH_LONG);
+                        //snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorGray));
+                        //snackbar.show();
+                        Toast.makeText(context, "Internet Connection Error!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("AddedID", AddedID);
+                params.put("UserID", UserID); //User of this app
+                params.put("eventID", eventID);
+                params.put("eventName", eventName);
+                return params;
+            }
+        };
+        MyRequestQueue.add(postRequest);
+    }
+
     public void rejectEventRequest(final int position, final String UserID, final String deletedID, final String eventID){
         RequestQueue MyRequestQueue = Volley.newRequestQueue(getContext());
 
@@ -211,7 +249,12 @@ public class EventRequestAdapter extends ArrayAdapter<EventRequest> {
         holder.accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                SharedPreferences shared = getContext().getSharedPreferences("shared", MODE_PRIVATE);
+                String addedID = shared.getString("email", null); //User of this application
+                String userID = getItem(position).getEmail();
+                String eventID = getItem(position).getEventID();
+                String eventName = getItem(position).getEventTitle();
+                acceptEventRequest(position, userID, addedID, eventID, eventName);
             }
         });
 
