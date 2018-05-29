@@ -178,6 +178,13 @@ public class TaskAdapter extends ArrayAdapter<Task>{
         locationTextView = taskInfoDialog.findViewById(R.id.locNameTxt);
         wifiTextView = taskInfoDialog.findViewById(R.id.wifiNameTxt);
         noteTextView = taskInfoDialog.findViewById(R.id.noteClicked);
+        ImageView closeDialog = taskInfoDialog.findViewById(R.id.closeReminder);
+        closeDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                taskInfoDialog.dismiss();
+            }
+        });
 
         titleTextView.setText(task.getTitle());
 

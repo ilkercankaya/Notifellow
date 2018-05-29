@@ -29,9 +29,9 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_write"
+                android:src="@drawable/ic_cancel_task"
                 android:tint="@color/colorBlue"
-                android:id="@+id/editReminder"
+                android:id="@+id/closeReminder"
                 android:layout_gravity="top|end"
                 android:layout_marginBottom="8dp"
                 />
