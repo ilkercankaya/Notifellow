@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:elevation="8dp"
         android:clickable="false"
         android:layout_gravity="center"
         card_view:cardCornerRadius="30dp"
@@ -48,6 +49,7 @@
                 />
 
             <ListView
+                android:divider="@null"
                 android:id="@+id/listParticipants"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"></ListView>
