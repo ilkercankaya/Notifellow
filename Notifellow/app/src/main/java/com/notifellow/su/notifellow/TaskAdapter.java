@@ -14,9 +14,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -26,6 +38,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +54,57 @@ public class TaskAdapter extends ArrayAdapter<Task>{
     Dialog taskInfoDialog;
     TextView titleTextView, startsTextView, endsTextView, remindsTextView, locationTextView, wifiTextView, noteTextView;
 
+    ArrayList<String> usernameList;
+
+    public void getParticipants(final String postOwner, final String taskID){
+        RequestQueue MyRequestQueue = Volley.newRequestQueue(getContext());
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, "http://188.166.149.168:3030/getGroups",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        try {
+                            usernameList.clear();
+                            JSONArray rootJson = new JSONArray(response);
+                            for (int i = 0; i < rootJson.length(); i++){
+                                JSONObject participantJSON = rootJson.getJSONObject(i);
+                                String username = participantJSON.getString("username");
+                                usernameList.add(username);
+                            }
+                            Dialog dialog = new Dialog(getContext());
+                            dialog.setContentView(R.layout.feed_participants_dialog);
+                            ListView participantsListView = dialog.findViewById(R.id.listParticipants);
+                            ParticipantsAdapter participantsAdapter = new ParticipantsAdapter(getContext(), usernameList);
+                            participantsListView.setAdapter(participantsAdapter);
+                            dialog.show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        //Snackbar snackbar = Snackbar
+                        //.make(getView(), "Internet Connection Error!", Snackbar.LENGTH_LONG);
+                        //snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorGray));
+                        //snackbar.show();
+                        Toast.makeText(getContext(), "Internet Connection Error!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("postOwner", postOwner); //Add the data you'd like to send to the server.
+                params.put("taskID", taskID);
+                return params;
+            }
+        };
+        MyRequestQueue.add(postRequest);
+    }
 
     public static Map<TimeUnit,Long> computeDiff(Date date1, Date date2) {
         long diffInMillies = date2.getTime() - date1.getTime();
@@ -205,8 +269,6 @@ public class TaskAdapter extends ArrayAdapter<Task>{
 
         holder.titleTextView.setText(getItem(position).getTitle());
 
-
-
         String startTime = getItem(position).getStartTime();
         String[] splitted = startTime.split("\t\t");
         String date = splitted[0];
@@ -261,12 +323,13 @@ public class TaskAdapter extends ArrayAdapter<Task>{
             holder.endTextView.setText(time + "\t\t" + date);
         }
 
-
+        usernameList = new ArrayList<String>();
 
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                rowOnClick(getItem(position));
+                if(!getItem(position).getGlobal().equals("2"))
+                    rowOnClick(getItem(position));
             }
         });
 
@@ -282,22 +345,41 @@ public class TaskAdapter extends ArrayAdapter<Task>{
         holder.participants.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (getItem(position).getGlobal().equals("2")) {
+                    String email = getItem(position).getTaskOwnerEmail();
+                    String taskID = getItem(position).getTaskGlobalID();
+                    getParticipants(email, taskID);
+                }
+                else{
+                    SharedPreferences shared;
+                    shared = getContext().getSharedPreferences("shared", MODE_PRIVATE);
+                    final String email = shared.getString("email", null);
 
+                    getParticipants(email, getItem(position).getID());
+                }
             }
         });
 
         holder.comments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences shared;
-                shared = getContext().getSharedPreferences("shared", MODE_PRIVATE);
-                final String email = shared.getString("email", null);
+                if(getItem(position).getGlobal().equals("2")){
+                    Intent intent = new Intent(getContext(), Comments.class);
+                    intent.putExtra("taskEmail", getItem(position).getTaskOwnerEmail());
+                    intent.putExtra("taskID", getItem(position).getTaskGlobalID());
+                    getContext().startActivity(intent);
+                }
+                else{
+                    SharedPreferences shared;
+                    shared = getContext().getSharedPreferences("shared", MODE_PRIVATE);
+                    final String email = shared.getString("email", null);
 
-                Intent intent = new Intent(getContext(), Comments.class);
-                intent.putExtra("taskEmail", email);
-                int taskID = Integer.parseInt(getItem(position).getID()) + 1;
-                intent.putExtra("taskID", String.valueOf(taskID));
-                getContext().startActivity(intent);
+                    Intent intent = new Intent(getContext(), Comments.class);
+                    intent.putExtra("taskEmail", email);
+                    int taskID = Integer.parseInt(getItem(position).getID()) + 1;
+                    intent.putExtra("taskID", String.valueOf(taskID));
+                    getContext().startActivity(intent);
+                }
             }
         });
 
@@ -308,6 +390,13 @@ public class TaskAdapter extends ArrayAdapter<Task>{
         else{
             holder.participants.setVisibility(View.VISIBLE);
             holder.comments.setVisibility(View.VISIBLE);
+        }
+
+        if(getItem(position).getGlobal().equals("2")){
+            holder.cancelTask.setVisibility(View.GONE);
+        }
+        else{
+            holder.cancelTask.setVisibility(View.VISIBLE);
         }
 
         return rowView;

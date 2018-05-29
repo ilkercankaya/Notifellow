@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -15,9 +16,22 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -31,6 +45,61 @@ public class ScheduleFragment extends Fragment {
     static TaskAdapter taskAdapter;
     private SharedPreferences shared;
 
+    public void getJoinedEvents(){
+        shared = getActivity().getSharedPreferences("shared", MODE_PRIVATE);
+        final String email = shared.getString("email", null);
+        RequestQueue MyRequestQueue = Volley.newRequestQueue(getActivity());
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, "http://188.166.149.168:3030/getJoinedEvents",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        try {
+                            JSONArray jsonArray = new JSONArray(response);
+                            for(int i = 0; i < jsonArray.length(); i++){
+                                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                                String taskOwner = jsonObject.getString("postOwner");
+                                String taskOwnerUsername = jsonObject.getString("postOwnerUsername");
+                                String globalTaskID = jsonObject.getString("orijinalId");
+                                String taskTitle = jsonObject.getString("title");
+                                String taskStartTime = jsonObject.getString("startTime");
+                                String taskEndTime = jsonObject.getString("endTime");
+
+                                String[] startTimeDate = taskStartTime.split("\t\t\t");
+                                String[] endTimeDate = taskEndTime.split("\t\t\t");
+
+                                Task task = new Task(taskOwner, taskOwnerUsername, globalTaskID, taskTitle, startTimeDate[0] + "\t\t" + startTimeDate[1], endTimeDate[0] + "\t\t" + endTimeDate[1]);
+                                taskList.add(task);
+                            }
+                            Collections.sort(taskList);
+                            taskAdapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Snackbar snackbar = Snackbar
+                                .make(getView(), "Internet Connection Error!", Snackbar.LENGTH_LONG);
+                        snackbar.getView().setBackgroundColor(getContext().getResources().getColor(R.color.colorGray));
+                        snackbar.show();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("UserID", email); //Add the data you'd like to send to the server.
+
+                return params;
+            }
+        };
+        MyRequestQueue.add(postRequest);
+    }
 
     public static String formatDate(String date) {
         String[] dateSplit = date.split("-");
@@ -117,6 +186,8 @@ public class ScheduleFragment extends Fragment {
 
         taskAdapter = new TaskAdapter(getActivity(), taskList);
         taskListView.setAdapter(taskAdapter);
+
+        getJoinedEvents();
 
         //// SWIPE TO REFRESH ////
         swipeRefreshLayout = view.findViewById(R.id.remindersLayout);

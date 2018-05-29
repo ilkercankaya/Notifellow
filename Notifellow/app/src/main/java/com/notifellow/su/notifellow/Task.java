@@ -1,6 +1,9 @@
 package com.notifellow.su.notifellow;
 
 public class Task implements Comparable<Task>{
+    private String taskOwnerEmail;
+    private String taskOwnerUsername;
+    private String taskGlobalID;
     private String title;
     private String startTime;
     private String endTime;
@@ -14,6 +17,16 @@ public class Task implements Comparable<Task>{
 
     public Task(String id){
         this.id = id;
+    }
+
+    public Task(String taskOwnerEmail, String taskOwnerUsername, String globalTaskID, String taskTitle, String startTime, String endTime){
+        this.taskOwnerEmail = taskOwnerEmail;
+        this.taskOwnerUsername = taskOwnerUsername;
+        this.taskGlobalID = globalTaskID;
+        this.title = taskTitle;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.global = "2";
     }
 
     public Task(String id, String title, String startTime, String endTime, String remindTime, String location, String hasJoined){
@@ -36,6 +49,14 @@ public class Task implements Comparable<Task>{
         this.wifi = wifi;
         this.note = note;
         this.global = global;
+    }
+
+    public String getTaskOwnerEmail() {
+        return taskOwnerEmail;
+    }
+
+    public String getTaskGlobalID(){
+        return taskGlobalID;
     }
 
     public String getID(){
