@@ -407,10 +407,12 @@ public class TaskAdapter extends ArrayAdapter<Task>{
         if(getItem(position).getGlobal().equals("0")){
             holder.participants.setVisibility(View.GONE);
             holder.comments.setVisibility(View.GONE);
+            holder.line.setVisibility(View.GONE);
         }
         else{
             holder.participants.setVisibility(View.VISIBLE);
             holder.comments.setVisibility(View.VISIBLE);
+            holder.line.setVisibility(View.VISIBLE);
         }
 
         if(getItem(position).getGlobal().equals("2")){
@@ -431,6 +433,7 @@ public class TaskAdapter extends ArrayAdapter<Task>{
         private ImageView cancelTask;
         private ImageView participants;
         private ImageView comments;
+        private ImageView line;
 
 
         public MyViewHolder(View itemView) {
@@ -442,6 +445,7 @@ public class TaskAdapter extends ArrayAdapter<Task>{
             cancelTask = itemView.findViewById(R.id.cancelTaskButton);
             participants = itemView.findViewById(R.id.scheduleParticipantsBtn);
             comments = itemView.findViewById(R.id.scheduleCommentBtn);
+            line= itemView.findViewById(R.id.lineSche);
         }
     }
 }
