@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class PendingFriendsAdapter extends ArrayAdapter<Friends> {
@@ -29,7 +31,7 @@ public class PendingFriendsAdapter extends ArrayAdapter<Friends> {
     private static RequestQueue MyRequestQueue;
 
     public PendingFriendsAdapter(Context context, List<Friends> taskList){
-        super(context, R.layout.row_request, taskList);
+        super(context, R.layout.row_request_v2, taskList);
         MyRequestQueue = Volley.newRequestQueue(context);
         shared = context.getSharedPreferences("shared", MODE_PRIVATE);
     }
@@ -41,7 +43,7 @@ public class PendingFriendsAdapter extends ArrayAdapter<Friends> {
         MyViewHolder holder;
         if(rowView == null) {
             LayoutInflater inflater = ((Activity) getContext()).getLayoutInflater();
-            rowView = inflater.inflate(R.layout.row_request, null); //SET IT TO SUITABLE LAYOUT
+            rowView = inflater.inflate(R.layout.row_request_v2, null); //SET IT TO SUITABLE LAYOUT
         }
 
         if(rowView.getTag() == null){
@@ -160,7 +162,7 @@ public class PendingFriendsAdapter extends ArrayAdapter<Friends> {
 
         private TextView usernameTextView;
         private TextView nameSurnameTextView;
-        private ImageView profilePictureView;
+        private CircleImageView profilePictureView;
         private ImageView acceptButton;
         private ImageView rejectButton;
 

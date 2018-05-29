@@ -8,12 +8,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/requestsLayout"
-        android:fitsSystemWindows="true"
         >
+
         <ListView
             android:id="@+id/listView_Requests"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:divider="@null"
             />
 
 
