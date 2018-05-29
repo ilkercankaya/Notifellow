@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
@@ -61,12 +62,15 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 //import com.notifellow.su.notifellow.notes.NotesMainActivity;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -85,9 +89,15 @@ public class Settings extends AppCompatPreferenceActivity {
         setupActionBar();
         MyRequestQueue = Volley.newRequestQueue(this);
         shared = getSharedPreferences("shared", MODE_PRIVATE);
+        contextOfApplication = getApplicationContext();
         Toolbar toolbar = (Toolbar) findViewById(R.id.settings_toolbar);
     }
 
+    public static Context contextOfApplication;
+    public static Context getContextOfApplication()
+    {
+        return contextOfApplication;
+    }
 
     private void setupActionBar() {
         getLayoutInflater().inflate(R.layout.settings_toolbar, (ViewGroup) findViewById(android.R.id.content));
@@ -247,30 +257,28 @@ public class Settings extends AppCompatPreferenceActivity {
                                     .make(getActivity().findViewById(android.R.id.content),"Upload Successful", Snackbar.LENGTH_LONG);
                             snackbarUno.getView().setBackgroundColor(getResources().getColor(R.color.colorBlue));
                             snackbarUno.show();
+                            Context applicationContext = Settings.getContextOfApplication();
+
                             CircleImageView img = getActivity().findViewById(R.id.pictureSettings);
                             img.setImageURI(filePath);
 
-                            try {
-                                InputStream in = getActivity().getContentResolver().openInputStream(filePath);
-                                OutputStream out = new FileOutputStream(new File(getActivity().getCacheDir(), uniqID + ".jpg"));
-                                byte[] buf = new byte[1024];
-                                int len;
-                                while ((len = in.read(buf)) > 0) {
-                                    out.write(buf, 0, len);
-                                }
-                                out.close();
-                                in.close();
-                            }catch(FileNotFoundException e){
-                                Snackbar snackbar = Snackbar
-                                        .make(getActivity().findViewById(android.R.id.content),e.getMessage(), Snackbar.LENGTH_LONG);
-                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
-                                snackbar.show();
+                            File file = new File(getActivity().getCacheDir(), uniqID + ".jpg");
+                            file.delete();
+                            final int chunkSize = 1024;  // We'll read in one kB at a time
+                            byte[] imageData = new byte[chunkSize];
 
-                            }catch(IOException e){
-                                Snackbar snackbar = Snackbar
-                                        .make(getActivity().findViewById(android.R.id.content),e.getMessage(), Snackbar.LENGTH_LONG);
-                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
-                                snackbar.show();
+                            try {
+                                InputStream in = applicationContext.getContentResolver().openInputStream(filePath);
+                                OutputStream out = new FileOutputStream(file);  // I'm assuming you already have the File object for where you're writing to
+
+                                int bytesRead;
+                                while ((bytesRead = in.read(imageData)) > 0) {
+                                    out.write(Arrays.copyOfRange(imageData, 0, Math.max(0, bytesRead)));
+                                }
+                                in.close();
+                                out.close();
+                            } catch (Exception ex) {
+
                             }
 
                             SharedPreferences.Editor editor = shared.edit();
@@ -320,79 +328,87 @@ public class Settings extends AppCompatPreferenceActivity {
                     final String ppSTAT = shared.getString("ppSTAT", null);
 
                     final CircleImageView ppImg = getActivity().findViewById(R.id.pictureSettings);
-                    final File localFile = new File(getActivity().getCacheDir(), response + ".jpg");
-                    if (ppSTAT == null) {
-                        storageRef.child(response).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                // Local temp file has been created load the pic
-                                SharedPreferences.Editor editor = shared.edit();
-                                editor.putString("ppSTAT", "exists");
-                                editor.putString("ppDIR", response);
-                                editor.commit();
-                                Glide.with(getContext())
-                                        .load(localFile)
-                                        .listener(new RequestListener<File, GlideDrawable>() {
-                                            @Override
-                                            public boolean onException(Exception e, File model, Target<GlideDrawable> target, boolean isFirstResource) {
-                                                Snackbar snackbar = Snackbar
-                                                        .make(getActivity().findViewById(android.R.id.content),e.getMessage(), Snackbar.LENGTH_LONG);
-                                                snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
-                                                snackbar.show();
-                                                progressDialog.dismiss();
+                    try {
+                        final File localFile = File.createTempFile("images", "jpg");
+                        // if(ppSTAT.equals( "doesntExists")){ //PP exists
+                        if (true) {
+                            storageRef.child(response ).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                    // Local temp file has been created load the pic
+                                    SharedPreferences.Editor editor = shared.edit();
+                                    editor.putString("ppSTAT", "exists");
+                                    editor.putString("ppDIR", response);
+                                    editor.commit();
+                                    Glide.with(getContext())
+                                            .load(localFile)
+                                            .listener(new RequestListener<File, GlideDrawable>() {
+                                                @Override
+                                                public boolean onException(Exception e, File model, Target<GlideDrawable> target, boolean isFirstResource) {
+                                                    Snackbar snackbar = Snackbar
+                                                            .make(getActivity().findViewById(android.R.id.content),e.getMessage(), Snackbar.LENGTH_LONG);
+                                                    snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
+                                                    snackbar.show();
+                                                    progressDialog.dismiss();
 
-                                                return false;
-                                            }
+                                                    return false;
+                                                }
 
-                                            @Override
-                                            public boolean onResourceReady(GlideDrawable resource, File model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                                                //Image is loaded
-                                                progressDialog.dismiss();
-                                                return false;
-                                            }
-                                        })
-                                        .into(ppImg);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                // Handle any errors
-                                //  Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_LONG);
-                                SharedPreferences.Editor editor = shared.edit();
-                                editor.putString("ppSTAT", "doesntExists");
-                                editor.commit();
-                            }
-                        });
-                    } else if(ppSTAT.equals( "exists")){ //PP exists
-                        Glide.with(getContext())
-                                .load(localFile)
-                                .listener(new RequestListener<File, GlideDrawable>() {
-                                    @Override
-                                    public boolean onException(Exception e, File model, Target<GlideDrawable> target, boolean isFirstResource) {
-                                        Snackbar snackbar = Snackbar
-                                                .make(getActivity().findViewById(android.R.id.content),e.getMessage(), Snackbar.LENGTH_LONG);
-                                        snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
-                                        snackbar.show();
+                                                @Override
+                                                public boolean onResourceReady(GlideDrawable resource, File model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                                                    //Image is loaded
+                                                    progressDialog.dismiss();
+                                                    return false;
+                                                }
+                                            })
+                                            .into(ppImg);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    // Handle any errors
+                                    //  Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_LONG);
+                                    SharedPreferences.Editor editor = shared.edit();
+                                    editor.putString("ppSTAT", "doesntExists");
+                                    editor.commit();
+                                }
+                            });
+                        } else if(ppSTAT.equals( "exists")){ //PP exists
+                            Glide.with(getContext())
+                                    .load(localFile)
+                                    .listener(new RequestListener<File, GlideDrawable>() {
+                                        @Override
+                                        public boolean onException(Exception e, File model, Target<GlideDrawable> target, boolean isFirstResource) {
+                                            Snackbar snackbar = Snackbar
+                                                    .make(getActivity().findViewById(android.R.id.content),e.getMessage(), Snackbar.LENGTH_LONG);
+                                            snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorGray));
+                                            snackbar.show();
 
-                                        progressDialog.dismiss();
-                                        SharedPreferences.Editor editor = shared.edit();
-                                        editor.putString("ppDIR", response);
-                                        editor.commit();
-                                        return false;
-                                    }
+                                            progressDialog.dismiss();
+                                            SharedPreferences.Editor editor = shared.edit();
+                                            editor.putString("ppDIR", response);
+                                            editor.commit();
+                                            return false;
+                                        }
 
-                                    @Override
-                                    public boolean onResourceReady(GlideDrawable resource, File model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                                        //Image is loaded
-                                        progressDialog.dismiss();
-                                        return false;
-                                    }
-                                })
-                                .into(ppImg);
-                    }else{
-                        //Do nothings the user dont have any PP
-                        progressDialog.dismiss();
+                                        @Override
+                                        public boolean onResourceReady(GlideDrawable resource, File model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                                            //Image is loaded
+                                            progressDialog.dismiss();
+                                            return false;
+                                        }
+                                    })
+                                    .into(ppImg);
+                        }else{
+                            //Do nothings the user dont have any PP
+                            progressDialog.dismiss();
+                        }
                     }
+                    catch (IOException e){
+
+                    }
+                    //if (ppSTAT == null) {
+
 
                 }
             }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.

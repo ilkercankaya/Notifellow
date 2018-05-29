@@ -54,6 +54,7 @@ import com.sendbird.android.SendBird;
 //import com.notifellow.su.notifellow.notes.Schema;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -81,7 +82,6 @@ public class Main extends AppCompatActivity
 
     private static SharedPreferences shared;
     GoogleApiClient mGoogleApiClient;
-
     private static Context context;
     private static RequestQueue queue;
 
@@ -283,47 +283,54 @@ public class Main extends AppCompatActivity
                 uniqID = response;
                 final String ppSTAT = shared.getString("ppSTAT", null);
 
-                final File localFile = new File(getCacheDir(), response + ".jpg");
-                if (ppSTAT == null) {
-                    storageRef.child(response).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                            // Local temp file has been created load the pic
-                            SharedPreferences.Editor editor = shared.edit();
-                            editor.putString("ppSTAT", "exists");
-                            editor.putString("ppDIR", response);
-                            editor.commit();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            // Handle any errors
-                            //  Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_LONG);
-                            SharedPreferences.Editor editor = shared.edit();
-                            editor.putString("ppSTAT", "doesntExists");
-                            editor.commit();
-                        }
-                    });
-                } else if (localFile == null || !localFile .exists()) {
-                    storageRef.child(response).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                            // Local temp file has been created load the pic
-                            SharedPreferences.Editor editor = shared.edit();
-                            editor.putString("ppSTAT", "exists");
-                            editor.putString("ppDIR", response);
-                            editor.commit();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            // Handle any errors
-                            //  Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_LONG);
-                            SharedPreferences.Editor editor = shared.edit();
-                            editor.putString("ppSTAT", "doesntExists");
-                            editor.commit();
-                        }
-                    });
+                try {
+                    final File localFile = File.createTempFile("images", "jpg");
+                    //if (ppSTAT == null) {
+
+                    if (true) {
+                        storageRef.child(response).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                // Local temp file has been created load the pic
+                                SharedPreferences.Editor editor = shared.edit();
+                                editor.putString("ppSTAT", "exists");
+                                editor.putString("ppDIR", response);
+                                editor.commit();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle any errors
+                                //  Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_LONG);
+                                SharedPreferences.Editor editor = shared.edit();
+                                editor.putString("ppSTAT", "doesntExists");
+                                editor.commit();
+                            }
+                        });
+                    } else if (localFile == null || !localFile.exists()) {
+                        storageRef.child(response).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                // Local temp file has been created load the pic
+                                SharedPreferences.Editor editor = shared.edit();
+                                editor.putString("ppSTAT", "exists");
+                                editor.putString("ppDIR", response);
+                                editor.commit();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle any errors
+                                //  Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_LONG);
+                                SharedPreferences.Editor editor = shared.edit();
+                                editor.putString("ppSTAT", "doesntExists");
+                                editor.commit();
+                            }
+                        });
+                    }
+                }
+                catch (IOException e){
+
                 }
             }
         }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
@@ -378,65 +385,91 @@ public class Main extends AppCompatActivity
         final String ppSTAT = shared.getString("ppSTAT", null);
         final String ppDir = shared.getString("ppDIR", null);
         final CircleImageView ppImg = findViewById(R.id.profilePic);
-        final File localFile = new File(getCacheDir(), ppDir + ".jpg");
+        try {
+            final File localFile = File.createTempFile("images", "jpg");
+            //if (ppSTAT == null) {
 
-        if (!(ppDir == null) && ppSTAT.equals("exists")) { //PP exists
-            Glide.with(this)
-                    .load(localFile)
-                    .listener(new RequestListener<File, GlideDrawable>() {
-                        @Override
-                        public boolean onException(Exception e, File model, Target<GlideDrawable> target, boolean isFirstResource) {
-                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG);
-                            return false;
-                        }
+            //if (!(ppDir == null) && ppSTAT.equals("exists")) { //PP exists
+            if (true) {
+                storageRef.child(ppDir).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                        // Local temp file has been created load the pic
+                        Glide.with(getApplicationContext())
+                                .load(localFile)
+                                .listener(new RequestListener<File, GlideDrawable>() {
+                                    @Override
+                                    public boolean onException(Exception e, File model, Target<GlideDrawable> target, boolean isFirstResource) {
+                                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG);
+                                        return false;
+                                    }
 
-                        @Override
-                        public boolean onResourceReady(GlideDrawable resource, File model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                            //Image is loaded
-                            return false;
-                        }
-                    })
-                    .into(ppImg);
-        } else if(ppSTAT == null){
-            StringRequest MyStringRequest = new StringRequest(Request.Method.POST, "http://188.166.149.168:3030/getUniqID", new Response.Listener<String>() {
-                @Override
-                public void onResponse(final String response) {
-                    storageRef.child(response).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                            // Local temp file has been created load the pic
-                            SharedPreferences.Editor editor = shared.edit();
-                            editor.putString("ppSTAT", "exists");
-                            editor.putString("ppDIR", response);
-                            editor.commit();
-                            Glide.with(getApplicationContext())
-                                    .load(localFile)
-                                    .listener(new RequestListener<File, GlideDrawable>() {
-                                        @Override
-                                        public boolean onException(Exception e, File model, Target<GlideDrawable> target, boolean isFirstResource) {
-                                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG);
-                                            return false;
-                                        }
+                                    @Override
+                                    public boolean onResourceReady(GlideDrawable resource, File model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                                        //Image is loaded
+                                        return false;
+                                    }
+                                })
+                                .into(ppImg);
 
-                                        @Override
-                                        public boolean onResourceReady(GlideDrawable resource, File model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                                            //Image is loaded
-                                            return false;
-                                        }
-                                    })
-                                    .into(ppImg);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            // Handle any errors
-                            //  Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_LONG);
-                            SharedPreferences.Editor editor = shared.edit();
-                            editor.putString("ppSTAT", "doesntExists");
-                            editor.commit();
-                        }
-                    });
-                } }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
+                        SharedPreferences.Editor editor = shared.edit();
+                        editor.putString("ppSTAT", "exists");
+                        editor.putString("ppDIR", ppDir);
+                        editor.commit();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                        //  Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_LONG);
+                        SharedPreferences.Editor editor = shared.edit();
+                        editor.putString("ppSTAT", "doesntExists");
+                        editor.commit();
+                    }
+                });
+
+
+            } else if (ppSTAT == null) {
+                StringRequest MyStringRequest = new StringRequest(Request.Method.POST, "http://188.166.149.168:3030/getUniqID", new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(final String response) {
+                        storageRef.child(response).getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                // Local temp file has been created load the pic
+                                SharedPreferences.Editor editor = shared.edit();
+                                editor.putString("ppSTAT", "exists");
+                                editor.putString("ppDIR", response);
+                                editor.commit();
+                                Glide.with(getApplicationContext())
+                                        .load(localFile)
+                                        .listener(new RequestListener<File, GlideDrawable>() {
+                                            @Override
+                                            public boolean onException(Exception e, File model, Target<GlideDrawable> target, boolean isFirstResource) {
+                                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG);
+                                                return false;
+                                            }
+
+                                            @Override
+                                            public boolean onResourceReady(GlideDrawable resource, File model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                                                //Image is loaded
+                                                return false;
+                                            }
+                                        })
+                                        .into(ppImg);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle any errors
+                                //  Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_LONG);
+                                SharedPreferences.Editor editor = shared.edit();
+                                editor.putString("ppSTAT", "doesntExists");
+                                editor.commit();
+                            }
+                        });
+                    }
+                }, new Response.ErrorListener() { //Create an error listener to handle errors appropriately.
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //This code is executed if there is an error.
@@ -452,18 +485,20 @@ public class Main extends AppCompatActivity
                         return MyData;
                     }
                 };
-        queue.add(MyStringRequest);
-        }
-            else{
-            //Set empty picutre
+                queue.add(MyStringRequest);
+            } else {
+                //Set empty picutre
           /*
            TODO: UNCOMMENT AND FIX THIS AREA, IT THREW EXCEPTION.
            Resources res = getResources();
             ppImg.setBackground(res.getDrawable(R.drawable.circular_profile_picture));
             ppImg.setImageDrawable(res.getDrawable(R.mipmap.notifellowlogo_round));
             */
+            }
         }
+        catch (IOException e){
 
+        }
         if (value == null) {
             //check sharedreference and if its not null update the box otherwise make a web call and update
             StringRequest postRequest = new StringRequest(Request.Method.POST, "http://188.166.149.168:3030/getFullName",
