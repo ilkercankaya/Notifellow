@@ -12,11 +12,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profilePic"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        app:srcCompat="@drawable/ic_profile"
+        android:src="@drawable/ic_profile"
         />
 
     <TextView

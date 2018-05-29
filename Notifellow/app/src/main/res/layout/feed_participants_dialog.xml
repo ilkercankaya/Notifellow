@@ -11,17 +11,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:padding="16dp"
         android:clickable="false"
         android:layout_gravity="center"
         card_view:cardCornerRadius="30dp"
         card_view:cardBackgroundColor="@color/colorWhite"
         >
+
+        <ImageView
+            android:id="@+id/closeParticipants"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_cancel_task"
+            android:tint="@color/colorBlue"
+            android:layout_gravity="end|top"
+            android:layout_margin="16dp"
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_margin="16dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             >
 
             <TextView

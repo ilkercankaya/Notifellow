@@ -72,11 +72,25 @@ public class TaskAdapter extends ArrayAdapter<Task>{
                                 String username = participantJSON.getString("username");
                                 usernameList.add(username);
                             }
-                            Dialog dialog = new Dialog(getContext());
+                            final Dialog dialog = new Dialog(getContext());
                             dialog.setContentView(R.layout.feed_participants_dialog);
+                            ImageView closeDialog = dialog.findViewById(R.id.closeParticipants);
+                            closeDialog.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog.dismiss();
+                                }
+                            });
+
                             ListView participantsListView = dialog.findViewById(R.id.listParticipants);
                             ParticipantsAdapter participantsAdapter = new ParticipantsAdapter(getContext(), usernameList);
                             participantsListView.setAdapter(participantsAdapter);
+
+                            int width = (int)(getContext().getResources().getDisplayMetrics().widthPixels); // fills the screen in terms of width
+                            int height = (int)(getContext().getResources().getDisplayMetrics().heightPixels*0.90); //fills the 90% of screen in terms of height
+                            dialog.getWindow().setLayout(width, height); // set the layout width and height
+                            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // DO NOT TOUCH, DESIGN ISSUES
+
                             dialog.show();
                         } catch (JSONException e) {
                             e.printStackTrace();
