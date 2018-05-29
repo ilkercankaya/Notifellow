@@ -58,7 +58,7 @@ public class ScheduleFragment extends Fragment {
                         try {
                             JSONArray jsonArray = new JSONArray(response);
                             for(int i = 0; i < jsonArray.length(); i++){
-                                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
                                 String taskOwner = jsonObject.getString("postOwner");
                                 String taskOwnerUsername = jsonObject.getString("postOwnerUsername");
                                 String globalTaskID = jsonObject.getString("orijinalId");
