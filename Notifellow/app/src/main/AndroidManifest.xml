@@ -118,6 +118,8 @@
             android:name="android.support.PARENT_ACTIVITY"
             android:value="com.notifellow.su.notifellow.Main" />
         </activity>
+        <activity android:name=".ChatActivity" />
+        <!--<activity android:name=".ChatLoginActivity" />-->
     </application>
 
 </manifest>

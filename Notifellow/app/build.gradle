@@ -10,6 +10,7 @@ apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 
 repositories {
     maven { url 'https://maven.google.com' }
+    maven { url "https://raw.githubusercontent.com/smilefam/SendBird-SDK-Android/master/" }
 }
 
 apply plugin: 'com.android.application'
@@ -64,6 +65,12 @@ dependencies {
     implementation 'org.mongodb:mongo-java-driver:3.0.3'
     implementation files('libs/CircleImageView-master/gradle/wrapper/gradle-wrapper.jar')
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+
+//    compile 'com.android.support:appcompat-v7:25.3.1'
+//    compile 'com.android.support:design:25.3.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.sendbird.sdk:sendbird-android-sdk:3.0.27'
 
 }
 

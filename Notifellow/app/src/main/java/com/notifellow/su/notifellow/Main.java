@@ -49,6 +49,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.sendbird.android.SendBird;
 //import com.notifellow.su.notifellow.notes.NotesMainActivity;
 //import com.notifellow.su.notifellow.notes.Schema;
 
@@ -89,6 +90,7 @@ public class Main extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
+        SendBird.init("4EDE48B8-215F-402B-AE9B-A90458524107", this.getApplicationContext());
         mGoogleApiClient.connect();
     }
 
