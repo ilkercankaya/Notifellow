@@ -5,6 +5,7 @@ var express = require('express'),
     fs = require('fs'),
     OneSignal = require('onesignal-node');
 
+
     // first we need to create a client
 var myClient = new OneSignal.Client({
   userAuthKey: 'ZDQzMzM3ZDgtN2Y3NC00MGFkLWFhZjItZWRmODg2ZTlkMDc3',
