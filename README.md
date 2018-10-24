@@ -9,6 +9,8 @@ The users can set schedules for
 
 which the user later will be notified when the condiitons are met for the alarm.
 
+![Notifellow]()
+
 # App Features
 * Setting alarms and being notified when the alarm condition is met
 * Social feed where user sees friends schedule / events
@@ -17,7 +19,8 @@ which the user later will be notified when the condiitons are met for the alarm.
 * Authentication (signup, signout, register, forgot password, email change)
 * Account Management 
 * Chat among users
- 
+* Validation for user registeration, alarms.
+
 # Project Details
 Technologies involved:
 * Android Studio 
