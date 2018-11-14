@@ -9,8 +9,6 @@ The users can set schedules for
 
 which the user later will be notified when the condiitons are met for the alarm.
 
-[Demo](https://youtu.be/451k9MqscqA)
-
 # App Features
 * Setting alarms and being notified when the alarm condition is met
 * Social feed where user sees friends schedule / events
@@ -33,3 +31,6 @@ Technologies involved:
 # Files
 * `Notifellow`: The folder for Android Studio.
 * `ServerSide`: The folder for server side code which requires node.js.
+
+# Demo
+[Demo](https://youtu.be/451k9MqscqA)
