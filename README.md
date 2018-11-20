@@ -24,7 +24,7 @@ Technologies involved:
 * Android Studio 
 * Node.js (including `express.js`)
 * MongoDB
-* Firabase
+* Firebase
 * One Signal API
 * Google Maps API
 
