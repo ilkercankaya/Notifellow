@@ -1,5 +1,5 @@
 # Notifellow
-Notifellow is a android social platform that allows users to share their daily schedules. Requires minimum Android API 23.
+Notifellow is a android social platform that allows users to share their daily schedules. Requires minimum Android API 23. Please scroll demo for a demo link.
 
 # How It Works
 The users can set schedules for
